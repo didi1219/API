@@ -7,5 +7,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`http://localhost:${port}`);
+    console.log(`Exemple of listening : http://localhost:${port}`);
 });
