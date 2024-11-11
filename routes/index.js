@@ -1,10 +1,12 @@
-import Router from 'express-promise-router';
+import {Router} from 'express';
+import {default as notificationRouter} from './notification.js';
+import {default as messageRouter} from './message.js';
+import {default as discussionEventRouter} from './discussionEvent.js';
 
-const router = new Router();
+const router = Router();
 
-router.use((req,res) =>{
-    console.error(`Bad URL: ${req.path}`);
-    return res.status(404).send("Il ne s'agit pas d'une URL prise en charge par l'application");
-})
+router.use('/notification', notificationRouter);
+router.use('/message', messageRouter);
+router.use('/discussionEvent', discussionEventRouter);
 
 export default router;

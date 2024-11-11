@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/projetDB</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="projetDB@localhost [2]" uuid="859e7dca-d773-4ca8-aefa-ea53345c6554">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/projetDB</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
