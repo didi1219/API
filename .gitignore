@@ -1,3 +1,2 @@
 .env
-populateDB.sql
-populateDB.js
+node_modules
