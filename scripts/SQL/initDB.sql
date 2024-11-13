@@ -85,5 +85,6 @@ CREATE TABLE linkUserEvent (
     user_id INTEGER REFERENCES owner(id) DEFERRABLE INITIALLY IMMEDIATE,
     event_id INTEGER REFERENCES event(id) DEFERRABLE INITIALLY IMMEDIATE,
     is_waiting BOOLEAN,
-    is_accepted BOOLEAN
+    is_accepted BOOLEAN,
+    CONSTRAINT unique_user_event UNIQUE (user_id, event_id)
 );
