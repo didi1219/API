@@ -5,12 +5,18 @@ CREATE TABLE category (
     title varchar
 );
 
+INSERT INTO category (title)
+VALUES('Festival'),('Music'),('Food'),('Sport'),('Culture');
+
 DROP TABLE IF EXISTS location CASCADE;
 
 CREATE TABLE location (
     id integer primary key GENERATED ALWAYS AS IDENTITY,
     label varchar
 );
+
+INSERT INTO location (label)
+VALUES ('Namur'),('Liège'),('Bruxelles'),('Charlesroi');
 
 DROP TABLE IF EXISTS owner CASCADE;
 
@@ -24,6 +30,9 @@ CREATE TABLE owner (
     bio varchar
 );
 
+INSERT INTO owner (email,password,last_name,first_name,user_name,bio)
+VALUES ('valentin.guillaume@live.be','1234','Guillaume','Valentin','Bamcko','coucou');
+
 DROP TABLE IF EXISTS event CASCADE;
 
 CREATE TABLE event (
@@ -36,6 +45,9 @@ CREATE TABLE event (
     location_id integer REFERENCES location(id) DEFERRABLE INITIALLY IMMEDIATE,
     category_id integer REFERENCES category(id) DEFERRABLE INITIALLY IMMEDIATE
 );
+
+INSERT INTO event (title,description,event_date,street_number,owner_id,location_id,category_id)
+VALUES ('IESN Party','Blablabla','2024-11-30 20:00:00','Rue de fer, 43',1,1,1);
 
 DROP TABLE IF EXISTS notification CASCADE;
 
