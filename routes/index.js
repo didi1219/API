@@ -17,7 +17,7 @@ router.use('/discussionEvent', discussionEventRouter);
 router.use('/category',categoryRouter);
 router.use('/location',locationRouter);
 router.use('/event',eventRouter);
-router.use('/owner', userRouter);
+router.use('/user', userRouter);
 router.use('/linkUserEvent', linkUserEventRouter);
 
 
