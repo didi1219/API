@@ -8,7 +8,12 @@ export const readLinkUserEvent = async (SQLClient, {userID, eventID}) => {
 export const createLinkUserEvent = async (SQLClient, {userID, eventID, isWaiting, isAccepted}) => {
     // Check if the user and the event exist ?
     await SQLClient.query('INSERT INTO linkuserevent (user_id, event_id, is_waiting, is_accepted) VALUES ($1, $2, $3, $4)',
-        [userID, eventID, isWaiting, isAccepted]);
+        [
+            userID,
+            eventID,
+            isWaiting,
+            isAccepted
+        ]);
 };
 
 export const deleteLinkUserEvent = async (SQLClient, {userID, eventID}) => {
