@@ -1,14 +1,14 @@
-export const createEvent = async (SQLClient, {title,description,event_date,street_number,owner_id,location_id,category_id}) => {
+export const createEvent = async (SQLClient, {title,description,event_date,street_number,user_id,location_id,category_id}) => {
     try {
         await SQLClient.query('BEGIN');
         const {rows} = await SQLClient.query(
-            'INSERT INTO event (title,description,event_date,street_number,owner_id,location_id,category_id) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING id',
+            'INSERT INTO event (title,description,event_date,street_number,user_id,location_id,category_id) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING id',
             [
                 title,
                 description,
                 event_date,
                 street_number,
-                owner_id,
+                user_id,
                 location_id,
                 category_id
             ]
@@ -39,7 +39,7 @@ export const deleteEvent = async (SQLClient, {id}) => {
     return await SQLClient.query('DELETE FROM event WHERE id = $1', [id]);
 }
 
-export const updateEvent = async (SQLClient, {id,title,description,event_date,street_number,owner_id,location_id,category_id}) => {
+export const updateEvent = async (SQLClient, {id,title,description,event_date,street_number,user_id,location_id,category_id}) => {
     let query = 'UPDATE event SET ';
     const querySet = [];
     const queryValues = [];
@@ -59,9 +59,9 @@ export const updateEvent = async (SQLClient, {id,title,description,event_date,st
         queryValues.push(street_number);
         querySet.push(`street_number = $${queryValues.length}`);
     }
-    if(owner_id){
-        queryValues.push(owner_id);
-        querySet.push(`owner_id = $${queryValues.length}`);
+    if(user_id){
+        queryValues.push(user_id);
+        querySet.push(`user_id = $${queryValues.length}`);
     }
     if(location_id){
         queryValues.push(location_id);

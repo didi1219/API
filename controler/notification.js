@@ -3,7 +3,7 @@ import {pool} from "../database/database.js";
 
 export const getNotification = async (req, res) => {
     try{
-        const notification =  await notificationModel.readNotifiation(pool, req.params);
+        const notification =  await notificationModel.readNotification(pool, req.params);
         if(notification){
             return res.send(notification);
         }

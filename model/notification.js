@@ -1,4 +1,4 @@
-export const readNotifiation = async (SQLClient,{id}) => {
+export const readNotification = async (SQLClient,{id}) => {
     const {rows} = await SQLClient.query(
         "SELECT * FROM notification WHERE id = $1",[id]
     )
