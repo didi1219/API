@@ -14,10 +14,18 @@ export const getEvent = async(req,res) => {
     }
 };
 
+export const getDiscussionEvents = async (req,res) => {
+    try {
+        const discussionEvents = await eventModel.listDiscussionEvent(pool, req.params);
+        res.status(200).send(discussionEvents);
+    } catch (error) {
+        res.sendStatus(500);
+    }
+}
+
 export const addEvent = async (req,res) => {
     try{
         const id = await eventModel.createEvent(pool,req.body);
-        console.log(req.body);
         res.status(201).json({id});
     } catch (error) {
         res.sendStatus(500);

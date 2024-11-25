@@ -1,6 +1,17 @@
 import * as discussionEventModel from '../model/discussionEvent.js'
 import {pool} from "../database/database.js"
-
+export const getMessages = async (req, res) => {
+    try{
+        const params = {
+            discussion_event_id: req.params.id,
+            offset: req.params.offset,
+        }
+        const messages = await discussionEventModel.readMessages(pool, params);
+        res.status(200).send(messages);
+    }catch(err){
+        res.sendStatus(500);
+    }
+}
 export const getDiscussionEvent = async (req, res) => {
     try{
         const discussionEvent = await discussionEventModel.readDiscussionEvent(pool, req.params);

@@ -16,8 +16,8 @@ export const createEvent = async (SQLClient, {title,description,event_date,stree
         const eventId = rows[0]?.id;
 
         await SQLClient.query(
-            'INSERT INTO discussionEvent (title, event_id) VALUES ($1,$2)',
-            ["Général",eventId]
+            'INSERT INTO discussionEvent (title, event_id, isWritable) VALUES ($1,$2)',
+            ["Général", eventId, false]
         );
         await SQLClient.query('COMMIT');
 
@@ -33,6 +33,13 @@ export const readEvent = async (SQLClient, {id}) =>{
         'SELECT * FROM event WHERE id = $1',[id]
     );
     return rows[0];
+}
+
+export const listDiscussionEvent = async (SQLClient, {id}) => {
+    const {rows} = await SQLClient.query(
+        'SELECT * FROM discussionEvent WHERE event_id = $1',[id]
+    );
+    return rows;
 }
 
 export const deleteEvent = async (SQLClient, {id}) => {
