@@ -116,6 +116,15 @@ export const updateEvent = async (SQLClient, {id, title, description, event_date
     }
 };
 
+export const listDiscussionEvent = async (SQLClient, {id}) => {
+    const {rows} = await SQLClient.query(
+        'SELECT * FROM discussionEvent WHERE event_id = $1',[id]
+    );
+    return rows;
+};
+
+
+/*
 export const searchEvent = async (SQLClient, {user_id}) => {
     try {
        const {rows} = await SQLClient.query(
@@ -125,11 +134,4 @@ export const searchEvent = async (SQLClient, {user_id}) => {
     } catch (error){
         throw new Error();
     }
-};
-
-export const listDiscussionEvent = async (SQLClient, {id}) => {
-    const {rows} = await SQLClient.query(
-        'SELECT * FROM discussionEvent WHERE event_id = $1',[id]
-    );
-    return rows;
-};
+};*/

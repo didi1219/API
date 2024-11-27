@@ -1,6 +1,7 @@
 import {pool} from '../database/database.js';
 import * as eventModel from '../model/event.js';
 
+/*
 export const updateEvent = async (req, res) => {
     try {
         req.val.user_id = req.session.id;
@@ -10,7 +11,7 @@ export const updateEvent = async (req, res) => {
     } catch (error){
         res.sendStatus(500);
     }
-};
+};*/
 
 export const addEvent = async (req, res) => {
     try {

@@ -9,6 +9,6 @@ import {eventValidatorMiddleware as EVM} from "../middleware/validation.js";
 const router = new Router();
 
 router.post('/',checkJWT,EVM.eventToAdd,addEvent);
-router.patch('/',checkJWT,EVM.eventToUpdate,updateEvent);
+//router.patch('/',checkJWT,EVM.eventToUpdate,updateEvent);
 
 export default router;
