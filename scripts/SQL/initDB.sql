@@ -122,7 +122,7 @@ INSERT INTO message (content, gps, sending_date, user_id, discussion_event_id) V
                                                                                    ('Vivement le concert !', 123456, '2024-11-30', 1, 1),
                                                                                    ('Hâte d en apprendre plus sur les nouvelles technologies.', 654321, '2024-11-30', 2, 2);
 
--- Fill `linkUserEvent` table
+-- Fill `linkUserEvent` 
 INSERT INTO linkUserEvent (user_id, event_id, isWaiting, isAccepted) VALUES
                                                                          (1, 1, false, true),
                                                                          (2, 2, false, true),
