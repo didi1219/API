@@ -20,7 +20,7 @@ router.get('/event/byCategory',getEventCategories); //http://localhost:3040/sear
 router.get('/event/byLocality',getEventByLoc);
 router.get('/event/all',getAllEv);
 
-router.patch('/isFavorite/:id',checkJWT, setFavoriteEvent);
+//router.patch('/isFavorite/:id',checkJWT, setFavoriteEvent);
 
 router.get('/byOwner/:id',getAllEventOfOwner);
 router.get('/byOwner/nb/:id', getNbEventByOwner);
