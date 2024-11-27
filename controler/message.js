@@ -1,45 +1,42 @@
 import * as messageModel from '../model/message.js';
-import {pool} from "../database/database.js"
+import {pool} from "../database/database.js";
 
 export const getMessage = async (req, res) => {
     try{
-        const message = await messageModel.readMessage(pool, req.params);
+        const message = await messageModel.readMessage(pool, req.val);
         if(message){
-            return res.status(200).send(message);
+            res.json(message)
+        } else {
+            res.sendStatus(404);
         }
-        return res.sendStatus(404);
     }catch(err){
-        console.log(err);
-        return res.sendStatus(500);
+        res.sendStatus(500);
     }
-}
-export const updateMessage = async (req, res) => {
+};
+
+export const addMessage = async (req, res) => {
     try{
-        const id = await messageModel.updateMessage(pool, req.body);
-        if(id){
-            return res.sendStatus(200);
-        }
-        return res.sendStatus(404);
+        const id = await messageModel.createMessage(pool, req.val);
+        res.status(201).json({id});
     }catch(err){
-        return res.sendStatus(500);
+        res.sendStatus(500);
     }
-}
+};
+
 export const deleteMessage = async (req, res) => {
     try{
-        await messageModel.deleteMessage(pool, req.params);
-        return res.sendStatus(200);
+        await messageModel.deleteMessage(pool, req.val);
+        res.sendStatus(204);
     }catch(err){
-        return res.sendStatus(500);
+        res.sendStatus(500);
     }
-}
-export const createMessage = async (req, res) => {
+};
+
+export const updateMessage = async (req, res) => {
     try{
-        const id = await messageModel.createMessage(pool, req.body);
-        if(id){
-            return res.status(200).send(id);
-        }
-        return res.sendStatus(404);
+        await messageModel.updateMessage(pool, req.val);
+        res.sendStatus(204);
     }catch(err){
-        return res.sendStatus(500);
+        res.sendStatus(500);
     }
-}
+};

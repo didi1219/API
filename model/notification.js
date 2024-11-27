@@ -1,12 +1,13 @@
 export const readNotification = async (SQLClient,{id}) => {
     const {rows} = await SQLClient.query(
-        "SELECT * FROM notification WHERE id = $1",[id]
+        'SELECT * FROM notification WHERE id = $1',[id]
     )
     return rows[0];
-}
-export const createNotification = async (SQLClient, {title,content, event_id,creation_date, type}) => {
- const {rows} = await SQLClient.query(
-     "INSERT INTO notification(title, content,event_id, creation_date, type) VALUES ($1,$2,$3,$4,$5) RETURNING id",
+};
+
+export const createNotification = async (SQLClient, {title, content, event_id, creation_date, type}) => {
+    const {rows} = await SQLClient.query(
+     'INSERT INTO notification(title, content,event_id, creation_date, type) VALUES ($1,$2,$3,$4,$5) RETURNING id',
      [
          title,
          content,
@@ -14,17 +15,19 @@ export const createNotification = async (SQLClient, {title,content, event_id,cre
          creation_date,
          type
      ]
- );
- return rows[0];
+    );
+    return rows[0]?.id;
 }
+
 export const deleteNotification = async (SQLClient, {id}) => {
     const {rows} = await SQLClient.query(
-        "DELETE FROM notification WHERE id = $1",[id]
+        'DELETE FROM notification WHERE id = $1',[id]
     )
     return rows[0];
-}
-export const updateNotification = async (SQLClient, {id,title,content, event_id,creation_date, type}) => {
-    let query = "UPDATE notification SET ";
+};
+
+export const updateNotification = async (SQLClient, {id, title, content, event_id, creation_date, type}) => {
+    let query = 'UPDATE notification SET ';
     const querySet = [];
     const queryValues = [];
     if(title){
@@ -54,4 +57,4 @@ export const updateNotification = async (SQLClient, {id,title,content, event_id,
     }else{
         throw new Error("No field given");
     }
-}
+};

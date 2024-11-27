@@ -5,14 +5,16 @@ import {
     getLinkUserEvent,
     deleteLinkUserEvent
 } from "../controler/linkUserEvent.js";
+import {checkJWT} from "../middleware/identification/JWT.js";
+import {admin} from "../middleware/authorization/mustBeAdmin.js";
+import {linkUserEventValidatorMiddleware as LUEVM} from "../middleware/validation.js";
 
 const router = Router();
 
-router.post('/', addLinkUserEvent);
-router.patch('/', updateLinkUserEvent);
-router.get('/', getLinkUserEvent);
-router.delete('/', deleteLinkUserEvent);
-
+router.post('/',checkJWT,admin,LUEVM.linkUserEventToAdd, addLinkUserEvent);
+router.patch('/',checkJWT,admin,LUEVM.linkUserEventToUpdate, updateLinkUserEvent);
+router.get('/',LUEVM.searchedLinkUserEvent, getLinkUserEvent);
+router.delete('/',checkJWT,admin,LUEVM.linkUserEventToDelete, deleteLinkUserEvent);
 
 
 export default router;

@@ -3,42 +3,40 @@ import {pool} from "../database/database.js";
 
 export const getNotification = async (req, res) => {
     try{
-        const notification =  await notificationModel.readNotification(pool, req.params);
+        const notification =  await notificationModel.readNotification(pool, req.val);
         if(notification){
-            return res.send(notification);
+            res.json(notification)
+        } else {
+            res.sendStatus(404);
         }
-        return res.sendStatus(404);
     }catch(err){
-        return res.sendStatus(500);
+        res.sendStatus(500);
     }
-}
+};
+
+export const addNotification = async (req, res) => {
+    try{
+        const id = await notificationModel.createNotification(pool, req.val);
+        res.status(201).json({id});
+    }catch(err){
+        res.sendStatus(500);
+    }
+};
+
 export const deleteNotification = async (req, res) => {
     try{
-        await notificationModel.deleteNotification(pool, req.params);
-        return res.sendStatus(200);
+        await notificationModel.deleteNotification(pool, req.val);
+        return res.sendStatus(204);
     }catch (err){
-        return res.sendStatus(500);
+        res.sendStatus(500);
     }
-}
+};
+
 export const updateNotification = async (req, res) => {
     try{
-        const response = await notificationModel.updateNotification(pool, req.body);
-        if(response){
-            return res.sendStatus(200);
-        }
-        return res.sendStatus(404);
+        await notificationModel.updateNotification(pool, req.val);
+        res.sendStatus(204);
     }catch(err){
-        return res.sendStatus(500);
+        res.sendStatus(500);
     }
-}
-export const createNotification = async (req, res) => {
-    try{
-        const id = await notificationModel.createNotification(pool, req.body);
-        if(id){
-            return res.sendStatus(200);
-        }
-        return res.sendStatus(400);
-    }catch(err){
-        return res.sendStatus(500);
-    }
-}
+};

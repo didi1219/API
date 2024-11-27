@@ -1,13 +1,23 @@
-export const createEvent = async (SQLClient, {title,description,event_date,street_number,user_id,location_id,category_id}) => {
+export const readEvent = async (SQLClient, {id}) =>{
+    const {rows} = await SQLClient.query(
+        'SELECT * FROM event WHERE id = $1',[id]
+    );
+    return rows[0];
+};
+
+export const createEvent = async (SQLClient, {title,description,event_date,street_number,isPrivate,picture_path,duration,user_id,location_id,category_id}) => {
     try {
         await SQLClient.query('BEGIN');
         const {rows} = await SQLClient.query(
-            'INSERT INTO event (title,description,event_date,street_number,user_id,location_id,category_id) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING id',
+            'INSERT INTO event (title,description,event_date,street_number,isPrivate,picture_path,duration,user_id,location_id,category_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING id',
             [
                 title,
                 description,
                 event_date,
                 street_number,
+                isPrivate,
+                picture_path,
+                duration,
                 user_id,
                 location_id,
                 category_id
@@ -16,8 +26,8 @@ export const createEvent = async (SQLClient, {title,description,event_date,stree
         const eventId = rows[0]?.id;
 
         await SQLClient.query(
-            'INSERT INTO discussionEvent (title, event_id) VALUES ($1,$2)',
-            ["Général",eventId]
+            'INSERT INTO discussionEvent (title,isWritable, event_id) VALUES ($1,$2,$3)',
+            ["Information",false,eventId]
         );
         await SQLClient.query('COMMIT');
 
@@ -28,18 +38,32 @@ export const createEvent = async (SQLClient, {title,description,event_date,stree
     }
 };
 
-export const readEvent = async (SQLClient, {id}) =>{
-    const {rows} = await SQLClient.query(
-        'SELECT * FROM event WHERE id = $1',[id]
-    );
-    return rows[0];
-}
-
 export const deleteEvent = async (SQLClient, {id}) => {
-    return await SQLClient.query('DELETE FROM event WHERE id = $1', [id]);
-}
+    const {rows} = await SQLClient.query(
+        'SELECT * FROM discussionevent WHERE event_id = $1;', [id]
+    );
 
-export const updateEvent = async (SQLClient, {id,title,description,event_date,street_number,user_id,location_id,category_id}) => {
+    await SQLClient.query('BEGIN');
+    try {
+        for (const row of rows) {
+            await SQLClient.query(
+                'DELETE from message where discussion_event_id = $1',
+                [row.id]
+            );
+        }
+        await SQLClient.query('DELETE FROM discussionevent where event_id = $1;', [id]);
+        await SQLClient.query('DELETE FROM notification where event_id = $1;', [id]);
+        await SQLClient.query('DELETE FROM linkuserevent where event_id = $1;', [id]);
+        await SQLClient.query('DELETE FROM event WHERE id = $1', [id]);
+
+        return await SQLClient.query('COMMIT');
+    } catch (error) {
+        await SQLClient.query('ROLLBACK');
+        throw  error;
+    }
+};
+
+export const updateEvent = async (SQLClient, {id, title, description, event_date, street_number,isPrivate,picture_path,duration, user_id, location_id, category_id}) => {
     let query = 'UPDATE event SET ';
     const querySet = [];
     const queryValues = [];
@@ -58,6 +82,18 @@ export const updateEvent = async (SQLClient, {id,title,description,event_date,st
     if(street_number){
         queryValues.push(street_number);
         querySet.push(`street_number = $${queryValues.length}`);
+    }
+    if(isPrivate){
+        queryValues.push(isPrivate);
+        querySet.push(`isPrivate = $${queryValues.length}`);
+    }
+    if(picture_path){
+        queryValues.push(picture_path);
+        querySet.push(`picture_path = $${queryValues.length}`);
+    }
+    if(duration){
+        queryValues.push(duration);
+        querySet.push(`duration = $${queryValues.length}`);
     }
     if(user_id){
         queryValues.push(user_id);
@@ -78,4 +114,22 @@ export const updateEvent = async (SQLClient, {id,title,description,event_date,st
     } else {
         throw new Error('No field given');
     }
+};
+
+export const searchEvent = async (SQLClient, {user_id}) => {
+    try {
+       const {rows} = await SQLClient.query(
+            'SELECT * FROM event where user_id = $1', [user_id]
+       );
+       return rows;
+    } catch (error){
+        throw new Error();
+    }
+};
+
+export const listDiscussionEvent = async (SQLClient, {id}) => {
+    const {rows} = await SQLClient.query(
+        'SELECT * FROM discussionEvent WHERE event_id = $1',[id]
+    );
+    return rows;
 };

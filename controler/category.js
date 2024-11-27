@@ -1,9 +1,9 @@
-import {pool} from '../database/database.js'
-import * as categoryModel from '../model/category.js'
+import {pool} from '../database/database.js';
+import * as categoryModel from '../model/category.js';
 
 export const getCategory = async (req,res) => {
     try {
-        const category = await categoryModel.readCategory(pool,req.params)
+        const category = await categoryModel.readCategory(pool,req.val)
         if(category){
             res.json(category);
         } else {
@@ -16,7 +16,7 @@ export const getCategory = async (req,res) => {
 
 export const addCategory = async (req,res) => {
     try {
-        const id = await categoryModel.createCategory(pool,req.body);
+        const id = await categoryModel.createCategory(pool,req.val);
         res.status(201).json({id});
     } catch (error){
         res.sendStatus(500);
@@ -25,7 +25,7 @@ export const addCategory = async (req,res) => {
 
 export const deleteCategory = async (req,res) => {
     try{
-        await categoryModel.deleteCategory(pool,req.params);
+        await categoryModel.deleteCategory(pool,req.val);
         res.sendStatus(204)
     } catch (error){
         res.sendStatus(500);
@@ -33,10 +33,10 @@ export const deleteCategory = async (req,res) => {
 };
 
 export const updateCategory = async (req,res) => {
-  try {
-      await categoryModel.updateCategory(pool,req.body);
+    try {
+      await categoryModel.updateCategory(pool,req.val);
       res.sendStatus(204);
-  }catch(error){
+    }catch(error){
       res.sendStatus(500);
-  }
+    }
 };

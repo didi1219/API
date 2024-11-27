@@ -1,16 +1,19 @@
-import Router from 'express'
+import Router from 'express-promise-router'
 import{
     getMessage,
-    createMessage,
+    addMessage,
     deleteMessage,
     updateMessage,
 } from "../controler/message.js"
+import {checkJWT} from "../middleware/identification/JWT.js";
+import {admin} from "../middleware/authorization/mustBeAdmin.js";
+import {messageValidatorMiddleware as MVM} from "../middleware/validation.js";
 
 const router = Router();
 
-router.get('/:id', getMessage);
-router.post('/', createMessage);
-router.patch('/', updateMessage);
-router.delete('/:id', deleteMessage);
+router.get('/:id',MVM.searchedMessage, getMessage);
+router.post('/',checkJWT,admin,MVM.messageToAdd, addMessage);
+router.patch('/',checkJWT,admin,MVM.messageToUpdate, updateMessage);
+router.delete('/:id',checkJWT,admin,MVM.messageToDelete, deleteMessage);
 
 export default router;

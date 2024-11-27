@@ -1,44 +1,43 @@
-import e from "express";
+export const readLinkUserEvent = async (SQLClient, {user_id, event_id}) => {
 
-export const readLinkUserEvent = async (SQLClient, {userID, eventID}) => {
-    const {rows} = await SQLClient.query('SELECT * FROM linkuserevent WHERE user_id = $1 AND event_id = $2', [userID, eventID]);
+    const {rows} = await SQLClient.query('SELECT * FROM linkuserevent WHERE user_id = $1 AND event_id = $2', [user_id, event_id]);
     return rows[0];
 };
 
-export const createLinkUserEvent = async (SQLClient, {userID, eventID, isWaiting, isAccepted}) => {
-    // Check if the user and the event exist ?
-    await SQLClient.query('INSERT INTO linkuserevent (user_id, event_id, is_waiting, is_accepted) VALUES ($1, $2, $3, $4)',
+export const createLinkUserEvent = async (SQLClient, {user_id, event_id, isWaiting, isAccepted}) => {
+    const {rows} = await SQLClient.query('INSERT INTO linkuserevent (user_id, event_id, isWaiting, isAccepted) VALUES ($1, $2, $3, $4)',
         [
-            userID,
-            eventID,
+            user_id,
+            event_id,
             isWaiting,
             isAccepted
         ]);
+    return rows[0];
 };
 
-export const deleteLinkUserEvent = async (SQLClient, {userID, eventID}) => {
-    return await SQLClient.query('DELETE FROM linkuserevent WHERE user_id = $1 AND event_id = $2', [userID, eventID]);
+export const deleteLinkUserEvent = async (SQLClient, {user_id, event_id}) => {
+    return await SQLClient.query('DELETE FROM linkuserevent WHERE user_id = $1 AND event_id = $2', [user_id, event_id]);
 };
 
-export const updateLinkUserEvent = async(SQLClient, {userID, eventID, isWaiting, isAccepted}) => {
+export const updateLinkUserEvent = async(SQLClient, {user_id, event_id, isWaiting, isAccepted}) => {
     let query = 'UPDATE linkUserEvent SET ';
     const querySet = [];
     const queryValues = [];
-    if(userID){
-        queryValues.push(userID);
+    if(user_id){
+        queryValues.push(user_id);
         querySet.push(`user_id = $${queryValues.length}`);
     }
-    if(eventID){
-        queryValues.push(eventID);
+    if(event_id){
+        queryValues.push(event_id);
         querySet.push(`event_id = $${queryValues.length}`);
     }
     if(isWaiting){
         queryValues.push(isWaiting);
-        querySet.push(`is_waiting = $${queryValues.length}`);
+        querySet.push(`isWaiting = $${queryValues.length}`);
     }
     if(isAccepted){
         queryValues.push(isAccepted);
-        querySet.push(`is_accepted = $${queryValues.length}`);
+        querySet.push(`isAccepted = $${queryValues.length}`);
     }
     if(queryValues.length > 0){
         queryValues.push(userID);
