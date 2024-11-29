@@ -1,8 +1,8 @@
 import Router from 'express-promise-router';
 import {
     addEvent,
-    updateEvent,
-    getDiscussionEvents,
+    //updateEvent,
+    getDiscussionEvents
 } from '../controler/event.js'
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {eventValidatorMiddleware as EVM} from "../middleware/validation.js";
