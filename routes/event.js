@@ -14,4 +14,6 @@ router.post('/',checkJWT,EVM.eventToAdd,addEvent);
 
 router.get('/:id/discussionEvent',getDiscussionEvents);
 
+router.get('/:id/discussionEvent',getDiscussionEvents);
+
 export default router;
