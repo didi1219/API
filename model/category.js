@@ -36,3 +36,10 @@ export const updateCategory = async (SQLClient, {id,title}) => {
         throw new Error('No field given');
     }
 };
+
+export const readAllCategories = async (SQLClient) => {
+    const {rows} = await SQLClient.query(
+        'SELECT * FROM category'
+    );
+    return rows;
+}

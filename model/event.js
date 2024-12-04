@@ -1,3 +1,5 @@
+import SQLClient from "express";
+
 export const readEvent = async (SQLClient, {id}) =>{
     const {rows} = await SQLClient.query(
         'SELECT * FROM event WHERE id = $1',[id]
@@ -130,6 +132,21 @@ export const searchEvent = async (SQLClient, {user_id}) => {
 export const listDiscussionEvent = async (SQLClient, {id}) => {
     const {rows} = await SQLClient.query(
         'SELECT * FROM discussionEvent WHERE event_id = $1',[id]
+    );
+    return rows;
+};
+
+
+export const readEventSubcribed = async (SQLClient, {user_id}) => {
+    const {rows} = await SQLClient.query(
+        'select e.id,e.title,e.description,e.event_date,e.street_number,e.isprivate,e.picture_path,e.duration,e.user_id,e.location_id,e.category_id from event e INNER JOIN linkuserevent l on l.event_id = e.id INNER JOIN users u on u.id = l.user_id where l.isaccepted = true and u.id = $1', [user_id]
+    )
+    return rows;
+};
+
+export const readEventCreated = async (SQLClient, {user_id}) => {
+    const {rows} = await SQLClient.query(
+        'select * from event where user_id = $1',[user_id]
     );
     return rows;
 };

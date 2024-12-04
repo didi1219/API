@@ -40,3 +40,16 @@ export const updateCategory = async (req,res) => {
       res.sendStatus(500);
     }
 };
+
+export const getAllCategories = async(req, res) => {
+    try {
+        const categories = await categoryModel.readAllCategories(pool);
+        if(categories){
+            res.json(categories);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (error) {
+        res.sendStatus(500);
+    }
+};
