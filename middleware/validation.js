@@ -115,11 +115,27 @@ export const discussionEventValidatorMiddleware = {
 };
 
 export const eventValidatorMiddleware = {
+    searchedEvent : async (req, res, next) => {
+        try {
+            req.val = await eventValidator.searchedEvent.validate(req.params);
+            next();
+        }  catch(error) {
+            res.status(400).send(error.messages);
+        }
+    },
     eventToAdd : async (req, res, next) => {
         try {
             req.val = await eventValidator.eventToAdd.validate(req.body);
             next();
         } catch (error){
+            res.status(400).send(error.messages);
+        }
+    },
+    eventToDelete : async (req, res, next) => {
+        try {
+            req.val = await eventValidator.eventToDelete.validate(req.params);
+            next();
+        } catch (error) {
             res.status(400).send(error.messages);
         }
     },

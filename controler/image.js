@@ -1,17 +1,19 @@
 import { v4 as uuidv4 } from 'uuid';
-import { saveImage} from "../model/imageManager.js";
-
+import { saveImage } from '../model/imageManager.js';
 
 const desFolderEvents = "./uploads/events";
 
-
 export const image = (req, res) => {
-    const images = req.files.images ? req.files.images[0] : undefined;
+    const image = req.files.image ? req.files.image[0] : undefined; // Change 'images' to 'image'
+
+    if (!image) {
+        return res.status(400).send("Aucune image reçue");
+    }
 
     const promises = [];
 
     promises.push(
-        saveImage(images.buffer, uuidv4(), desFolderEvents)
+        saveImage(image.buffer, uuidv4(), desFolderEvents)
     );
 
     Promise.all(promises)

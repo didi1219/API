@@ -1,5 +1,9 @@
 import vine from '@vinejs/vine';
 
+const eventIDSchema = vine.object({
+    id: vine.number()
+});
+
 const eventToAddSchema = vine.object({
     title: vine.string(),
     description: vine.string(),
@@ -13,6 +17,7 @@ const eventToAddSchema = vine.object({
 });
 
 const eventToUpdateSchema = vine.object({
+    id: vine.number(),
     title: vine.string().optional(),
     description: vine.string().optional(),
     event_date: vine.date().optional(),
@@ -25,5 +30,7 @@ const eventToUpdateSchema = vine.object({
 });
 
 export const
+    searchedEvent = vine.compile(eventIDSchema),
     eventToAdd = vine.compile(eventToAddSchema),
-    eventToUpdate = vine.compile(eventToUpdateSchema);
+    eventToUpdate = vine.compile(eventToUpdateSchema),
+    eventToDelete = vine.compile(eventIDSchema);

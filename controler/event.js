@@ -1,17 +1,35 @@
 import {pool} from '../database/database.js';
 import * as eventModel from '../model/event.js';
-import {readEventSubcribed} from "../model/event.js";
 
-export const updateEvent = async (req, res) => {
-    try {
+export const getAllEventsOfUserCreated = async (req, res) => {
+    try{
+        req.val = {};
         req.val.user_id = req.session.id;
-        const event = await eventModel.searchEvent(pool,req.val);
-        console.log(event);
-        res.sendStatus(204);
+        const event = await eventModel.readAllEventsOfUserCreated(pool,req.val);
+        if(event){
+            res.json(event);
+        } else {
+            res.sendStatus(404);
+        }
     } catch (error){
         res.sendStatus(500);
     }
 };
+
+export const getAllEventsOfUserSubscribed = async (req, res) => {
+    try {
+        req.val = {};
+        req.val.user_id = req.session.id;
+        const event = await eventModel.readAllEventsOfUserSubscribed(pool,req.val);
+        if(event) {
+            res.json(event);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (error){
+        res.sendStatus(500);
+    }
+}
 
 export const addEvent = async (req, res) => {
     try {
@@ -23,31 +41,28 @@ export const addEvent = async (req, res) => {
     }
 };
 
-export const getEventSubscribed = async (req, res) => {
+export const deleteEvent = async (req, res) => {
     try {
-        req.val = {}
         req.val.user_id = req.session.id;
-        const events = await eventModel.readEventSubcribed(pool,req.val);
-        if(events){
-            res.json(events);
-        } else {
-            res.sendStatus(404);
-        }
-    } catch (error){
+        const event = await eventModel.readAllEventsOfUserCreated(pool,req.val);
+        req.val.id = event[req.val.id - 1].id;
+
+        await eventModel.deleteEvent(pool,req.val);
+        res.sendStatus(204);
+    } catch(error) {
         res.sendStatus(500);
     }
 };
 
-export const getEventCreated = async (req, res) => {
+export const updateEvent = async (req, res) => {
     try {
-        req.val = {}
         req.val.user_id = req.session.id;
-        const events = await eventModel.readEventCreated(pool,req.val);
-        if(events){
-            res.json(events);
-        } else {
-            res.sendStatus(404);
-        }
+
+        const event = await eventModel.readAllEventsOfUserCreated(pool,req.val);
+        req.val.id = event[req.val.id - 1].id;
+
+        await eventModel.updateEvent(pool,req.val);
+        res.sendStatus(204);
     } catch (error){
         res.sendStatus(500);
     }

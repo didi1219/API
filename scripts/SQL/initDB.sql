@@ -86,8 +86,16 @@ CREATE TABLE linkUserEvent (
 -- Fill `category` table
 INSERT INTO category (title) VALUES
                                  ('Musique'),
-                                 ('Conférence'),
-                                 ('Sport');
+                                 ('Sport'),
+                                 ('Art et Expositions'),
+                                 ('Théâtre et Comédie'),
+                                 ('Festivals'),
+                                 ('Conférences'),
+                                 ('Formations'),
+                                 ('Marchés et Foires'),
+                                 ('Soirée'),
+                                 ('Discothèques'),
+                                 ('Rencontres et Réseautage');
 
 -- Fill `location` table
 INSERT INTO location (label, postalCode) VALUES
@@ -102,9 +110,9 @@ INSERT INTO users (email, password, last_name, first_name, user_name, bio, isAdm
 
 -- Fill `event` table
 INSERT INTO event (title, description, event_date, street_number, isPrivate, picture_path, duration, user_id, location_id, category_id) VALUES
-                                                                                                                                            ('Concert de Jazz', 'Un concert de jazz en plein air.', '2024-12-01', '12', false, 'images/event1.jpg', 120, 1, 1, 1),
-                                                                                                                                            ('Conférence Tech', 'Une conférence sur les dernières technologies.', '2024-11-15', '45', false, 'images/event2.jpg', 70, 2, 2, 2),
-                                                                                                                                            ('Marathon', 'Un marathon annuel pour les amateurs de course.', '2024-11-20', '78', false, 'images/event3.jpg', 130, 1, 3, 3);
+                                                                                                                                            ('Concert de Jazz', 'Un concert de jazz en plein air.', '2024-12-01', 'Rue Martin Jean', false, 'images/event1.jpg', 120, 1, 1, 1),
+                                                                                                                                            ('Conférence Tech', 'Une conférence sur les dernières technologies.', '2024-11-15', 'Rue de la soie', false, 'images/event2.jpg', 70, 2, 2, 2),
+                                                                                                                                            ('Marathon', 'Un marathon annuel pour les amateurs de course.', '2024-11-20', 'Boulvard Mélon', false, 'images/event3.jpg', 130, 1, 3, 3);
 
 -- Fill `notification` table
 INSERT INTO notification (title, content, event_id, creation_date, type) VALUES
@@ -122,7 +130,7 @@ INSERT INTO message (content, gps, sending_date, user_id, discussion_event_id) V
                                                                                    ('Vivement le concert !', 123456, '2024-11-30', 1, 1),
                                                                                    ('Hâte d en apprendre plus sur les nouvelles technologies.', 654321, '2024-11-30', 2, 2);
 
--- Fill `linkUserEvent` 
+-- Fill `linkUserEvent`
 INSERT INTO linkUserEvent (user_id, event_id, isWaiting, isAccepted) VALUES
                                                                          (1, 1, false, true),
                                                                          (2, 2, false, true),
