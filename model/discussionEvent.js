@@ -1,6 +1,78 @@
-export const readMessages = async (SQLClient,{discussion_event_id, offset}) => {
-    const {rows} = await SQLClient.query(
-        "SELECT * FROM message WHERE discussion_event_id = $1 ORDER BY sending_date LIMIT 20 OFFSET $2",[discussion_event_id, offset]
+export const readMessages = async (SQLClient, { discussion_event_id, offset }) => {
+    const { rows } = await SQLClient.query(
+        `SELECT 
+            m.id AS messageId,
+            m.content AS messageContent,
+            m.gps AS messageGPS,
+            m.sending_date AS sendingDate,
+            u.id AS userId,
+            u.user_name AS userName
+        FROM 
+            message m
+        LEFT JOIN 
+            users u ON m.user_id = u.id
+        WHERE 
+            m.discussion_event_id = $1
+        ORDER BY 
+            m.sending_date
+        DESC 
+        LIMIT 20 OFFSET $2`,
+        [discussion_event_id, offset]
+    );
+    return rows;
+};
+export const readNewerMessages = async (SQLClient, { discussion_event_id, nextMessageID }) => {
+    const { rows } = await SQLClient.query(
+        `SELECT
+            m.id AS messageId,
+            m.content AS messageContent,
+            m.gps AS messageGPS,
+            m.sending_date AS sendingDate,
+            u.id AS userId,
+            u.user_name AS userName
+        FROM
+            message m
+                LEFT JOIN
+            users u ON m.user_id = u.id
+        WHERE
+            m.discussion_event_id = $1
+          AND m.sending_date > (
+            SELECT sending_date
+            FROM message
+            WHERE id = $2
+        )
+        ORDER BY
+            m.sending_date
+        DESC`,
+        [discussion_event_id, nextMessageID]
+    );
+    return rows;
+};
+export const readOlderMessages = async (SQLClient, { discussion_event_id, previousMessageID }) => {
+    const { rows } = await SQLClient.query(
+        `SELECT
+            m.id AS messageId,
+            m.content AS messageContent,
+            m.gps AS messageGPS,
+            m.sending_date AS sendingDate,
+            u.id AS userId,
+            u.user_name AS userName
+        FROM
+            message m
+                LEFT JOIN
+            users u ON m.user_id = u.id
+        WHERE
+            m.discussion_event_id = $1
+          AND m.sending_date < (
+            SELECT sending_date
+            FROM message
+            WHERE id = $2
+        )
+        ORDER BY
+            m.sending_date
+        DESC
+        LIMIT 20`,
+        [discussion_event_id, previousMessageID]
     );
     return rows;
 }

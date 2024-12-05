@@ -116,12 +116,36 @@ export const updateEvent = async (SQLClient, {id, title, description, event_date
     }
 };
 
-export const listDiscussionEvent = async (SQLClient, {id}) => {
-    const {rows} = await SQLClient.query(
-        'SELECT * FROM discussionEvent WHERE event_id = $1',[id]
+export const listDiscussionEvent = async (SQLClient, { id }) => {
+    const { rows } = await SQLClient.query(
+        `SELECT
+            d.id AS discussionId,
+            d.title AS conversationTitle,
+            e.description AS eventDescription,
+            COUNT(DISTINCT m.user_id) AS usersCount,
+            MAX(m.sending_date) AS lastMessageSendingDate,
+            (
+                SELECT m2.content
+                FROM message m2
+                WHERE m2.discussion_event_id = d.id
+                ORDER BY m2.sending_date DESC
+                LIMIT 1
+            ) AS lastMessageContent
+        FROM
+            discussionEvent d
+        LEFT JOIN
+            event e ON d.event_id = e.id
+        LEFT JOIN
+            message m ON d.id = m.discussion_event_id
+        WHERE
+            d.event_id = $1
+        GROUP BY
+            d.id, e.description`,
+        [id]
     );
     return rows;
 };
+
 
 
 /*

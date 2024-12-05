@@ -12,6 +12,30 @@ export const getMessages = async (req, res) => {
         res.sendStatus(500);
     }
 }
+export const getNewerMessages = async (req, res) => {
+    try{
+        const params = {
+            discussion_event_id: req.params.id,
+            nextMessageID: req.params.nextMessageID,
+        }
+        const messages = await discussionEventModel.readNewerMessages(pool, params);
+        res.status(200).send(messages);
+    }catch(err){
+        res.sendStatus(500);
+    }
+}
+export const getOlderMessages = async (req, res) => {
+    try{
+        const params = {
+            discussion_event_id: req.params.id,
+            previousMessageID: req.params.previousMessageID,
+        }
+        const messages = await discussionEventModel.readOlderMessages(pool, params);
+        res.status(200).send(messages);
+    }catch(err){
+        res.sendStatus(500);
+    }
+}
 export const getDiscussionEvent = async (req, res) => {
     try{
         const discussionEvent = await discussionEventModel.readDiscussionEvent(pool, req.params);

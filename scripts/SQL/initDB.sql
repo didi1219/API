@@ -68,7 +68,7 @@ CREATE TABLE message(
                         id integer primary key GENERATED ALWAYS AS IDENTITY,
                         content varchar(250) NOT NULL,
                         gps integer,
-                        sending_date DATE NOT NULL,
+                        sending_date TIMESTAMP NOT NULL,
                         user_id integer REFERENCES users(id) DEFERRABLE INITIALLY IMMEDIATE,
                         discussion_event_id INTEGER REFERENCES discussionEvent(id) DEFERRABLE INITIALLY IMMEDIATE
 );
