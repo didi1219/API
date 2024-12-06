@@ -8,6 +8,7 @@ const messageIDSchema = vine.object({
 const messageToAddSchema = vine.object({
     content: vine.string(),
     gps: vine.number(),
+    sending_date: vine.date(),
     user_id: vine.number(),
     discussion_event_id: vine.number()
 });
