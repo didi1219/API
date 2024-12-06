@@ -6,16 +6,16 @@ const messageIDSchema = vine.object({
 });
 
 const messageToAddSchema = vine.object({
-    content: vine.string(),
-    gps: vine.number(),
+    content: vine.string().maxLength(250),
+    type: vine.number(),
     user_id: vine.number(),
     discussion_event_id: vine.number()
 });
 
 const messageToUpdateSchema = vine.object({
     id: vine.number(),
-    content: vine.string().optional(),
-    gps: vine.number().optional(),
+    content: vine.string().maxLength(250).optional(),
+    type: vine.number().optional(),
     user_id: vine.number().optional(),
     discussion_event_id: vine.number().optional()
 });

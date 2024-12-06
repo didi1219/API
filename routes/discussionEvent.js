@@ -5,7 +5,9 @@ import {
     addDiscussionEvent,
     updateDiscussionEvent,
     deleteDiscussionEvent,
-    getMessagesInDiscussion
+    getMessagesInDiscussion,
+    getNewerMessagesInDiscussion,
+    getOlderMessagesInDiscussion
 } from "../controler/discussionEvent.js";
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {admin} from "../middleware/authorization/mustBeAdmin.js";
@@ -20,5 +22,7 @@ router.delete('/:id',checkJWT,admin,DVM.discussionEventToDelete, deleteDiscussio
 
 // Ajouter un middleware de validation et autorisation
 router.get('/:id/messages/:offset',checkJWT,getMessagesInDiscussion);
+router.get('/:id/newerMessages/:nextMessageID', getNewerMessagesInDiscussion);
+router.get('/:id/olderMessages/:previousMessageID', getOlderMessagesInDiscussion);
 
 export default router;
