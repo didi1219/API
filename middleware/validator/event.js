@@ -24,6 +24,11 @@ const eventToUpdateSchema = vine.object({
     category_id: vine.number().optional()
 });
 
+const eventToListDiscussionSchema = vine.object({
+    id: vine.number()
+});
+
 export const
     eventToAdd = vine.compile(eventToAddSchema),
-    eventToUpdate = vine.compile(eventToUpdateSchema);
+    eventToUpdate = vine.compile(eventToUpdateSchema),
+    eventToListDiscussion = vine.compile(eventToListDiscussionSchema);
