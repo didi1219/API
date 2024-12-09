@@ -18,6 +18,10 @@ const discussionEventToUpdateSchema = vine.object({
     event_id: vine.number().optional()
 });
 
+const listDiscussionEventsSchema = vine.object({
+    offset: vine.number()
+});
+
 const discussionEventToListMessagesSchema = vine.object({
     id: vine.number(),
     offset: vine.number()
@@ -38,6 +42,7 @@ export const
     discussionEventToAdd = vine.compile(discussionEventToAddSchema),
     discussionEventToUpdate = vine.compile(discussionEventToUpdateSchema),
     discussionEventToDelete = vine.compile(discussionEventIDSchema),
+    listDiscussionEvents = vine.compile(listDiscussionEventsSchema),
     discussionEventToListMessages = vine.compile(discussionEventToListMessagesSchema),
     discussionEventToListNewerMessages = vine.compile(discussionEventToListNewerMessagesSchema),
     discussionEventToListOlderMessages = vine.compile(discussionEventToListOlderMessagesSchema);

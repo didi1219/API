@@ -58,3 +58,10 @@ export const updateMessage = async (SQLClient, {id,content, type, user_id, sendi
         throw new Error ("No field Given");
     }
 };
+
+export const readMessages = async (SQLClient, {offset}) => {
+    const {rows} = await SQLClient.query(
+        "SELECT * FROM message OFFSET $1 LIMIT 10", [offset]
+    );
+    return rows;
+};

@@ -112,6 +112,14 @@ export const discussionEventValidatorMiddleware = {
             res.status(400).send(error.messages);
         }
     },
+    listDiscussions : async (req, res, next) => {
+        try {
+            req.val = await discussionEventValidator.listDiscussionEvents.validate(req.params);
+            next();
+        } catch (error) {
+            res.status(400).send(error.messages);
+        }
+    },
     discussionEventToListMessages : async (req, res, next) => {
         try {
             req.val = await discussionEventValidator.discussionEventToListMessages.validate(req.params);
@@ -300,6 +308,14 @@ export const messageValidatorMiddleware = {
             req.val = await messageValidator.messageToDelete.validate(req.params);
             next();
         } catch(error){
+            res.status(400).send(error.messages);
+        }
+    },
+    listMessages : async (req, res, next) => {
+        try {
+            req.val = await messageValidator.listMessages.validate(req.params);
+            next();
+        } catch (error) {
             res.status(400).send(error.messages);
         }
     }

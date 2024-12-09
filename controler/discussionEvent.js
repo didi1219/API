@@ -41,6 +41,15 @@ export const updateDiscussionEvent = async (req, res) => {
     }
 };
 
+export const listDiscussionEvents = async (req, res) => {
+    try{
+        const discussionEvents = await discussionEventModel.readDiscussionEvents(pool, req.val);
+        res.json(discussionEvents);
+    }catch(err){
+        res.sendStatus(500);
+    }
+};
+
 export const getMessagesInDiscussion = async (req, res) => {
     try{
         const params = {

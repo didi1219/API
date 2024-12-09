@@ -54,6 +54,15 @@ export const updateDiscussionEvent = async (SQLClient, {id, title,isWritable, ev
         throw new Error ("No field Given");
     }
 };
+
+export const readDiscussionEvents = async (SQLClient, {offset}) => {
+    const {rows} = await SQLClient.query(
+        "SELECT * FROM discussionevent OFFSET $1 LIMIT 10",
+        [offset]
+    );
+    return rows;
+}
+
 export const readMessagesInDiscussion = async (SQLClient, { discussion_event_id, offset }) => {
     const { rows } = await SQLClient.query(
         `SELECT 

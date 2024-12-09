@@ -7,7 +7,8 @@ import {
     deleteDiscussionEvent,
     getMessagesInDiscussion,
     getNewerMessagesInDiscussion,
-    getOlderMessagesInDiscussion
+    getOlderMessagesInDiscussion,
+    listDiscussionEvents
 } from "../controler/discussionEvent.js";
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {admin} from "../middleware/authorization/mustBeAdmin.js";
@@ -20,6 +21,8 @@ router.get('/:id', checkJWT, admin, DVM.searchedDiscussionEvent, getDiscussionEv
 router.post('/',checkJWT,admin,DVM.discussionEventToAdd, addDiscussionEvent);
 router.patch('/',checkJWT,admin,DVM.discussionEventToUpdate, updateDiscussionEvent);
 router.delete('/:id',checkJWT,admin,DVM.discussionEventToDelete, deleteDiscussionEvent);
+
+router.get('/all/:offset', checkJWT, admin, DVM.listDiscussions, listDiscussionEvents);
 
 router.get('/:id/messages/:offset', checkJWT, inDiscussion, DVM.discussionEventToListMessages, getMessagesInDiscussion);
 router.get('/:id/newerMessages/:nextMessageID', checkJWT, DVM.discussionEventToListNewerMessages, inDiscussion, getNewerMessagesInDiscussion);

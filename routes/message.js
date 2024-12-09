@@ -4,6 +4,7 @@ import{
     addMessage,
     deleteMessage,
     updateMessage,
+    listMessages,
 } from "../controler/message.js"
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {admin} from "../middleware/authorization/mustBeAdmin.js";
@@ -15,5 +16,7 @@ router.get('/:id', checkJWT, admin, MVM.searchedMessage, getMessage);
 router.post('/',checkJWT,admin,MVM.messageToAdd, addMessage);
 router.patch('/',checkJWT,admin,MVM.messageToUpdate, updateMessage);
 router.delete('/:id',checkJWT,admin,MVM.messageToDelete, deleteMessage);
+
+router.get('/all/:offset', checkJWT, admin, MVM.listMessages, listMessages);
 
 export default router;

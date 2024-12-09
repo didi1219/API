@@ -20,8 +20,13 @@ const messageToUpdateSchema = vine.object({
     discussion_event_id: vine.number().optional()
 });
 
+const listMessagesSchema = vine.object({
+    offset: vine.number()
+});
+
 export const
     searchedMessage = vine.compile(messageIDSchema),
     messageToAdd = vine.compile(messageToAddSchema),
     messageToUpdate = vine.compile(messageToUpdateSchema),
-    messageToDelete = vine.compile(messageIDSchema);
+    messageToDelete = vine.compile(messageIDSchema),
+    listMessages = vine.compile(listMessagesSchema);
