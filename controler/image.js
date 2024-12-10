@@ -10,18 +10,14 @@ export const image = (req, res) => {
         return res.status(400).send("Aucune image reçue");
     }
 
-    const promises = [];
-
-    promises.push(
-        saveImage(image.buffer, uuidv4(), desFolderEvents)
-    );
-
-    Promise.all(promises)
-        .then(() => {
-            res.sendStatus(201);
+    saveImage(image.buffer, uuidv4(), desFolderEvents)
+        .then((savedImagePath) => {
+            res.status(201).json({
+                imagePath: savedImagePath
+            });
         })
         .catch((err) => {
             console.log(err);
-            res.sendStatus(500);
-        })
+            res.status(500).send("Erreur lors de l'upload de l'image");
+        });
 };

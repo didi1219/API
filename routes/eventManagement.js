@@ -5,6 +5,8 @@ import {
     deleteEvent,
     updateEvent,
     getDiscussionEvents,
+    getEvents,
+    getTotalRowEvent
 } from '../controler/eventManagement.js'
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {admin} from "../middleware/authorization/mustBeAdmin.js";
@@ -17,7 +19,11 @@ router.post('/',checkJWT,admin,EVM.eventToAdd, addEvent);
 router.delete('/:id',checkJWT, admin, EVM.eventToDelete, deleteEvent);
 router.patch('/',checkJWT,admin,EVM.eventToUpdate,updateEvent);
 
-// Ajouter un middleware de validation et autorisation
+
+router.get('/nbEvents/search?',checkJWT,EVM.searchedEvents,getEvents);
+router.get('/nbEvents/totalCount/',checkJWT,getTotalRowEvent);
+
+
 router.get('/discussionEvent/:id',checkJWT,getDiscussionEvents);
 
 export default router;

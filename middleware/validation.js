@@ -8,6 +8,8 @@ import * as locationValidator from './validator/location.js';
 import * as messageValidator from './validator/message.js';
 import * as notificationValidator from './validator/notification.js';
 import * as userValidator from './validator/user.js';
+import {searchedEvents} from "./validator/eventManagement.js";
+import {searchedCategories} from "./validator/category.js";
 
 export const adminValidatorMiddleware = {
     searchedUser : async (req, res, next) => {
@@ -72,6 +74,14 @@ export const categoryValidatorMiddleware = {
     categoryToDelete: async (req, res, next) => {
         try {
             req.val = await categoryValidator.categoryToDelete.validate(req.params);
+            next();
+        } catch (error) {
+            res.status(400).send(error.messages);
+        }
+    },
+    searchedCategories : async (req, res, next) => {
+        try {
+            req.val = await categoryValidator.searchedCategories.validate(req.query);
             next();
         } catch (error) {
             res.status(400).send(error.messages);
@@ -179,6 +189,14 @@ export const eventManagementValidatorMiddleware = {
             req.val = await eventManagementValidator.eventToDelete.validate(req.params);
             next();
         } catch (error) {
+            res.status(400).send(error.messages);
+        }
+    },
+    searchedEvents : async (req, res, next) => {
+        try {
+            req.val = await eventManagementValidator.searchedEvents.validate(req.query);
+            next();
+        } catch (error){
             res.status(400).send(error.messages);
         }
     }

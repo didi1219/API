@@ -2,6 +2,7 @@ import sharp from 'sharp';
 
 
 export const saveImage = (imageBuffer, imageName, desFolder) => {
+    const imagePath = `${imageName}.jpeg`;
     return sharp(imageBuffer)
         .jpeg()
         .resize({
@@ -9,5 +10,6 @@ export const saveImage = (imageBuffer, imageName, desFolder) => {
             width: 1920,
             height: 1080
         })
-        .toFile(`${desFolder}/${imageName}.jpeg`);
+        .toFile(`${desFolder}/${imageName}.jpeg`)
+        .then(() => imagePath);
 };

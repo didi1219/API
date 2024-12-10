@@ -4,6 +4,11 @@ const eventIDSchema = vine.object({
     id: vine.number(),
 });
 
+const nbEventsSchema = vine.object({
+    page: vine.number(),
+    perPage: vine.number(),
+});
+
 const eventToAddSchema = vine.object({
     title: vine.string().trim(),
     description: vine.string(),
@@ -35,4 +40,5 @@ export const
     searchedEvent = vine.compile(eventIDSchema),
     eventToAdd = vine.compile(eventToAddSchema),
     eventToUpdate = vine.compile(eventToUpdateSchema),
-    eventToDelete = vine.compile(eventIDSchema);
+    eventToDelete = vine.compile(eventIDSchema),
+    searchedEvents = vine.compile(nbEventsSchema);

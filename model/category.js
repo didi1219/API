@@ -42,4 +42,17 @@ export const readAllCategories = async (SQLClient) => {
         'SELECT * FROM category'
     );
     return rows;
-}
+};
+
+export const readCategories = async (SQLClient, {page, perPage}) => {
+    const {rows} = await SQLClient.query(
+        `SELECT * FROM category ORDER BY id LIMIT $1 OFFSET $2`,[perPage,(page - 1) * perPage]
+    );
+    return rows;
+};
+
+export const readTotalRowCategories = async (SQLClient) =>{
+    const query = `SELECT COUNT(*) AS total_rows FROM category`;
+    const { rows } = await SQLClient.query(query);
+    return rows[0].total_rows;
+};

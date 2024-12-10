@@ -67,7 +67,6 @@ DROP TABLE IF EXISTS message CASCADE;
 CREATE TABLE message(
                         id integer primary key GENERATED ALWAYS AS IDENTITY,
                         content varchar(250) NOT NULL,
-                        gps integer,
                         sending_date DATE NOT NULL,
                         user_id integer REFERENCES users(id) DEFERRABLE INITIALLY IMMEDIATE,
                         discussion_event_id INTEGER REFERENCES discussionEvent(id) DEFERRABLE INITIALLY IMMEDIATE
@@ -100,8 +99,14 @@ INSERT INTO category (title) VALUES
 -- Fill `location` table
 INSERT INTO location (label, postalCode) VALUES
                                              ('Namur', 5000),
-                                             ('Lyon', 4030),
-                                             ('Marseille', 2740);
+                                             ('Charleroi', 6000),
+                                             ('Liège', 4000),
+                                             ('Mons', 7000),
+                                             ('Arlon', 6700),
+                                             ('Tournai', 7500),
+                                             ('Wavre', 1300),
+                                             ('Dinant', 5500);
+
 
 -- Fill `users` table
 INSERT INTO users (email, password, last_name, first_name, user_name, bio, isAdmin) VALUES
@@ -112,7 +117,13 @@ INSERT INTO users (email, password, last_name, first_name, user_name, bio, isAdm
 INSERT INTO event (title, description, event_date, street_number, isPrivate, picture_path, duration, user_id, location_id, category_id) VALUES
                                                                                                                                             ('Concert de Jazz', 'Un concert de jazz en plein air.', '2024-12-01', 'Rue Martin Jean', false, 'images/event1.jpg', 120, 1, 1, 1),
                                                                                                                                             ('Conférence Tech', 'Une conférence sur les dernières technologies.', '2024-11-15', 'Rue de la soie', false, 'images/event2.jpg', 70, 2, 2, 2),
-                                                                                                                                            ('Marathon', 'Un marathon annuel pour les amateurs de course.', '2024-11-20', 'Boulvard Mélon', false, 'images/event3.jpg', 130, 1, 3, 3);
+                                                                                                                                            ('Marathon', 'Un marathon annuel pour les amateurs de course.', '2024-11-20', 'Boulvard Mélon', false, 'images/event3.jpg', 130, 1, 3, 3),
+                                                                                                                                            ('Soirée Disco', 'Soirée en boite avec les potes !', '2024-12-24', 'Discothèque de Namur', true, 'images/event4.jpg', 300, 1, 3, 10),
+                                                                                                                                            ('Exposition d art moderne', 'Une exposition unique mettant en vedette des artistes contemporains.', '2024-12-10', 'Galerie Lumière', false, 'images/event5.jpg', 180, 1, 1, 3),
+                                                                                                                                            ('Tournoi de Tennis', 'Participez à notre tournoi annuel de tennis.', '2024-12-15', 'Complexe Sportif', false, 'images/event6.jpg', 240, 1, 2, 2),
+                                                                                                                                            ('Atelier de Peinture', 'Un atelier pour les amateurs d art.', '2024-12-20', 'Atelier Rue de l Artiste', true, 'images/event7.jpg', 150, 1, 1, 3),
+                                                                                                                                            ('Marché de Noël', 'Découvrez des produits artisanaux pour les fêtes.', '2024-12-18', 'Place Centrale', false, 'images/event8.jpg', 300, 1, 3, 8),
+                                                                                                                                            ('Soirée Karaoké', 'Une soirée pleine de fun pour les amateurs de chant.', '2024-12-22', 'Café du Centre', true, 'images/event9.jpg', 200, 1, 3, 9);
 
 -- Fill `notification` table
 INSERT INTO notification (title, content, event_id, creation_date, type) VALUES
@@ -126,9 +137,9 @@ INSERT INTO discussionEvent (title, isWritable, event_id) VALUES
                                                               ('Discussion Conférence Tech', true, 2);
 
 -- Fill `message` table
-INSERT INTO message (content, gps, sending_date, user_id, discussion_event_id) VALUES
-                                                                                   ('Vivement le concert !', 123456, '2024-11-30', 1, 1),
-                                                                                   ('Hâte d en apprendre plus sur les nouvelles technologies.', 654321, '2024-11-30', 2, 2);
+INSERT INTO message (content, sending_date, user_id, discussion_event_id) VALUES
+                                                                                   ('Vivement le concert !', '2024-11-30', 1, 1),
+                                                                                   ('Hâte d en apprendre plus sur les nouvelles technologies.', '2024-11-30', 2, 2);
 
 -- Fill `linkUserEvent`
 INSERT INTO linkUserEvent (user_id, event_id, isWaiting, isAccepted) VALUES

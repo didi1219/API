@@ -12,7 +12,7 @@ import {notificationValidatorMiddleware as NVM} from "../middleware/validation.j
 
 const router = Router();
 
-router.get('/:id',NVM.searchedNotification, getNotification);
+router.get('/:id',checkJWT,admin,NVM.searchedNotification, getNotification);
 router.post('/',checkJWT,admin,NVM.notificationToAdd, addNotification);
 router.patch('/',checkJWT,admin,NVM.notificationToUpdate, updateNotification)
 router.delete('/:id',checkJWT,admin,NVM.notificationToDelete, deleteNotification);

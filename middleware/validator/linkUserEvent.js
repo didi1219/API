@@ -1,7 +1,5 @@
 import vine from '@vinejs/vine';
 
-
-
 const linkUserEventIDSchema = vine.object({
     event_id: vine.number(),
     user_id: vine.number(),

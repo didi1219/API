@@ -11,7 +11,7 @@ const port = 3001;
 const storage = multer.memoryStorage();
 const upload = multer({
     limits: {
-        fileSize: 700000
+        fileSize: 10 * 1024 * 1024
     },
     storage: storage
 });

@@ -32,7 +32,7 @@ export const readEventByLocalities = async (SQLClient, localitiesID)=>{
 
 export const readAllEvents = async (SQLClient)=>{
     const {rows} = await SQLClient.query(
-        "SELECT * FROM event"
+        "SELECT * FROM event ORDER BY id"
     )
     return rows;
 };

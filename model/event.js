@@ -140,3 +140,18 @@ export const readAllEventsOfUserSubscribed = async (SQLClient, {user_id}) => {
     );
     return rows;
 };
+
+export const readEvents = async (SQLClient, {page, perPage}) => {
+    const {rows} = await SQLClient.query(
+        `SELECT * FROM event ORDER BY id LIMIT $1 OFFSET $2`,[perPage,(page - 1) * perPage]
+    );
+    return rows;
+};
+
+
+export const readTotalRowEvent = async (SQLClient) =>{
+    const query = `SELECT COUNT(*) AS total_rows FROM event`;
+    const { rows } = await SQLClient.query(query);
+    return rows[0].total_rows;
+};
+
