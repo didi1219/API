@@ -1,5 +1,6 @@
 import * as notificationModel from "../model/notification.js";
 import {pool} from "../database/database.js";
+import * as userModel from "../model/user.js";
 
 export const getNotification = async (req, res) => {
     try{
@@ -40,3 +41,20 @@ export const updateNotification = async (req, res) => {
         res.sendStatus(500);
     }
 };
+
+export const getAllNotifications = async (req, res) => {
+    try{
+        const response = await notificationModel.readAllNotifications(pool, req.val)
+        res.json(response)
+    }catch(err){
+        res.sendStatus(500);
+    }
+}
+export const countRows = async (req, res) => {
+    try{
+        const response = await notificationModel.nbRows(pool);
+        return res.json(response);
+    }catch(error){
+        res.sendStatus(500);
+    }
+}

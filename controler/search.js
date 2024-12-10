@@ -4,10 +4,7 @@ import {pool} from "../database/database.js";
 
 export const searchEventByName = async (req,res) => {
     try {
-        const page = parseInt(req.query.page) || 1;
-        const perPage = parseInt(req.query.perPage) || 10;
-        const name = req.query.name || "";
-        const response = await searchModel.readEventByName(pool,req.params);
+        const response = await searchModel.readEventByName(pool, req.val);
         if(response) {
             res.json({response});
         } else {
@@ -20,10 +17,7 @@ export const searchEventByName = async (req,res) => {
 
 export const searchEvent = async (req, res) =>{
     try {
-        const page = parseInt(req.query.page) || 1;
-        const perPage = parseInt(req.query.perPage) || 10;
-        const search = req.query.search || "";
-        const response = await searchModel.readEventGeneric(pool,{page, perPage,search});
+        const response = await searchModel.readEventGeneric(pool,req.val);
         if(response) {
             res.json({response});
         } else {
@@ -36,34 +30,18 @@ export const searchEvent = async (req, res) =>{
 
 export const getEventCategories = async (req,res) => {
     try {
-        const categories = req.query.categories;
-        const perPage = parseInt(req.query.perPage) || 10;
-        const page = parseInt(req.query.page) || 1;
-        if(!categories){
-            res.status(404).send('Pas de parametres');
-        }else{
-        const categoriesIds = categories.split(',').map(id => parseInt(id.trim()));
-        const result = await searchModel.readEventByCategories(pool,{categoriesIds, page , perPage});
+        const result = await searchModel.readEventByCategories(pool,req.val);
         res.json({result});
-        }
     }catch (error){
+        console.log(error)
         res.sendStatus(500);
     }
 };
 
 export const getEventByLoc = async (req,res) => {
     try {
-        const localities = req.query.localities;
-        const page = parseInt(req.query.page) || 1;
-        const perPage = parseInt(req.query.perPage) || 10;
-
-        if(!localities){
-            res.status(404).send('Pas de parametres');
-        }else{
-            const localitiesId = localities.split(',').map(id => parseInt(id.trim()));
-            const result = await searchModel.readEventByLocalities(pool, {localitiesId, page , perPage});
-            res.json({result})
-        }
+        const result = await searchModel.readEventByLocalities(pool, req.val);
+        res.json({result})
     } catch(error){
         console.log(error)
         res.sendStatus(500);
@@ -72,7 +50,7 @@ export const getEventByLoc = async (req,res) => {
 
 export const getAllEv = async(req,res) => {
     try {
-        const response = await searchModel.readAllEvents(pool,req.params);
+        const response = await searchModel.readAllEvents(pool,req.val);
         if(response) {
             res.json({response});
         } else {
@@ -94,7 +72,7 @@ export const setFavoriteEvent = async (req,res)=>{
 
 export const getAllEventOfOwner = async (req,res) => {
     try{
-        const response = await searchModel.readEventByOwner(pool, req.params);
+        const response = await searchModel.readEventByOwner(pool, req.val);
         if(response) {
             res.json(response);
         } else {
@@ -107,7 +85,7 @@ export const getAllEventOfOwner = async (req,res) => {
 
 export const getNbEventByOwner = async(req,res) => {
     try{
-        const response = await searchModel.readNbEventOwner(pool,req.params);
+        const response = await searchModel.readNbEventOwner(pool, req.val);
         if(response) {
             res.json(response);
         } else {

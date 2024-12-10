@@ -1,3 +1,5 @@
+import {calculOffset, verifyValueOfPerPage} from "../util/paging.js";
+
 export const readLocation = async (SQLClient, {id}) =>{
     const {rows} = await SQLClient.query(
         'SELECT * FROM location WHERE id = $1', [id]
@@ -40,3 +42,18 @@ export const updateLocation = async (SQLClient, {id,label,postalCode}) =>{
         throw new Error('No field given');
     }
 };
+
+export const readAllLocations = async (SQLClient, {page,perPage}) => {
+    const size = verifyValueOfPerPage(perPage);
+    const offset = calculOffset({size, page});
+    const {rows} = await SQLClient.query(
+        "SELECT * FROM location LIMIT $1 OFFSET $2", [perPage, offset]
+    )
+    return rows;
+}
+export const nbRows = async (SQLClient)=>{
+    const {rows} = await SQLClient.query(
+        "SELECT COUNT(*) as count_rows FROM location"
+    )
+    return rows[0].count_rows;
+}

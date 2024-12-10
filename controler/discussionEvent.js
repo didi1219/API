@@ -1,5 +1,7 @@
 import * as discussionEventModel from '../model/discussionEvent.js';
 import {pool} from "../database/database.js";
+import * as userModel from "../model/user.js";
+import {getNbRows} from "../model/discussionEvent.js";
 
 export const getDiscussionEvent = async (req, res) => {
     try{
@@ -58,3 +60,29 @@ export const getMessagesInDiscussion = async (req, res) => {
         res.sendStatus(500);
     }
 };
+export const getAllDiscussionPaging = async (req, res) => {
+    try{
+        const page = req.val.page;
+        const perPage = req.val.perPage;
+        const response = await discussionEventModel.readAllDiscussion(pool, {perPage,page})
+        res.json(response);
+    }catch(error){
+        res.sendStatus(500);
+    }
+}
+export const countNbRows = async (req, res) => {
+    try{
+        const response = await discussionEventModel.getNbRows((pool))
+        res.json(response);
+    }catch(error){
+        res.sendStatus(500);
+    }
+}
+export const countRows = async (req, res) => {
+    try{
+        const response = await discussionEventModel.getNbRows(pool);
+        return res.json(response);
+    }catch(error){
+        res.sendStatus(500);
+    }
+}

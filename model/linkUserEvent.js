@@ -1,3 +1,5 @@
+import {calculOffset, verifyValueOfPerPage} from "../util/paging.js";
+
 export const readLinkUserEvent = async (SQLClient, {user_id, event_id}) => {
 
     const {rows} = await SQLClient.query('SELECT * FROM linkuserevent WHERE user_id = $1 AND event_id = $2', [user_id, event_id]);
@@ -48,3 +50,18 @@ export const updateLinkUserEvent = async(SQLClient, {user_id, event_id, isWaitin
         throw new Error('No field given');
     }
 };
+
+export const readAllLinkUserEvent = async (SQLClient, {page, perPage}) => {
+    const size = verifyValueOfPerPage(perPage);
+    const offset = calculOffset({size, page});
+    const {rows} = await SQLClient.query(
+        "SELECT * FROM linkuserevent LIMIT $1 OFFSET $2", [perPage, offset]
+    )
+    return rows
+}
+export const nbRows = async (SQLClient)=>{
+    const {rows} = await SQLClient.query(
+        "SELECT COUNT(*) as count_rows FROM linkuserevent"
+    )
+    return rows[0].count_rows;
+}

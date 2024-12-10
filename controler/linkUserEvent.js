@@ -1,5 +1,7 @@
 import {pool} from '../database/database.js';
 import * as linkUserEventModel from '../model/linkUserEvent.js';
+import {readAllLinkUserEvent} from "../model/linkUserEvent.js";
+import * as userModel from "../model/user.js";
 
 export const getLinkUserEvent = async (req, res) => {
     try {
@@ -40,3 +42,19 @@ export const updateLinkUserEvent = async (req, res) => {
         res.sendStatus(500);
     }
 };
+export const getAllLinkUserEvent = async (req, res) => {
+    try{
+        const response = await linkUserEventModel.readAllLinkUserEvent(pool, req.val);
+        res.json(response);
+    }catch(error){
+        res.sendStatus(500);
+    }
+}
+export const countRows = async (req, res) => {
+    try{
+        const response = await linkUserEventModel.nbRows(pool);
+        return res.json(response);
+    }catch(error){
+        res.sendStatus(500);
+    }
+}

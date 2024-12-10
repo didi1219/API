@@ -62,3 +62,17 @@ export const readMessagesInDiscussion = async (SQLClient,{discussion_event_id, o
     );
     return rows;
 };
+
+export const readAllDiscussion = async (SQLClient,{perPage, page}) => {
+    const offset = perPage * (page - 1);
+    const {rows} = await SQLClient.query(
+        "SELECT * FROM discussionevent ORDER BY id LIMIT $1 OFFSET $2",[perPage, offset]
+    )
+    return rows;
+}
+export const getNbRows = async (SQLClient) => {
+    const {rows} = await SQLClient.query(
+        "SELECT COUNT(*) as nb_columns FROM discussionevent"
+    )
+    return rows[0].nb_columns;
+}

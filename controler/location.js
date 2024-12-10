@@ -1,5 +1,6 @@
 import {pool} from '../database/database.js';
 import * as locationModel from '../model/location.js';
+import * as userModel from "../model/user.js";
 
 export const getLocation = async (req,res) =>{
     try {
@@ -40,3 +41,19 @@ export const updateLocation = async (req,res) => {
         res.sendStatus(500);
     }
 };
+export const getAllLocations = async(req, res) => {
+    try{
+        const response = await locationModel.readAllLocations(pool, req.val);
+        res.json(response);
+    }catch(error){
+        res.sendStatus(500);
+    }
+}
+export const countRows = async (req, res) => {
+    try{
+        const response = await locationModel.nbRows(pool);
+        return res.json(response);
+    }catch(error){
+        res.sendStatus(500);
+    }
+}

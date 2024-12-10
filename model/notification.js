@@ -1,3 +1,5 @@
+import {calculOffset, verifyValueOfPerPage} from "../util/paging.js";
+
 export const readNotification = async (SQLClient,{id}) => {
     const {rows} = await SQLClient.query(
         'SELECT * FROM notification WHERE id = $1',[id]
@@ -58,3 +60,17 @@ export const updateNotification = async (SQLClient, {id, title, content, event_i
         throw new Error("No field given");
     }
 };
+export const readAllNotifications = async (SQLClient,{page,perPage}) => {
+    const size = verifyValueOfPerPage(perPage);
+    const offset = calculOffset({size, page});
+    const {rows} = await SQLClient.query(
+        "SELECT * FROM notification LIMIT $1 OFFSET $2", [perPage, offset]
+    )
+    return rows
+}
+export const nbRows = async (SQLClient)=>{
+    const {rows} = await SQLClient.query(
+        "SELECT COUNT(*) as count_rows FROM notification"
+    )
+    return rows[0].count_rows;
+}

@@ -22,6 +22,6 @@ router.patch('/',checkJWT,admin,PVM.categoryToUpdate,updateCategory);
 router.get('/get/all',getAllCategories);
 
 router.get('/nbCategories/search?',checkJWT,PVM.searchedCategories,getCategories);
-router.get('/nbEvents/totalCount/',checkJWT,getTotalRowCategories);
+router.get('/nbCategories/totalCount/',checkJWT,getTotalRowCategories);
 
 export default router;

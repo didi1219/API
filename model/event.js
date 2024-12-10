@@ -1,3 +1,5 @@
+import {calculOffset, verifyValueOfPerPage} from "../util/paging.js";
+
 export const readEvent = async (SQLClient, {id}) =>{
     const {rows} = await SQLClient.query(
         'SELECT * FROM event WHERE id = $1',[id]
@@ -116,34 +118,38 @@ export const updateEvent = async (SQLClient, {id, title, description, event_date
     }
 };
 
-export const readAllEventsOfUserCreated = async (SQLClient, {user_id}) => {
-    try {
-        const {rows} = await SQLClient.query(
-            'SELECT * FROM event where user_id = $1 ORDER BY id', [user_id]
-        );
-        return rows;
-    } catch (error){
-        throw new Error();
-    }
-};
-
-export const listDiscussionEvent = async (SQLClient, {id}) => {
+export const readAllEventsOfUserCreated = async (SQLClient, {user_id, perPage, page}) => {
+    const size = verifyValueOfPerPage(perPage);
+    const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        'SELECT * FROM discussionEvent WHERE event_id = $1',[id]
+        'SELECT * FROM event where user_id = $1 ORDER BY id LIMIT $2 OFFSET $3', [user_id, size, offset]
     );
     return rows;
 };
 
-export const readAllEventsOfUserSubscribed = async (SQLClient, {user_id}) => {
+export const listDiscussionEvent = async (SQLClient, {id, perPage,page}) => {
+    const size = verifyValueOfPerPage(perPage);
+    const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        'select event.id, event.title, event.description, event.event_date, event.street_number, event.isprivate, event.picture_path, event.duration,event.location_id, event.category_id, l.isaccepted, l.iswaiting from event inner join linkuserevent l on event.id = l.event_id where l.user_id = $1 and l.isAccepted = true', [user_id]
+        'SELECT * FROM discussionEvent WHERE event_id = $1 LIMIT $2 OFFSET $3',[id, size, offset]
+    );
+    return rows;
+};
+
+export const readAllEventsOfUserSubscribed = async (SQLClient, {user_id, perPage, page}) => {
+    const size = verifyValueOfPerPage(perPage);
+    const offset = calculOffset({size, page});
+    const {rows} = await SQLClient.query(
+        'select event.id, event.title, event.description, event.event_date, event.street_number, event.isprivate, event.picture_path, event.duration,event.location_id, event.category_id, l.isaccepted, l.iswaiting from event inner join linkuserevent l on event.id = l.event_id where l.user_id = $1 and l.isAccepted = true LIMIT $2 OFFSET $3', [user_id, size, offset]
     );
     return rows;
 };
 
 export const readEvents = async (SQLClient, {page, perPage}) => {
+    const size = verifyValueOfPerPage(perPage);
+    const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        `SELECT * FROM event ORDER BY id LIMIT $1 OFFSET $2`,[perPage,(page - 1) * perPage]
+        `SELECT * FROM event ORDER BY id LIMIT $1 OFFSET $2`,[perPage,offset]
     );
     return rows;
 };
@@ -154,4 +160,10 @@ export const readTotalRowEvent = async (SQLClient) =>{
     const { rows } = await SQLClient.query(query);
     return rows[0].total_rows;
 };
+export const nbRows = async (SQLClient)=>{
+    const {rows} = await SQLClient.query(
+        "SELECT COUNT(*) as count_rows FROM event"
+    )
+    return rows[0].count_rows;
+}
 

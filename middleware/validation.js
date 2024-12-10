@@ -8,8 +8,10 @@ import * as locationValidator from './validator/location.js';
 import * as messageValidator from './validator/message.js';
 import * as notificationValidator from './validator/notification.js';
 import * as userValidator from './validator/user.js';
+import * as pagingValidator from './validator/paging.js'
 import {searchedEvents} from "./validator/eventManagement.js";
 import {searchedCategories} from "./validator/category.js";
+import {pagingSearchByCategories} from "./validator/paging.js";
 
 export const adminValidatorMiddleware = {
     searchedUser : async (req, res, next) => {
@@ -368,3 +370,62 @@ export const userValidatorMiddleware = {
         }
     }
 };
+
+export const pagingValidatorMiddleWare={
+    paging: async (req, res, next) => {
+        try{
+            req.val = await pagingValidator.paging.validate(req.query);
+            next();
+        }catch(error){
+            res.status(400).send(error.messages)
+        }
+    },
+    pagingSearchByName: async (req,res, next) => {
+        try{
+            req.val = await pagingValidator.pagingSearchByName.validate(req.query);
+            next();
+        }catch(error){
+            res.status(400).send(error.messages)
+        }
+    },
+    pagingSearchGeneral : async (req, res, next) =>{
+        try{
+            req.val = await pagingValidator.pagingSearchGeneral.validate(req.query);
+            next();
+        }catch(error){
+            res.status(400).send(error.messages)
+        }
+    },
+    pagingSearchByCategories : async (req,res, next) => {
+        try{
+            req.val = await pagingValidator.pagingSearchByCategories.validate(req.query);
+            next();
+        }catch(error){
+            res.status(400).send(error.messages);
+        }
+    },
+    pagingSearchByLoc : async (req,res, next) => {
+        try{
+            req.val = await pagingValidator.pagingSearchByLoc.validate(req.query);
+            next();
+        }catch(error){
+            res.status(400).send(error.messages);
+        }
+    },
+    pagingSearchEventByOwner : async (req,res, next) => {
+        try{
+            req.val = await pagingValidator.pagingSearchAllEventByOwner.validate(req.query);
+            next();
+        }catch(error){
+            res.status(400).send(error.messages);
+        }
+    },
+    pagingWithId : async (req,res,next) =>{
+        try{
+            req.val = await pagingValidator.pagingWithId.validate(req.query);
+            next()
+        }catch(error){
+            res.status(400).send(error.messages);
+        }
+    }
+}

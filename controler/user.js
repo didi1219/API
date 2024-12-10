@@ -83,3 +83,20 @@ export const getUserInfo = async (req, res) => {
         res.sendStatus(500);
     }
 };
+
+export const getAllUsers = async (req,res) => {
+    try{
+        const response = await userModel.readAllUser(pool, req.val);
+        res.json(response);
+    }catch{
+        res.sendStatus(500);
+    }
+}
+export const countRows = async (req, res) => {
+    try{
+        const response = await userModel.nbRows(pool);
+        return res.json(response);
+    }catch(error){
+        res.sendStatus(500);
+    }
+}

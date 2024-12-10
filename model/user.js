@@ -1,4 +1,5 @@
 import { hash } from '../util/index.js';
+import {calculOffset, verifyValueOfPerPage} from "../util/paging.js";
 
 export const userExists = async (SQLClient, {email}) => {
     const {rows} = await SQLClient.query(
@@ -104,3 +105,17 @@ export const updateUser = async(SQLClient,id, {email, password, last_name, first
     }
 };
 
+export const readAllUser = async (SQLClient,{page,perPage}) => {
+    const size = verifyValueOfPerPage(perPage);
+    const offset = calculOffset({size, page});
+    const {rows} = await SQLClient.query(
+        "SELECT * FROM users LIMIT $1 OFFSET $2",[perPage, offset]
+    )
+    return rows;
+}
+export const nbRows = async (SQLClient)=>{
+    const {rows} = await SQLClient.query(
+        "SELECT COUNT(*) as count_rows FROM users"
+    )
+    return rows[0].count_rows;
+}

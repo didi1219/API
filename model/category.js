@@ -1,3 +1,5 @@
+import {calculOffset, verifyValueOfPerPage} from "../util/paging.js";
+
 export const readCategory = async (SQLClient, {id}) => {
     const {rows} = await SQLClient.query(
         'SELECT * FROM category WHERE id = $1', [id]
@@ -45,8 +47,10 @@ export const readAllCategories = async (SQLClient) => {
 };
 
 export const readCategories = async (SQLClient, {page, perPage}) => {
+    const size = verifyValueOfPerPage(perPage);
+    const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        `SELECT * FROM category ORDER BY id LIMIT $1 OFFSET $2`,[perPage,(page - 1) * perPage]
+        `SELECT * FROM category ORDER BY id LIMIT $1 OFFSET $2`,[perPage, offset]
     );
     return rows;
 };

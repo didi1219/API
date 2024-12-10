@@ -3,7 +3,6 @@ import * as eventModel from '../model/event.js';
 
 export const getAllEventsOfUserCreated = async (req, res) => {
     try{
-        req.val = {};
         req.val.user_id = req.session.id;
         const event = await eventModel.readAllEventsOfUserCreated(pool,req.val);
         if(event){
@@ -18,7 +17,6 @@ export const getAllEventsOfUserCreated = async (req, res) => {
 
 export const getAllEventsOfUserSubscribed = async (req, res) => {
     try {
-        req.val = {};
         req.val.user_id = req.session.id;
         const event = await eventModel.readAllEventsOfUserSubscribed(pool,req.val);
         if(event) {
