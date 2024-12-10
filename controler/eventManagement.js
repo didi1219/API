@@ -49,3 +49,29 @@ export const getDiscussionEvents = async (req,res) => {
         res.sendStatus(500);
     }
 };
+
+export const getEvents = async (req, res) => {
+    try {
+        const events = await eventModel.readEvents(pool, req.val);
+        if(events){
+            res.json(events);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (error){
+        res.sendStatus(500);
+    }
+};
+
+export const getTotalRowEvent = async (req, res) => {
+    try {
+        const totalRow = await eventModel.readTotalRowEvent(pool);
+        if(totalRow){
+            res.json(totalRow);
+        } else {
+            res.sendStatus(204);
+        }
+    } catch (error) {
+        res.sendStatus(500);
+    }
+};

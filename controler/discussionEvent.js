@@ -48,7 +48,7 @@ export const getMessagesInDiscussion = async (req, res) => {
             discussion_event_id: req.params.id,
             offset: req.params.offset,
         }
-        const messages = await discussionEventModel.readMessagesInDiscussion(pool, params);;
+        const messages = await discussionEventModel.readMessagesInDiscussion(pool, params);
         if(messages) {
             res.json(messages);
         } else {

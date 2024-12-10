@@ -8,6 +8,8 @@ import * as locationValidator from './validator/location.js';
 import * as messageValidator from './validator/message.js';
 import * as notificationValidator from './validator/notification.js';
 import * as userValidator from './validator/user.js';
+import {searchedEvents} from "./validator/eventManagement.js";
+import {searchedCategories} from "./validator/category.js";
 
 export const adminValidatorMiddleware = {
     searchedUser : async (req, res, next) => {
@@ -76,6 +78,14 @@ export const categoryValidatorMiddleware = {
         } catch (error) {
             res.status(400).send(error.messages);
         }
+    },
+    searchedCategories : async (req, res, next) => {
+        try {
+            req.val = await categoryValidator.searchedCategories.validate(req.query);
+            next();
+        } catch (error) {
+            res.status(400).send(error.messages);
+        }
     }
 };
 
@@ -115,11 +125,27 @@ export const discussionEventValidatorMiddleware = {
 };
 
 export const eventValidatorMiddleware = {
+    searchedEvent : async (req, res, next) => {
+        try {
+            req.val = await eventValidator.searchedEvent.validate(req.params);
+            next();
+        }  catch(error) {
+            res.status(400).send(error.messages);
+        }
+    },
     eventToAdd : async (req, res, next) => {
         try {
             req.val = await eventValidator.eventToAdd.validate(req.body);
             next();
         } catch (error){
+            res.status(400).send(error.messages);
+        }
+    },
+    eventToDelete : async (req, res, next) => {
+        try {
+            req.val = await eventValidator.eventToDelete.validate(req.params);
+            next();
+        } catch (error) {
             res.status(400).send(error.messages);
         }
     },
@@ -163,6 +189,14 @@ export const eventManagementValidatorMiddleware = {
             req.val = await eventManagementValidator.eventToDelete.validate(req.params);
             next();
         } catch (error) {
+            res.status(400).send(error.messages);
+        }
+    },
+    searchedEvents : async (req, res, next) => {
+        try {
+            req.val = await eventManagementValidator.searchedEvents.validate(req.query);
+            next();
+        } catch (error){
             res.status(400).send(error.messages);
         }
     }

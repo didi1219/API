@@ -1,6 +1,13 @@
 import 'dotenv/config';
 import pg from 'pg';
 
+// Identifiant du type `DATE` dans PostgreSQL
+const DATE_OID = 1082;
+
+// Désactive le parsing automatique pour `DATE`
+// Cela retournera les dates directement sous forme brute, telles que PostgreSQL les fournit.
+pg.types.setTypeParser(DATE_OID, (value) => value);
+
 const pgPool = new pg.Pool({
     host: process.env.HOSTDB,
     user: process.env.USERDB,

@@ -26,5 +26,6 @@ router.get('/byOwner/:id',getAllEventOfOwner);
 router.get('/byOwner/nb/:id', getNbEventByOwner);
 router.get('/byUser/nb/:id',getNbEventByUser);
 
+
 export default router;
 

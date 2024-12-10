@@ -116,6 +116,17 @@ export const updateEvent = async (SQLClient, {id, title, description, event_date
     }
 };
 
+export const readAllEventsOfUserCreated = async (SQLClient, {user_id}) => {
+    try {
+        const {rows} = await SQLClient.query(
+            'SELECT * FROM event where user_id = $1 ORDER BY id', [user_id]
+        );
+        return rows;
+    } catch (error){
+        throw new Error();
+    }
+};
+
 export const listDiscussionEvent = async (SQLClient, {id}) => {
     const {rows} = await SQLClient.query(
         'SELECT * FROM discussionEvent WHERE event_id = $1',[id]
@@ -123,15 +134,24 @@ export const listDiscussionEvent = async (SQLClient, {id}) => {
     return rows;
 };
 
+export const readAllEventsOfUserSubscribed = async (SQLClient, {user_id}) => {
+    const {rows} = await SQLClient.query(
+        'select event.id, event.title, event.description, event.event_date, event.street_number, event.isprivate, event.picture_path, event.duration,event.location_id, event.category_id, l.isaccepted, l.iswaiting from event inner join linkuserevent l on event.id = l.event_id where l.user_id = $1 and l.isAccepted = true', [user_id]
+    );
+    return rows;
+};
 
-/*
-export const searchEvent = async (SQLClient, {user_id}) => {
-    try {
-       const {rows} = await SQLClient.query(
-            'SELECT * FROM event where user_id = $1', [user_id]
-       );
-       return rows;
-    } catch (error){
-        throw new Error();
-    }
-};*/
+export const readEvents = async (SQLClient, {page, perPage}) => {
+    const {rows} = await SQLClient.query(
+        `SELECT * FROM event ORDER BY id LIMIT $1 OFFSET $2`,[perPage,(page - 1) * perPage]
+    );
+    return rows;
+};
+
+
+export const readTotalRowEvent = async (SQLClient) =>{
+    const query = `SELECT COUNT(*) AS total_rows FROM event`;
+    const { rows } = await SQLClient.query(query);
+    return rows[0].total_rows;
+};
+
