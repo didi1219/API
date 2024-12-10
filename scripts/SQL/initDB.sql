@@ -87,7 +87,17 @@ CREATE TABLE linkUserEvent (
 INSERT INTO category (title) VALUES
                                  ('Musique'),
                                  ('Conférence'),
-                                 ('Sport');
+                                 ('Sport'),
+                                 ('Art'),
+                                 ('Cinéma'),
+                                 ('Littérature'),
+                                 ('Technologie'),
+                                 ('Jeux Vidéo'),
+                                 ('Gastronomie'),
+                                 ('Voyages'),
+                                 ('Mode'),
+                                 ('Éducation'),
+                                 ('Environnement');
 
 -- Fill `location` table
 INSERT INTO location (label, postalCode) VALUES
@@ -98,7 +108,31 @@ INSERT INTO location (label, postalCode) VALUES
 -- Fill `users` table
 INSERT INTO users (email, password, last_name, first_name, user_name, bio, isAdmin) VALUES
                                                                                         ('johndoe@example.com', '$argon2id$v=19$m=65536,t=3,p=4$oeWGTzbMpqd3J7IT1CHv1w$eOBf53KoHNm4V6OOH+uFtc+0HuBNlDqGdmGj1FuXtVs', 'Doe', 'John', 'johndoe', 'Passionné d événements culturels', true),
-                                                                                        ('janedoe@example.com', 'password456', 'Doe', 'Jane', 'janedoe', 'Amatrice de sport et de plein air', false);
+                                                                                        ('janedoe@example.com', 'password456', 'Doe', 'Jane', 'janedoe', 'Amatrice de sport et de plein air', false),
+                                                                                        ('user1@example.com', 'password1', 'Smith', 'John', 'johnsmith', 'Loves coding and coffee.', FALSE),
+                                                                                        ('user3@example.com', 'password3', 'Brown', 'Charlie', 'charlieb', 'Avid reader and traveler.', FALSE),
+                                                                                        ('user4@example.com', 'password4', 'Wilson', 'Emily', 'emilyw', 'Fitness enthusiast.', FALSE),
+                                                                                        ('user5@example.com', 'password5', 'Taylor', 'Michael', 'miketaylor', 'Tech geek.', FALSE),
+                                                                                        ('user6@example.com', 'password6', 'Johnson', 'Sarah', 'sarahj', 'Musician and foodie.', FALSE),
+                                                                                        ('user7@example.com', 'password7', 'Lee', 'David', 'davidlee', 'History buff.', FALSE),
+                                                                                        ('user8@example.com', 'password8', 'Martinez', 'Laura', 'lauram', 'Nature lover.', FALSE),
+                                                                                        ('user9@example.com', 'password9', 'Garcia', 'Sophia', 'sophiag', 'Fashion designer.', FALSE),
+                                                                                        ('user10@example.com', 'password10', 'Anderson', 'James', 'jamesa', 'Film fanatic.', FALSE),
+                                                                                        ('user11@example.com', 'password11', 'Thomas', 'Olivia', 'oliviat', 'Yoga practitioner.', FALSE),
+                                                                                        ('user12@example.com', 'password12', 'Jackson', 'Ethan', 'ethanj', 'Cycling adventurer.', FALSE),
+                                                                                        ('user13@example.com', 'password13', 'White', 'Ava', 'avawhite', 'Gamer and streamer.', FALSE),
+                                                                                        ('user14@example.com', 'password14', 'Harris', 'Mia', 'miah', 'Writer and poet.', FALSE),
+                                                                                        ('user15@example.com', 'password15', 'Clark', 'Lucas', 'lucasc', 'Photographer.', FALSE),
+                                                                                        ('user16@example.com', 'password16', 'Rodriguez', 'Ella', 'ellar', 'Social media manager.', FALSE),
+                                                                                        ('user17@example.com', 'password17', 'Lewis', 'Mason', 'masonl', 'Football player.', FALSE),
+                                                                                        ('user18@example.com', 'password18', 'Walker', 'Isabella', 'isabellaw', 'Chef.', FALSE),
+                                                                                        ('user19@example.com', 'password19', 'Hall', 'Alexander', 'alexhall', 'Entrepreneur.', FALSE),
+                                                                                        ('user20@example.com', 'password20', 'Allen', 'Chloe', 'chloeallen', 'Animal rights activist.', FALSE),
+                                                                                        ('user21@example.com', 'password21', 'Young', 'Liam', 'liamyoung', 'Art curator.', FALSE),
+                                                                                        ('user22@example.com', 'password22', 'King', 'Emma', 'emmaking', 'Aspiring astronaut.', FALSE),
+                                                                                        ('user23@example.com', 'password23', 'Wright', 'Benjamin', 'benwright', 'Stock market analyst.', FALSE),
+                                                                                        ('user24@example.com', 'password24', 'Lopez', 'Emily', 'emilylopez', 'Biologist.', FALSE),
+                                                                                        ('user25@example.com', 'password25', 'Hill', 'Noah', 'noahhill', 'Guitarist.', FALSE);
 
 -- Fill `event` table
 INSERT INTO event (title, description, event_date, street_number, isPrivate, picture_path, duration, user_id, location_id, category_id) VALUES
@@ -127,3 +161,5 @@ INSERT INTO linkUserEvent (user_id, event_id, isWaiting, isAccepted) VALUES
                                                                          (1, 1, false, true),
                                                                          (2, 2, false, true),
                                                                          (1, 3, true, false);
+
+

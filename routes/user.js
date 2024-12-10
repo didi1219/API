@@ -6,7 +6,7 @@ import {
     deleteUser,
     registration,
     login,
-    getUserInfo
+    getUserInfo,
 } from "../controler/user.js";
 
 import {checkJWT} from "../middleware/identification/JWT.js";

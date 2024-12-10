@@ -103,3 +103,4 @@ export const updateUser = async(SQLClient,id, {email, password, last_name, first
         throw new Error('No field given');
     }
 };
+
