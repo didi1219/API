@@ -1,0 +1,24 @@
+select
+    e.id,
+    e.title as "event_title",
+    e.description,
+    e.event_date,
+    e.street_number,
+    e.isprivate,
+    e.duration,
+    e.user_id,
+    e.picture_path,
+    u.user_name as "user_name",
+    l.label as "locality",
+    l.id as "locality_id",
+    c.title as "category",
+    c.id as "category_id"
+FROM event e
+    inner join location l on e.location_id = l.id
+    inner join category c on e.category_id = c.id
+    inner join users u on u.id = e.user_id
+ORDER BY id LIMIT 10 OFFSET 0;
+
+select e.id, e.title as "event_title", e.description, e.event_date, e.street_number, e.isprivate, e.duration, e.user_id, u.user_name as "user_name", l.label as "locality", l.id as "location_id", c.title as "category", c.id as "category_id" FROM event e inner join location l on e.location_id = l.id inner join category c on e.category_id = c.id inner join users u on u.id = e.user_id ORDER BY id LIMIT 10 OFFSET 0;
+
+select * from event
