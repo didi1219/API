@@ -5,12 +5,15 @@ import {
     getLinkUserEvent,
     deleteLinkUserEvent,
     getAllLinkUserEvent,
-    countRows
+    countRows,
+    deleteLinkUserEvents
 } from "../controler/linkUserEvent.js";
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {admin} from "../middleware/authorization/mustBeAdmin.js";
 import {linkUserEventValidatorMiddleware as LUEVM} from "../middleware/validation.js";
 import {pagingValidatorMiddleWare as PagingVM} from "../middleware/validation.js";
+
+
 
 
 const router = Router();
@@ -22,6 +25,8 @@ router.delete('/',checkJWT,admin,LUEVM.linkUserEventToDelete, deleteLinkUserEven
 
 router.get('/getAll/linkUserEvent',checkJWT,PagingVM.paging,getAllLinkUserEvent);
 router.get('/nbLinkUserEvent/count/',checkJWT,countRows);
+
+router.delete('/many/deleteLinkUserEvent',checkJWT,LUEVM.linkUserEventToDeleteMany,deleteLinkUserEvents);
 
 
 export default router;

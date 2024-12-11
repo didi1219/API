@@ -58,3 +58,13 @@ export const countRows = async (req, res) => {
         res.sendStatus(500);
     }
 }
+export const deleteLinkUserEvents = async (req,res) => {
+    try{
+        for (const ids of req.val.ids) {
+            await linkUserEventModel.deleteLinkUserEvent(pool, ids);
+        }
+        res.sendStatus(200);
+    }catch(error){
+        res.sendStatus(500);
+    }
+}

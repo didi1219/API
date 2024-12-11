@@ -5,12 +5,15 @@ import{
     updateNotification,
     deleteNotification,
     getAllNotifications,
-    countRows
+    countRows,
+    deleteNotifications
 } from "../controler/notification.js";
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {admin} from "../middleware/authorization/mustBeAdmin.js";
 import {notificationValidatorMiddleware as NVM} from "../middleware/validation.js";
 import {pagingValidatorMiddleWare as PagingVM} from "../middleware/validation.js";
+import {tabValidatorMiddleware as TabVM} from "../middleware/validation.js";
+import {tabIds} from "../middleware/validator/tabValidator.js";
 
 
 const router = Router();
@@ -22,5 +25,7 @@ router.delete('/:id',checkJWT,admin,NVM.notificationToDelete, deleteNotification
 
 router.get('/getAll/notification',checkJWT,PagingVM.paging,getAllNotifications);
 router.get('/nbNotification/count/',checkJWT,countRows)
+
+router.delete('/many/deleteNotification',checkJWT,tabIds,TabVM.ids ,deleteNotifications);
 
 export default router;

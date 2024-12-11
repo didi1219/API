@@ -9,6 +9,7 @@ import * as messageValidator from './validator/message.js';
 import * as notificationValidator from './validator/notification.js';
 import * as userValidator from './validator/user.js';
 import * as pagingValidator from './validator/paging.js'
+import * as tabValidator from './validator/tabValidator.js'
 import {searchedEvents} from "./validator/eventManagement.js";
 import {searchedCategories} from "./validator/category.js";
 import {pagingSearchByCategories} from "./validator/paging.js";
@@ -236,6 +237,24 @@ export const linkUserEventValidatorMiddleware = {
         } catch (error) {
             res.status(400).send(error.messages);
         }
+    },
+    linkUserEventToDeleteMany : async (req,res,next) => {
+        try{
+            const items = req.body;
+            if(!Array.isArray(items)){
+                res.status(400).send("Need an array");
+            }else{
+                req.val={};
+                req.val.ids = [];
+                for (const item of items){
+                    req.val.ids.push(await linkUserEventValidator.linkUserEventToDelete.validate(item));
+                }
+                next();
+            }
+        }catch(error){
+            console.log(error);
+            res.status(400).send(error.message);
+        }
     }
 };
 
@@ -412,20 +431,22 @@ export const pagingValidatorMiddleWare={
             res.status(400).send(error.messages);
         }
     },
-    pagingSearchEventByOwner : async (req,res, next) => {
+    pagingWithId : async (req,res,next) =>{
         try{
-            req.val = await pagingValidator.pagingSearchAllEventByOwner.validate(req.query);
+            req.val = await pagingValidator.pagingWithId.validate(req.query);
             next();
         }catch(error){
             res.status(400).send(error.messages);
         }
-    },
-    pagingWithId : async (req,res,next) =>{
+    }
+}
+export const tabValidatorMiddleware = {
+    ids : async (req, res, next) => {
         try{
-            req.val = await pagingValidator.pagingWithId.validate(req.query);
-            next()
+            req.val = await tabValidator.ids.validate(req.query);
+            next();
         }catch(error){
-            res.status(400).send(error.messages);
+            res.status(400).send(error.message);
         }
     }
 }

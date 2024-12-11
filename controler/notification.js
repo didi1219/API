@@ -53,7 +53,17 @@ export const getAllNotifications = async (req, res) => {
 export const countRows = async (req, res) => {
     try{
         const response = await notificationModel.nbRows(pool);
-        return res.json(response);
+        res.json(response);
+    }catch(error){
+        res.sendStatus(500);
+    }
+}
+export const deleteNotifications = async (req,res) => {
+    try{
+        for (const id of req.val.ids) {
+            await notificationModel.deleteNotification(pool, {id});
+        }
+        res.sendStatus(204);
     }catch(error){
         res.sendStatus(500);
     }
