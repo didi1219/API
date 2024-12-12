@@ -1,11 +1,11 @@
-import {isUserInEvent} from "../../util/accessChecks.js";
+import {isUserInEvent} from "../../model/accessChecks.js";
 
 export const inEvent = (req, res, next) => {
     if(req.session.status === 'admin'){
         next();
     } else {
         const userID = req.session.id;
-        const eventID = req.params.id;
+        const eventID = req.val.id;
         isUserInEvent(userID, eventID)
             .then((hasAccess) => {
                 if(hasAccess){

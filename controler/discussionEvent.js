@@ -52,11 +52,7 @@ export const listDiscussionEvents = async (req, res) => {
 
 export const getMessagesInDiscussion = async (req, res) => {
     try{
-        const params = {
-            discussion_event_id: req.params.id,
-            offset: req.params.offset,
-        }
-        const messages = await discussionEventModel.readMessagesInDiscussion(pool, params);
+        const messages = await discussionEventModel.readMessagesInDiscussion(pool, req.val);
         if(messages) {
             res.json(messages);
         } else {
@@ -69,12 +65,12 @@ export const getMessagesInDiscussion = async (req, res) => {
 
 export const getNewerMessagesInDiscussion = async (req, res) => {
     try{
-        const params = {
-            discussion_event_id: req.params.id,
-            nextMessageID: req.params.nextMessageID,
+        const messages = await discussionEventModel.readNewerMessagesInDiscussion(pool, req.val);
+        if(messages) {
+            res.json(messages);
+        } else {
+            res.sendStatus(404);
         }
-        const messages = await discussionEventModel.readNewerMessagesInDiscussion(pool, params);
-        res.status(200).send(messages);
     }catch(err){
         res.sendStatus(500);
     }
@@ -82,12 +78,12 @@ export const getNewerMessagesInDiscussion = async (req, res) => {
 
 export const getOlderMessagesInDiscussion = async (req, res) => {
     try{
-        const params = {
-            discussion_event_id: req.params.id,
-            previousMessageID: req.params.previousMessageID,
+        const messages = await discussionEventModel.readOlderMessagesInDiscussion(pool, req.val);
+        if(messages) {
+            res.json(messages);
+        } else {
+            res.sendStatus(404);
         }
-        const messages = await discussionEventModel.readOlderMessagesInDiscussion(pool, params);
-        res.status(200).send(messages);
     }catch(err){
         res.sendStatus(500);
     }

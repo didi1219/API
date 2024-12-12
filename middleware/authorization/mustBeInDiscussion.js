@@ -1,11 +1,11 @@
-import {isUserInDiscussion} from "../../util/accessChecks.js";
+import {isUserInDiscussion} from "../../model/accessChecks.js";
 
 export const inDiscussion = (req, res, next) => {
     if(req.session.status === 'admin'){
         next();
     } else {
         const userID = req.session.id;
-        const discussionID = req.params.id;
+        const discussionID = req.val.discussion_event_id;
         isUserInDiscussion(userID, discussionID)
             .then((hasAccess) => {
                 if(hasAccess){

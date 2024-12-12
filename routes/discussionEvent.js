@@ -24,7 +24,7 @@ router.delete('/:id',checkJWT,admin,DVM.discussionEventToDelete, deleteDiscussio
 
 router.get('/all/:offset', checkJWT, admin, DVM.listDiscussions, listDiscussionEvents);
 
-router.get('/:id/messages/:offset', checkJWT, inDiscussion, DVM.discussionEventToListMessages, getMessagesInDiscussion);
+router.get('/:id/messages/:offset', checkJWT, DVM.discussionEventToListMessages, inDiscussion, getMessagesInDiscussion);
 router.get('/:id/newerMessages/:nextMessageID', checkJWT, DVM.discussionEventToListNewerMessages, inDiscussion, getNewerMessagesInDiscussion);
 router.get('/:id/olderMessages/:previousMessageID', checkJWT, DVM.discussionEventToListOlderMessages, inDiscussion, getOlderMessagesInDiscussion);
 

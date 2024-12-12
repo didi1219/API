@@ -1,4 +1,4 @@
-import {hasUserWriteRights} from "../../util/accessChecks.js";
+import {hasUserWriteRights} from "../../model/accessChecks.js";
 
 export const hasWriteRights = (req, res, next) => {
     if(req.session.status === 'admin'){

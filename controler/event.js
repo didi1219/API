@@ -25,7 +25,7 @@ export const addEvent = async (req, res) => {
 
 export const getDiscussionEvents = async (req,res) => {
     try {
-        const discussionEvents = await eventModel.listDiscussionEvent(pool, req.params);
+        const discussionEvents = await eventModel.listDiscussionEvent(pool, req.val);
         res.status(200).send(discussionEvents);
     } catch (error) {
         res.sendStatus(500);

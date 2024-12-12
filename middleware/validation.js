@@ -41,6 +41,14 @@ export const adminValidatorMiddleware = {
         } catch (error) {
             res.status(400).send(error.messages);
         }
+    },
+    adminToLogin: async (req, res, next) => {
+        try {
+            req.val = await adminValidator.adminToLogin.validate(req.body);
+            next();
+        } catch (error) {
+            res.status(400).send(error.messages);
+        }
     }
 };
 
