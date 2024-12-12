@@ -23,17 +23,17 @@ const listDiscussionEventsSchema = vine.object({
 });
 
 const discussionEventToListMessagesSchema = vine.object({
-    discussion_event_id: vine.number(),
+    id: vine.number(),
     offset: vine.number()
 });
 
 const discussionEventToListNewerMessagesSchema = vine.object({
-    discussion_event_id: vine.number(),
+    id: vine.number(),
     nextMessageID: vine.number()
 });
 
 const discussionEventToListOlderMessagesSchema = vine.object({
-    discussion_event_id: vine.number(),
+    id: vine.number(),
     previousMessageID: vine.number()
 });
 
