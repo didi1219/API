@@ -145,11 +145,18 @@ export const readAllEventsOfUserSubscribed = async (SQLClient, {user_id, perPage
     return rows;
 };
 
+export const readAllEventTitle = async (SQLClient) => {
+    const {rows} = await SQLClient.query(
+        'SELECT title, id FROM event'
+    );
+    return rows;
+};
+
 export const readEvents = async (SQLClient, {page, perPage}) => {
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        `SELECT * FROM event ORDER BY id LIMIT $1 OFFSET $2`,[perPage,offset]
+        `select e.id, e.title, e.description, e.event_date, e.street_number,e.picture_path, e.isprivate as "isPrivate", e.duration, e.user_id, u.user_name as "user_name", l.label as "locality", l.id as "location_id", c.title as "category", c.id as "category_id" FROM event e inner join location l on e.location_id = l.id inner join category c on e.category_id = c.id inner join users u on u.id = e.user_id ORDER BY id LIMIT $1 OFFSET $2`,[perPage,offset]
     );
     return rows;
 };

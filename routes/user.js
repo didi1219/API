@@ -23,6 +23,6 @@ router.get('/me',checkJWT,getUserInfo);
 router.patch('/me',checkJWT,UVM.update,updateUser);
 
 router.get('/getAll/users',checkJWT,PagingVM.paging,getAllUsers);
-router.get('/nbUser/count/', checkJWT,countRows);
+router.get('/nbUser/totalCount/', checkJWT,countRows);
 
 export default router;

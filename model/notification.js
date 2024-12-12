@@ -64,7 +64,7 @@ export const readAllNotifications = async (SQLClient,{page,perPage}) => {
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        "SELECT * FROM notification LIMIT $1 OFFSET $2", [perPage, offset]
+        `select n.id, n.title, n.content, n.event_id,  n.creation_date, n.type, n.creation_date, e.title as "event" from notification n inner join event e on e.id = n.event_id ORDER BY id LIMIT $1 OFFSET $2;`, [perPage, offset]
     )
     return rows
 }

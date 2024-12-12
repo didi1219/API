@@ -43,6 +43,13 @@ export const updateLocation = async (SQLClient, {id,label,postalCode}) =>{
     }
 };
 
+export const readAllLocation = async (SQLClient) => {
+    const {rows} = await SQLClient.query(
+        'SELECT * FROM location'
+    );
+    return rows;
+};
+
 export const readAllLocations = async (SQLClient, {page,perPage}) => {
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});

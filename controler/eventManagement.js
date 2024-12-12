@@ -50,6 +50,19 @@ export const getDiscussionEvents = async (req,res) => {
     }
 };
 
+export const getAllEventTitle = async(req, res) => {
+    try {
+        const categories = await eventModel.readAllEventTitle(pool);
+        if(categories){
+            res.json(categories);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (error) {
+        res.sendStatus(500);
+    }
+};
+
 export const getEvents = async (req, res) => {
     try {
         const events = await eventModel.readEvents(pool, req.val);

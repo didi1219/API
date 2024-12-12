@@ -6,7 +6,8 @@ import {
     updateEvent,
     getDiscussionEvents,
     getEvents,
-    getTotalRowEvent
+    getTotalRowEvent,
+    getAllEventTitle
 } from '../controler/eventManagement.js'
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {admin} from "../middleware/authorization/mustBeAdmin.js";
@@ -20,6 +21,7 @@ router.post('/',checkJWT,admin,EVM.eventToAdd, addEvent);
 router.delete('/:id',checkJWT, admin, EVM.eventToDelete, deleteEvent);
 router.patch('/',checkJWT,admin,EVM.eventToUpdate,updateEvent);
 
+router.get('/get/all',getAllEventTitle);
 
 router.get('/nbEvents/search?',checkJWT,PagingVM.paging,getEvents);
 router.get('/nbEvents/totalCount/',checkJWT,getTotalRowEvent);

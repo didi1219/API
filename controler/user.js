@@ -85,10 +85,14 @@ export const getUserInfo = async (req, res) => {
 };
 
 export const getAllUsers = async (req,res) => {
-    try{
+    try {
         const response = await userModel.readAllUser(pool, req.val);
-        res.json(response);
-    }catch{
+        if(response) {
+            res.json(response);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch {
         res.sendStatus(500);
     }
 }
