@@ -5,7 +5,7 @@ export const inDiscussion = (req, res, next) => {
         next();
     } else {
         const userID = req.session.id;
-        const discussionID = req.val.discussion_event_id;
+        const discussionID = req.val.id;
         isUserInDiscussion(userID, discussionID)
             .then((hasAccess) => {
                 if(hasAccess){
