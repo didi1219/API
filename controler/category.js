@@ -1,6 +1,5 @@
 import {pool} from '../database/database.js';
 import * as categoryModel from '../model/category.js';
-import * as eventModel from "../model/event.js";
 
 export const getCategory = async (req,res) => {
     try {
@@ -83,3 +82,13 @@ export const getTotalRowCategories = async (req, res) => {
         res.sendStatus(500);
     }
 };
+export const deleteCategories = async (req,res) => {
+    try{
+        for (const id of req.val.ids) {
+            await categoryModel.deleteCategory(pool,{id});
+        }
+        res.sendStatus(204);
+    }catch(error){
+        res.sendStatus(500);
+    }
+}

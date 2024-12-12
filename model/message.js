@@ -5,11 +5,13 @@ export const readMessage = async (SQLClient, {id}) => {
     return rows[0];
 };
 
-export const createMessage = async (SQLClient, {content,sending_date, user_id, discussion_event_id}) => {
+export const createMessage = async (SQLClient, {content, type, user_id, discussion_event_id}) => {
+    const sending_date = new Date();
     const {rows} = await SQLClient.query(
-        'INSERT INTO message(content,sending_date, user_id,discussion_event_id) VALUES ($1,$2,$3,$4) RETURNING id',
+        "INSERT INTO message(content, type, sending_date, user_id, discussion_event_id) VALUES ($1,$2,$3,$4,$5) RETURNING id",
         [
             content,
+            type,
             sending_date,
             user_id,
             discussion_event_id,
@@ -24,13 +26,17 @@ export const deleteMessage = async (SQLClient, {id}) => {
     );
 };
 
-export const updateMessage = async (SQLClient, {id, content,sending_date, user_id, discussion_event_id}) => {
-    let query = 'UPDATE message SET ';
+export const updateMessage = async (SQLClient, {id,content, type, user_id, sending_date, discussion_event_id}) => {
+    let query = "UPDATE message SET ";
     const querySet = [];
     const queryValues = [];
     if(content){
         queryValues.push(content);
         querySet.push(`content = $${queryValues.length}`);
+    }
+    if(type){
+        queryValues.push(type);
+        querySet.push(`type = $${queryValues.length}`);
     }
     if(user_id){
         queryValues.push(user_id);
@@ -51,4 +57,11 @@ export const updateMessage = async (SQLClient, {id, content,sending_date, user_i
     }else{
         throw new Error ("No field Given");
     }
+};
+
+export const readMessages = async (SQLClient, {offset}) => {
+    const {rows} = await SQLClient.query(
+        "SELECT * FROM message OFFSET $1 LIMIT 10", [offset]
+    );
+    return rows;
 };

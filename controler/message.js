@@ -40,3 +40,12 @@ export const updateMessage = async (req, res) => {
         res.sendStatus(500);
     }
 };
+
+export const listMessages = async (req, res) => {
+    try{
+        const messages = await messageModel.readMessages(pool, req.val);
+        res.json(messages);
+    }catch(err){
+        res.sendStatus(500);
+    }
+};

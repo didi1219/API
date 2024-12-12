@@ -1,6 +1,7 @@
 import {pool} from '../database/database.js';
 import * as eventModel from '../model/event.js';
 
+
 export const getEvent = async(req,res) => {
     try {
         const event = await eventModel.readEvent(pool,req.val);
@@ -88,3 +89,13 @@ export const getTotalRowEvent = async (req, res) => {
         res.sendStatus(500);
     }
 };
+export const deleteEvents = async (req,res) => {
+    try{
+        for (const id of req.val.ids) {
+            await eventModel.deleteEvent(pool,{id});
+        }
+        res.sendStatus(204);
+    }catch(error){
+        res.sendStatus(500);
+    }
+}

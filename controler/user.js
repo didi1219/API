@@ -104,3 +104,14 @@ export const countRows = async (req, res) => {
         res.sendStatus(500);
     }
 }
+export const deleteUsers = async (req,res) => {
+    try{
+        for (const id of req.val.ids) {
+            console.log(id)
+            await userModel.deleteUser(pool,{id});
+        }
+        res.sendStatus(204);
+    }catch(error){
+        res.sendStatus(500);
+    }
+}

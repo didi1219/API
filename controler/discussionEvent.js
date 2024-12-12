@@ -3,6 +3,7 @@ import {pool} from "../database/database.js";
 import * as userModel from "../model/user.js";
 import {getNbRows} from "../model/discussionEvent.js";
 
+
 export const getDiscussionEvent = async (req, res) => {
     try{
         const discussionEvent = await discussionEventModel.readDiscussionEvent(pool, req.val);
@@ -43,14 +44,9 @@ export const updateDiscussionEvent = async (req, res) => {
     }
 };
 
-
 export const getMessagesInDiscussion = async (req, res) => {
     try{
-        const params = {
-            discussion_event_id: req.params.id,
-            offset: req.params.offset,
-        }
-        const messages = await discussionEventModel.readMessagesInDiscussion(pool, params);
+        const messages = await discussionEventModel.readMessagesInDiscussion(pool, req.val);
         if(messages) {
             res.json(messages);
         } else {
@@ -60,6 +56,33 @@ export const getMessagesInDiscussion = async (req, res) => {
         res.sendStatus(500);
     }
 };
+
+export const getNewerMessagesInDiscussion = async (req, res) => {
+    try{
+        const messages = await discussionEventModel.readNewerMessagesInDiscussion(pool, req.val);
+        if(messages) {
+            res.json(messages);
+        } else {
+            res.sendStatus(404);
+        }
+    }catch(err){
+        res.sendStatus(500);
+    }
+};
+
+export const getOlderMessagesInDiscussion = async (req, res) => {
+    try{
+        const messages = await discussionEventModel.readOlderMessagesInDiscussion(pool, req.val);
+        if(messages) {
+            res.json(messages);
+        } else {
+            res.sendStatus(404);
+        }
+    }catch(err){
+        res.sendStatus(500);
+    }
+};
+
 export const getAllDiscussionPaging = async (req, res) => {
     try{
         const page = req.val.page;
@@ -69,7 +92,8 @@ export const getAllDiscussionPaging = async (req, res) => {
     }catch(error){
         res.sendStatus(500);
     }
-}
+};
+
 export const countNbRows = async (req, res) => {
     try{
         const response = await discussionEventModel.getNbRows((pool))
@@ -77,7 +101,8 @@ export const countNbRows = async (req, res) => {
     }catch(error){
         res.sendStatus(500);
     }
-}
+};
+
 export const countRows = async (req, res) => {
     try{
         const response = await discussionEventModel.getNbRows(pool);
@@ -85,4 +110,15 @@ export const countRows = async (req, res) => {
     }catch(error){
         res.sendStatus(500);
     }
-}
+};
+
+export const deleteDiscussionEvents = async (req,res) => {
+    try{
+        for (const id of req.val.ids) {
+            await discussionEventModel.deleteDiscussionEvent(pool,{id});
+        }
+        res.sendStatus(204);
+    }catch(error){
+        res.sendStatus(500);
+    }
+};

@@ -22,8 +22,14 @@ const userToUpdateSchema = vine.object({
     bio: vine.string()
 });
 
+const adminToLoginSchema = vine.object({
+    email: vine.string().email(),
+    password: vine.string()
+});
+
 export const
     searchedUser = vine.compile(userIdSchema),
     userToAdd = vine.compile(userToAddSchema),
     userToUpdate = vine.compile(userToUpdateSchema),
-    userToDelete = vine.compile(userIdSchema);
+    userToDelete = vine.compile(userIdSchema),
+    adminToLogin = vine.compile(adminToLoginSchema);

@@ -65,3 +65,13 @@ export const updateEvent = async (req, res) => {
         res.sendStatus(500);
     }
 };
+
+
+export const getDiscussionEvents = async (req,res) => {
+    try {
+        const discussionEvents = await eventModel.listDiscussionEvent(pool, req.val);
+        res.status(200).send(discussionEvents);
+    } catch (error) {
+        res.sendStatus(500);
+    }
+}

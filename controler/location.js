@@ -1,5 +1,7 @@
 import {pool} from '../database/database.js';
 import * as locationModel from '../model/location.js';
+import * as userModel from "../model/user.js";
+import notification from "../routes/notification.js";
 
 export const getLocation = async (req,res) =>{
     try {
@@ -66,6 +68,16 @@ export const countRows = async (req, res) => {
     try{
         const response = await locationModel.nbRows(pool);
         return res.json(response);
+    }catch(error){
+        res.sendStatus(500);
+    }
+}
+export const deleteLocations = async (req,res) => {
+    try{
+        for (const id of req.val.ids) {
+            await locationModel.deleteLocation(pool,{id});
+        }
+        res.sendStatus(204);
     }catch(error){
         res.sendStatus(500);
     }
