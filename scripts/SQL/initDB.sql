@@ -67,8 +67,8 @@ DROP TABLE IF EXISTS message CASCADE;
 CREATE TABLE message(
                         id integer primary key GENERATED ALWAYS AS IDENTITY,
                         content varchar(250) NOT NULL,
-                        gps integer,
-                        sending_date DATE NOT NULL,
+                        type integer,
+                        sending_date TIMESTAMP NOT NULL,
                         user_id integer REFERENCES users(id) DEFERRABLE INITIALLY IMMEDIATE,
                         discussion_event_id INTEGER REFERENCES discussionEvent(id) DEFERRABLE INITIALLY IMMEDIATE
 );
@@ -100,6 +100,11 @@ INSERT INTO category (title) VALUES
                                  ('Environnement');
 
 -- Fill `location` table
+INSERT INTO users (email, password, last_name, first_name, user_name, bio, isAdmin) VALUES
+                                                                                        ('johndoe@example.com', '$argon2id$v=19$m=65536,t=3,p=4$oeWGTzbMpqd3J7IT1CHv1w$eOBf53KoHNm4V6OOH+uFtc+0HuBNlDqGdmGj1FuXtVs', 'Doe', 'John', 'johndoe', 'Passionné d événements culturels', true),
+                                                                                        ('janedoe@example.com', '$argon2id$v=19$m=65536,t=3,p=4$oeWGTzbMpqd3J7IT1CHv1w$eOBf53KoHNm4V6OOH+uFtc+0HuBNlDqGdmGj1FuXtVs', 'Doe', 'Jane', 'janedoe', 'Amatrice de sport et de plein air', false);
+
+-- Fill `users` table
 INSERT INTO location (label, postalCode) VALUES
                                              ('Namur', 5000),
                                              ('Lyon', 4030),
@@ -152,14 +157,11 @@ INSERT INTO discussionEvent (title, isWritable, event_id) VALUES
                                                               ('Discussion Conférence Tech', true, 2);
 
 -- Fill `message` table
-INSERT INTO message (content, gps, sending_date, user_id, discussion_event_id) VALUES
-                                                                                   ('Vivement le concert !', 123456, '2024-11-30', 1, 1),
-                                                                                   ('Hâte d en apprendre plus sur les nouvelles technologies.', 654321, '2024-11-30', 2, 2);
-
+INSERT INTO message (content, type, sending_date, user_id, discussion_event_id) VALUES
+                                                                                    ('Vivement le concert !', 0, '2024-11-30', 1, 1),
+                                                                                    ('Hâte d en apprendre plus sur les nouvelles technologies.', 0, '2024-11-30', 2, 2);
 -- Fill `linkUserEvent` table
 INSERT INTO linkUserEvent (user_id, event_id, isWaiting, isAccepted) VALUES
                                                                          (1, 1, false, true),
                                                                          (2, 2, false, true),
                                                                          (1, 3, true, false);
-
-
