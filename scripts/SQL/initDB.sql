@@ -99,11 +99,6 @@ INSERT INTO category (title) VALUES
                                  ('Éducation'),
                                  ('Environnement');
 
--- Fill `location` table
-INSERT INTO users (email, password, last_name, first_name, user_name, bio, isAdmin) VALUES
-                                                                                        ('johndoe@example.com', '$argon2id$v=19$m=65536,t=3,p=4$oeWGTzbMpqd3J7IT1CHv1w$eOBf53KoHNm4V6OOH+uFtc+0HuBNlDqGdmGj1FuXtVs', 'Doe', 'John', 'johndoe', 'Passionné d événements culturels', true),
-                                                                                        ('janedoe@example.com', '$argon2id$v=19$m=65536,t=3,p=4$oeWGTzbMpqd3J7IT1CHv1w$eOBf53KoHNm4V6OOH+uFtc+0HuBNlDqGdmGj1FuXtVs', 'Doe', 'Jane', 'janedoe', 'Amatrice de sport et de plein air', false);
-
 -- Fill `users` table
 INSERT INTO location (label, postalCode) VALUES
                                              ('Namur', 5000),

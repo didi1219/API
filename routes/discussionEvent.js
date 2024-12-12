@@ -11,7 +11,6 @@ import {
     deleteDiscussionEvents,
     getNewerMessagesInDiscussion,
     getOlderMessagesInDiscussion,
-    listDiscussionEvents
 } from "../controler/discussionEvent.js";
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {admin} from "../middleware/authorization/mustBeAdmin.js";
@@ -19,7 +18,6 @@ import {discussionEventValidatorMiddleware as DVM, tabValidatorMiddleware as Tab
 import {pagingValidatorMiddleWare as PagingVM} from "../middleware/validation.js";
 import {tabIds} from "../middleware/validator/tabValidator.js";
 import {inDiscussion} from "../middleware/authorization/mustBeInDiscussion.js";
-import {discussionEventValidatorMiddleware as DVM} from "../middleware/validation.js";
 
 const router = Router();
 
@@ -27,8 +25,6 @@ router.get('/:id', checkJWT, admin, DVM.searchedDiscussionEvent, getDiscussionEv
 router.post('/',checkJWT,admin,DVM.discussionEventToAdd, addDiscussionEvent);
 router.patch('/',checkJWT,admin,DVM.discussionEventToUpdate, updateDiscussionEvent);
 router.delete('/:id',checkJWT,admin,DVM.discussionEventToDelete, deleteDiscussionEvent);
-
-router.get('/all/:offset', checkJWT, admin, DVM.listDiscussions, listDiscussionEvents);
 
 router.get('/:id/messages/:offset', checkJWT, DVM.discussionEventToListMessages, inDiscussion, getMessagesInDiscussion);
 router.get('/:id/newerMessages/:nextMessageID', checkJWT, DVM.discussionEventToListNewerMessages, inDiscussion, getNewerMessagesInDiscussion);
