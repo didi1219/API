@@ -6,21 +6,28 @@ const messageIDSchema = vine.object({
 });
 
 const messageToAddSchema = vine.object({
-    content: vine.string(),
+    content: vine.string().maxLength(250),
     sending_date: vine.date(),
+    type: vine.number(),
     user_id: vine.number(),
     discussion_event_id: vine.number()
 });
 
 const messageToUpdateSchema = vine.object({
     id: vine.number(),
-    content: vine.string().optional(),
+    content: vine.string().maxLength(250).optional(),
+    type: vine.number().optional(),
     user_id: vine.number().optional(),
     discussion_event_id: vine.number().optional()
+});
+
+const listMessagesSchema = vine.object({
+    offset: vine.number()
 });
 
 export const
     searchedMessage = vine.compile(messageIDSchema),
     messageToAdd = vine.compile(messageToAddSchema),
     messageToUpdate = vine.compile(messageToUpdateSchema),
-    messageToDelete = vine.compile(messageIDSchema);
+    messageToDelete = vine.compile(messageIDSchema),
+    listMessages = vine.compile(listMessagesSchema);

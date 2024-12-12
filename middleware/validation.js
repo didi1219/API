@@ -46,6 +46,14 @@ export const adminValidatorMiddleware = {
         } catch (error) {
             res.status(400).send(error.messages);
         }
+    },
+    adminToLogin: async (req, res, next) => {
+        try {
+            req.val = await adminValidator.adminToLogin.validate(req.body);
+            next();
+        } catch (error) {
+            res.status(400).send(error.messages);
+        }
     }
 };
 
@@ -124,6 +132,38 @@ export const discussionEventValidatorMiddleware = {
         } catch (error) {
             res.status(400).send(error.messages);
         }
+    },
+    listDiscussions : async (req, res, next) => {
+        try {
+            req.val = await discussionEventValidator.listDiscussionEvents.validate(req.params);
+            next();
+        } catch (error) {
+            res.status(400).send(error.messages);
+        }
+    },
+    discussionEventToListMessages : async (req, res, next) => {
+        try {
+            req.val = await discussionEventValidator.discussionEventToListMessages.validate(req.params);
+            next();
+        } catch (error) {
+            res.status(400).send(error.messages);
+        }
+    },
+    discussionEventToListNewerMessages : async (req, res, next) => {
+        try {
+            req.val = await discussionEventValidator.discussionEventToListNewerMessages.validate(req.params);
+            next();
+        } catch (error) {
+            res.status(400).send(error.messages);
+        }
+    },
+    discussionEventToListOlderMessages : async (req, res, next) => {
+        try {
+            req.val = await discussionEventValidator.discussionEventToListOlderMessages.validate(req.params);
+            next();
+        } catch (error) {
+            res.status(400).send(error.messages);
+        }
     }
 };
 
@@ -155,6 +195,14 @@ export const eventValidatorMiddleware = {
     eventToUpdate : async (req, res, next) => {
         try {
             req.val = await eventValidator.eventToUpdate.validate(req.body);
+            next();
+        } catch (error) {
+            res.status(400).send(error.messages);
+        }
+    },
+    eventToListDiscussions : async (req, res, next) => {
+        try {
+            req.val = await eventValidator.eventToListDiscussion.validate(req.params);
             next();
         } catch (error) {
             res.status(400).send(error.messages);
@@ -323,6 +371,14 @@ export const messageValidatorMiddleware = {
             req.val = await messageValidator.messageToDelete.validate(req.params);
             next();
         } catch(error){
+            res.status(400).send(error.messages);
+        }
+    },
+    listMessages : async (req, res, next) => {
+        try {
+            req.val = await messageValidator.listMessages.validate(req.params);
+            next();
+        } catch (error) {
             res.status(400).send(error.messages);
         }
     }

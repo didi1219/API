@@ -127,15 +127,6 @@ export const readAllEventsOfUserCreated = async (SQLClient, {user_id, perPage, p
     return rows;
 };
 
-export const listDiscussionEvent = async (SQLClient, {id, perPage,page}) => {
-    const size = verifyValueOfPerPage(perPage);
-    const offset = calculOffset({size, page});
-    const {rows} = await SQLClient.query(
-        'SELECT * FROM discussionEvent WHERE event_id = $1 LIMIT $2 OFFSET $3',[id, size, offset]
-    );
-    return rows;
-};
-
 export const readAllEventsOfUserSubscribed = async (SQLClient, {user_id, perPage, page}) => {
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
@@ -144,6 +135,49 @@ export const readAllEventsOfUserSubscribed = async (SQLClient, {user_id, perPage
     );
     return rows;
 };
+
+export const listDiscussionEvent = async (SQLClient, { id }) => {
+    const { rows } = await SQLClient.query(
+        `SELECT
+            d.id AS discussionId,
+            d.title AS conversationTitle,
+            e.description AS eventDescription,
+            COUNT(DISTINCT m.user_id) AS usersCount,
+            MAX(m.sending_date) AS lastMessageSendingDate,
+            (
+                SELECT m2.content
+                FROM message m2
+                WHERE m2.discussion_event_id = d.id
+                ORDER BY m2.sending_date DESC
+                LIMIT 1
+            ) AS lastMessageContent
+        FROM
+            discussionEvent d
+        LEFT JOIN
+            event e ON d.event_id = e.id
+        LEFT JOIN
+            message m ON d.id = m.discussion_event_id
+        WHERE
+            d.event_id = $1
+        GROUP BY
+            d.id, e.description`,
+        [id]
+    );
+    return rows;
+};
+
+
+/*
+export const searchEvent = async (SQLClient, {user_id}) => {
+    try {
+       const {rows} = await SQLClient.query(
+            'SELECT * FROM event where user_id = $1', [user_id]
+       );
+       return rows;
+    } catch (error){
+        throw new Error();
+    }
+};*/
 
 export const readEvents = async (SQLClient, {page, perPage}) => {
     const size = verifyValueOfPerPage(perPage);
@@ -154,16 +188,15 @@ export const readEvents = async (SQLClient, {page, perPage}) => {
     return rows;
 };
 
-
 export const readTotalRowEvent = async (SQLClient) =>{
     const query = `SELECT COUNT(*) AS total_rows FROM event`;
     const { rows } = await SQLClient.query(query);
     return rows[0].total_rows;
 };
+
 export const nbRows = async (SQLClient)=>{
     const {rows} = await SQLClient.query(
         "SELECT COUNT(*) as count_rows FROM event"
     )
     return rows[0].count_rows;
 }
-
