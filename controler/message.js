@@ -32,6 +32,15 @@ export const deleteMessage = async (req, res) => {
     }
 };
 
+export const deletemessages = async (req,res) => {
+    try{
+        await messageModel.deleteManyMessages(pool, req.val);
+        res.sendStatus(204);
+    }catch(error){
+        res.sendStatus(500);
+    }
+}
+
 export const updateMessage = async (req, res) => {
     try{
         await messageModel.updateMessage(pool, req.val);

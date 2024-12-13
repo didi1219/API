@@ -7,7 +7,8 @@ import {
     getDiscussionEvents,
     getEvents,
     getTotalRowEvent,
-    deleteEvents
+    deleteEvents,
+    addEventWithInvitations
 } from '../controler/eventManagement.js'
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {admin} from "../middleware/authorization/mustBeAdmin.js";
@@ -30,5 +31,7 @@ router.get('/nbEvents/totalCount/',checkJWT,getTotalRowEvent);
 router.get('/discussion/event',checkJWT, PagingVM.pagingWithId,getDiscussionEvents);
 
 router.delete('/many/deleteEvent',checkJWT,tabIds,TabVM.ids,deleteEvents);
+
+router.post('/createPrivate/withInvitation/',checkJWT,EVM.eventToAddWithInvitation,addEventWithInvitations)
 
 export default router;

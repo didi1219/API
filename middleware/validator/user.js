@@ -2,26 +2,26 @@ import vine from '@vinejs/vine';
 
 
 const userSchema = vine.object({
-    email: vine.string().email().trim(),
-    password: vine.string(),
-    last_name: vine.string().trim(),
-    first_name: vine.string().trim(),
-    user_name: vine.string().trim(),
-    bio: vine.string()
+    email: vine.string().email().trim().maxLength(250),
+    password: vine.string().maxLength(250),
+    last_name: vine.string().trim().maxLength(250),
+    first_name: vine.string().trim().maxLength(250),
+    user_name: vine.string().trim().maxLength(250),
+    bio: vine.string().maxLength(500)
 });
 
 const loginSchema = vine.object({
-    email: vine.string().email(),
-    password: vine.string()
+    email: vine.string().email().maxLength(250),
+    password: vine.string().maxLength(250)
 });
 
 const updateSchema = vine.object({
-    email: vine.string().optional(),
-    password: vine.string().optional(),
-    last_name: vine.string().trim().optional(),
-    first_name: vine.string().trim().optional(),
-    user_name: vine.string().trim().optional(),
-    bio: vine.string().optional()
+    email: vine.string().maxLength(250).optional(),
+    password: vine.string().maxLength(250).optional(),
+    last_name: vine.string().trim().maxLength(250).optional(),
+    first_name: vine.string().trim().maxLength(250).optional(),
+    user_name: vine.string().trim().maxLength(250).optional(),
+    bio: vine.string().maxLength(500).optional()
 });
 
 

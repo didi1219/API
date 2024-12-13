@@ -60,9 +60,7 @@ export const countRows = async (req, res) => {
 }
 export const deleteLocations = async (req,res) => {
     try{
-        for (const id of req.val.ids) {
-            await locationModel.deleteLocation(pool,{id});
-        }
+        await locationModel.deleteManyLocations(pool,req.val);
         res.sendStatus(204);
     }catch(error){
         res.sendStatus(500);

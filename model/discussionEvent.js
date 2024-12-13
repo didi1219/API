@@ -30,6 +30,20 @@ export const deleteDiscussionEvent = async (SQLClient,{id}) => {
     }
 };
 
+export const deleteDiscussionEvents = async (SQLClient, {ids}) => {
+    try {
+        await SQLClient.query('BEGIN');
+
+        for (const id of ids) {
+            await deleteDiscussionEvent(SQLClient, { id });
+        }
+        await SQLClient.query('COMMIT');
+    } catch (error) {
+        await SQLClient.query('ROLLBACK');
+        throw error;
+    }
+};
+
 export const updateDiscussionEvent = async (SQLClient, {id, title,isWritable, event_id}) => {
     let query = 'UPDATE discussionevent SET '
     const queryValues = [];

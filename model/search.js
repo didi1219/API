@@ -13,6 +13,7 @@ export const readEventByName = async (SQLClient, {name,perPage, page})=> {
 };
 
 export const readEventGeneric = async (SQLClient, { page, perPage, search }) => {
+    const searchDecode = decodeURI()
     const searchConcat = `%${search}%`;
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});

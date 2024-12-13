@@ -60,10 +60,64 @@ export const countRows = async (req, res) => {
 }
 export const deleteLinkUserEvents = async (req,res) => {
     try{
-        for (const ids of req.val.ids) {
-            await linkUserEventModel.deleteLinkUserEvent(pool, ids);
-        }
+        await linkUserEventModel.deleteManyLinkUserEvents(pool, ids);
         res.sendStatus(200);
+    }catch(error){
+        res.sendStatus(500);
+    }
+}
+
+export const addInvitations = async (req,res) => {
+    try {
+        await linkUserEventModel.createInvitations(pool,req.val);
+        res.sendStatus(201);
+    } catch (error){
+        res.sendStatus(500);
+    }
+}
+
+export const getInvitationNotAcceptedByCurrentId = async (req, res) =>{
+    try{
+        req.val={};
+        req.val.user_id = req.session.id;
+        const response = await linkUserEventModel.readInvitationNotAcceptedByCurrentId(pool,req.val);
+        if(!response){
+            res.sendStatus(404);
+        }else{
+            res.status(200).send(response);
+        }
+    }catch(error){
+        res.sendStatus(500);
+    }
+}
+
+export const acceptInvitation = async (req, res) => {
+    try{
+        req.val.user_id = req.session.id;
+        console.log(req.val.user_id);
+        await linkUserEventModel.updateLinkUserEvent(pool,{user_id:req.val.user_id, event_id:req.val.event_id, isWaiting : false, isAccepted : true});
+        res.sendStatus(204);
+    }catch(error){
+
+        res.sendStatus(500);
+    }
+}
+
+export const declineInvitation = async (req, res) => {
+    try{
+        req.val.user_id = req.session.id;
+        await linkUserEventModel.updateLinkUserEvent(pool,{user_id:req.val.user_id, event_id:req.val.event_id, isWaiting : false, isAccepted : false});
+        res.sendStatus(204);
+    }catch(error){
+        res.sendStatus(500)
+    }
+}
+
+export const isFavorite = async (req,res) => {
+    try{
+        req.val.user_id = req.session.id;
+        await linkUserEventModel.isFavoritePatch(pool,req.val);
+        res.sendStatus(204);
     }catch(error){
         res.sendStatus(500);
     }

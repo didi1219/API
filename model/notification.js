@@ -28,6 +28,16 @@ export const deleteNotification = async (SQLClient, {id}) => {
     return rows[0];
 };
 
+export const deleteManyNotifications = async (SQLClient, {ids}) => {
+    try {
+        for (const id of ids) {
+            await deleteNotification(SQLClient, { id });
+        }
+    } catch (err) {
+        throw new Error('Failed to delete notifications');
+    }
+};
+
 export const updateNotification = async (SQLClient, {id, title, content, event_id, creation_date, type}) => {
     let query = 'UPDATE notification SET ';
     const querySet = [];

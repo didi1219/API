@@ -5,12 +5,12 @@ const eventIDSchema = vine.object({
 });
 
 const eventToAddSchema = vine.object({
-    title: vine.string(),
-    description: vine.string(),
+    title: vine.string().maxLength(250),
+    description: vine.string().maxLength(250),
     event_date: vine.date(),
-    street_number: vine.string(),
+    street_number: vine.string().maxLength(250),
     isPrivate: vine.boolean(),
-    picture_path: vine.string().trim(),
+    picture_path: vine.string().trim().maxLength(250),
     duration: vine.number(),
     location_id: vine.number(),
     category_id: vine.number()
@@ -18,12 +18,12 @@ const eventToAddSchema = vine.object({
 
 const eventToUpdateSchema = vine.object({
     id: vine.number(),
-    title: vine.string().optional(),
-    description: vine.string().optional(),
+    title: vine.string().maxLength(250).optional(),
+    description: vine.string().maxLength(250).optional(),
     event_date: vine.date().optional(),
-    street_number: vine.string().optional(),
+    street_number: vine.string().maxLength(250),
     isPrivate: vine.boolean().optional(),
-    picture_path: vine.string().trim().optional(),
+    picture_path: vine.string().trim().maxLength(250).optional(),
     duration: vine.number().optional(),
     location_id: vine.number().optional(),
     category_id: vine.number().optional()

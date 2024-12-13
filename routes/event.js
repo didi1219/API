@@ -20,6 +20,8 @@ router.post('/',checkJWT,EVM.eventToAdd,addEvent);
 router.patch('/',checkJWT,EVM.eventToUpdate,updateEvent);
 router.delete('/:id',checkJWT,EVM.eventToDelete,deleteEvent);
 
+
+
 router.get('/:id/discussions', checkJWT, EVM.eventToListDiscussions, inEvent, getDiscussionEvents);
 
 export default router;

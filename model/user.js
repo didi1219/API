@@ -67,6 +67,19 @@ export const deleteUser = async (SQLClient, {id}) => {
     }
 };
 
+export const deleteManyUsers = async (SQLClient, {ids}) => {
+    try {
+        await SQLClient.query('BEGIN');
+        for (const id of ids) {
+            await deleteUser(SQLClient, { id });
+        }
+        await SQLClient.query('COMMIT');
+    } catch (error) {
+        await SQLClient.query('ROLLBACK');
+        throw error;
+    }
+}
+
 export const updateUser = async(SQLClient,id, {email, password, last_name, first_name, user_name, bio}) => {
     let query = 'UPDATE users SET ';
     const querySet = [];
@@ -118,4 +131,18 @@ export const nbRows = async (SQLClient)=>{
         "SELECT COUNT(*) as count_rows FROM users"
     )
     return rows[0].count_rows;
+}
+export const checkIfEmailExists = async (SQLClient, {emails}) => {
+    const emailDoesntExist = [];
+    const idEmailExist = [];
+
+    for (const email of emails) {
+        try{
+            const rows = await readUserByEmail(SQLClient, {email});
+            idEmailExist.push(rows.id);
+        }catch(error){
+            emailDoesntExist.push(email);
+        }
+    }
+    return {idEmailExist, emailDoesntExist};
 }

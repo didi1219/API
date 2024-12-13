@@ -80,6 +80,7 @@ CREATE TABLE linkUserEvent (
                                event_id INTEGER REFERENCES event(id) DEFERRABLE INITIALLY IMMEDIATE,
                                isWaiting BOOLEAN NOT NULL,
                                isAccepted BOOLEAN NOT NULL,
+                               isFavorite BOOLEAN NOT NULL,
                                CONSTRAINT unique_user_event UNIQUE (user_id, event_id)
 );
 
@@ -156,7 +157,7 @@ INSERT INTO message (content, type, sending_date, user_id, discussion_event_id) 
                                                                                     ('Vivement le concert !', 0, '2024-11-30', 1, 1),
                                                                                     ('Hâte d en apprendre plus sur les nouvelles technologies.', 0, '2024-11-30', 2, 2);
 -- Fill `linkUserEvent` table
-INSERT INTO linkUserEvent (user_id, event_id, isWaiting, isAccepted) VALUES
-                                                                         (1, 1, false, true),
-                                                                         (2, 2, false, true),
-                                                                         (1, 3, true, false);
+INSERT INTO linkUserEvent (user_id, event_id, isWaiting, isAccepted, isFavorite) VALUES
+                                                                         (1, 1, false, true,false),
+                                                                         (2, 2, false, true,false),
+                                                                         (1, 3, true, false,false);

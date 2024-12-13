@@ -22,6 +22,21 @@ export const deleteCategory = async (SQLClient, {id}) => {
     return await SQLClient.query('DELETE FROM category WHERE id = $1',[id]);
 };
 
+export const deleteCategories = async (SQLClient, {ids}) => {
+    try {
+        await SQLClient.query('BEGIN');
+        for (const id of ids) {
+            await deleteCategory(SQLClient, {id});
+        }
+        await SQLClient.query('COMMIT');
+    } catch (error) {
+        await SQLClient.query('ROLLBACK');
+        throw error;
+    }
+};
+
+
+
 export const updateCategory = async (SQLClient, {id,title}) => {
     let query = 'UPDATE category SET ';
     const querySet = [];

@@ -26,6 +26,20 @@ export const deleteMessage = async (SQLClient, {id}) => {
     );
 };
 
+export const deleteManyMessages = async (SQLClient, {ids}) => {
+
+    try {
+        await SQLClient.query('BEGIN');
+        for (const id of ids) {
+            await deleteMessage(SQLClient, { id });
+        }
+        await SQLClient.query('COMMIT');
+    } catch (error) {
+        await SQLClient.query('ROLLBACK');
+        throw error;
+    }
+};
+
 export const updateMessage = async (SQLClient, {id,content, type, user_id, sending_date, discussion_event_id}) => {
     let query = "UPDATE message SET ";
     const querySet = [];

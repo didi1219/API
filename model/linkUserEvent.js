@@ -21,33 +21,44 @@ export const deleteLinkUserEvent = async (SQLClient, {user_id, event_id}) => {
     return await SQLClient.query('DELETE FROM linkuserevent WHERE user_id = $1 AND event_id = $2', [user_id, event_id]);
 };
 
-export const updateLinkUserEvent = async(SQLClient, {user_id, event_id, isWaiting, isAccepted}) => {
+export const deleteManyLinkUserEvents = async (SQLClient, linkUserEvents) => {
+    if (!Array.isArray(linkUserEvents) || linkUserEvents.length === 0) {
+        throw new Error('No linkUserEvents provided for deletion.');
+    }
+    try {
+        await SQLClient.query('BEGIN');
+        for (const { user_id, event_id } of linkUserEvents) {
+            await deleteLinkUserEvent(SQLClient, { user_id, event_id });
+        }
+        await SQLClient.query('COMMIT');
+    } catch (error) {
+        await SQLClient.query('ROLLBACK');
+        throw error;
+    }
+}
+
+export const updateLinkUserEvent = async (SQLClient, { user_id, event_id, isWaiting, isAccepted }) => {
     let query = 'UPDATE linkUserEvent SET ';
     const querySet = [];
     const queryValues = [];
-    if(user_id){
-        queryValues.push(user_id);
-        querySet.push(`user_id = $${queryValues.length}`);
-    }
-    if(event_id){
-        queryValues.push(event_id);
-        querySet.push(`event_id = $${queryValues.length}`);
-    }
-    if(isWaiting){
+
+    if (typeof isWaiting !== 'undefined') {
         queryValues.push(isWaiting);
         querySet.push(`isWaiting = $${queryValues.length}`);
     }
-    if(isAccepted){
+    if (typeof isAccepted !== 'undefined') {
         queryValues.push(isAccepted);
         querySet.push(`isAccepted = $${queryValues.length}`);
     }
-    if(queryValues.length > 0){
-        queryValues.push(userID);
-        queryValues.push(eventID);
+
+    if (querySet.length > 0) {
+        queryValues.push(user_id);
+        queryValues.push(event_id);
         query += `${querySet.join(', ')} WHERE user_id = $${queryValues.length - 1} AND event_id = $${queryValues.length}`;
+        
         return await SQLClient.query(query, queryValues);
     } else {
-        throw new Error('No field given');
+        throw new Error('No fields to update provided.');
     }
 };
 
@@ -57,11 +68,25 @@ export const readAllLinkUserEvent = async (SQLClient, {page, perPage}) => {
     const {rows} = await SQLClient.query(
         "SELECT * FROM linkuserevent LIMIT $1 OFFSET $2", [perPage, offset]
     )
-    return rows
+    return rows;
 }
 export const nbRows = async (SQLClient)=>{
     const {rows} = await SQLClient.query(
         "SELECT COUNT(*) as count_rows FROM linkuserevent"
     )
     return rows[0].count_rows;
+}
+
+export const readInvitationNotAcceptedByCurrentId = async (SQLClient,{user_id}) =>{
+    const {rows} = await SQLClient.query(
+        "SELECT * FROM linkuserevent l INNER JOIN event e on l.event_id = e.id WHERE l.user_id = $1 AND isWaiting",[user_id]
+    )
+    return rows;
+}
+
+export const isFavoritePatch = async (SQLClient,{user_id,event_id}) => {
+    const {rows} = await SQLClient.query(
+        "UPDATE linkuserevent SET isFavorite = NOT isFavorite WHERE user_id = $1 AND event_id = $2",[user_id,event_id]
+    )
+    return rows;
 }

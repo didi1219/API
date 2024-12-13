@@ -250,6 +250,14 @@ export const eventManagementValidatorMiddleware = {
         } catch (error){
             res.status(400).send(error.messages);
         }
+    },
+    eventToAddWithInvitation : async (req, res, next) => {
+        try{
+            req.val = await eventManagementValidator.eventToAddWithInvitations.validate(req.body);
+            next();
+        }catch(error){
+            res.status(400).send(error.messages);
+        }
     }
 };
 
@@ -300,8 +308,15 @@ export const linkUserEventValidatorMiddleware = {
                 next();
             }
         }catch(error){
-            console.log(error);
-            res.status(400).send(error.message);
+            res.status(400).send(error.messages);
+        }
+    },
+    linkUserEventInvitationPatch : async (req,res,next) => {
+        try{
+            req.val = await linkUserEventValidator.linkUserEventInvitationPatch.validate(req.params)
+            next()
+        }catch(error){
+            res.status(400).send(error.messages)
         }
     }
 };
@@ -468,6 +483,7 @@ export const pagingValidatorMiddleWare={
             req.val = await pagingValidator.pagingSearchGeneral.validate(req.query);
             next();
         }catch(error){
+            console.log("on est la")
             res.status(400).send(error.messages)
         }
     },

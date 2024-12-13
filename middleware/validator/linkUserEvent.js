@@ -18,10 +18,13 @@ const linkUserEventToUpdateSchema = vine.object({
     isWaiting: vine.boolean().optional(),
     isAccepted: vine.boolean().optional(),
 });
-
+const linUserEventInvitationPatchSchema = vine.object({
+    event_id: vine.number()
+})
 
 export const
     searchedLinkUserEvent = vine.compile(linkUserEventIDSchema),
     linkUserEventToAdd = vine.compile(linkUserEventToAddSchema),
     linkUserEventToUpdate = vine.compile(linkUserEventToUpdateSchema),
-    linkUserEventToDelete = vine.compile(linkUserEventIDSchema);
+    linkUserEventToDelete = vine.compile(linkUserEventIDSchema),
+    linkUserEventInvitationPatch = vine.compile(linUserEventInvitationPatchSchema);

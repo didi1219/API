@@ -1,4 +1,5 @@
 import {calculOffset, verifyValueOfPerPage} from "../util/paging.js";
+import {createLinkUserEvent} from "./linkUserEvent.js";
 
 export const readEvent = async (SQLClient, {id}) =>{
     const {rows} = await SQLClient.query(
@@ -62,6 +63,19 @@ export const deleteEvent = async (SQLClient, {id}) => {
     } catch (error) {
         await SQLClient.query('ROLLBACK');
         throw  error;
+    }
+};
+
+export const deleteManyEvents = async (SQLClient, ids) => {
+    try {
+        await SQLClient.query('BEGIN');
+        for (const id of ids) {
+            await deleteEvent(SQLClient, { id });
+        }
+        await SQLClient.query('COMMIT');
+    } catch (error) {
+        await SQLClient.query('ROLLBACK');
+        throw error;
     }
 };
 
@@ -200,3 +214,32 @@ export const nbRows = async (SQLClient)=>{
     )
     return rows[0].count_rows;
 }
+export const createEventWithInvitations = async (SQLClient, {
+    title, description, event_date, street_number, picture_path, duration, user_id, location_id, category_id, users_id
+}) => {
+    const failedInsertions = [];
+    const successfulInsertions = [];
+
+    try {
+        const eventId = await createEvent(SQLClient, {
+            title, description, event_date, street_number,
+            picture_path, duration, user_id, location_id, category_id,
+            isPrivate: true
+        });
+        for (const user_id of users_id) {
+            try {
+                await createLinkUserEvent(SQLClient, { user_id, event_id: eventId, isWaiting: true, isAccepted: false });
+                successfulInsertions.push(user_id);
+            } catch (error) {
+                failedInsertions.push({ user_id, error });
+            }
+        }
+
+        return { eventId, successfulInsertions, failedInsertions };
+    } catch (error) {
+        throw error;
+    }
+};
+
+
+

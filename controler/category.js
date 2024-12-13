@@ -84,9 +84,7 @@ export const getTotalRowCategories = async (req, res) => {
 };
 export const deleteCategories = async (req,res) => {
     try{
-        for (const id of req.val.ids) {
-            await categoryModel.deleteCategory(pool,{id});
-        }
+        await categoryModel.deleteCategories(pool,req.val);
         res.sendStatus(204);
     }catch(error){
         res.sendStatus(500);

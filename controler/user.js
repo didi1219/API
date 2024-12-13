@@ -55,7 +55,6 @@ export const login = async (req, res) => {
             res.sendStatus(404);
         }
     } catch (err) {
-        console.error(err);
         res.sendStatus(500);
     }
 };
@@ -102,11 +101,18 @@ export const countRows = async (req, res) => {
 }
 export const deleteUsers = async (req,res) => {
     try{
-        for (const id of req.val.ids) {
-            console.log(id)
-            await userModel.deleteUser(pool,{id});
-        }
+        await userModel.deleteManyUsers(pool,req.val);
+        console.log("passe ici")
         res.sendStatus(204);
+    }catch(error){
+        console.log(error)
+        res.sendStatus(500);
+    }
+}
+export const checkEmailExist = async (req,res) => {
+    try{
+        const {idEmailExist, emailDoesntExist} = await userModel.checkIfEmailExists(pool,req.body);
+        res.json({idEmailExist, emailDoesntExist});
     }catch(error){
         res.sendStatus(500);
     }

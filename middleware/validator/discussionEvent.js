@@ -6,14 +6,14 @@ const discussionEventIDSchema = vine.object({
 });
 
 const discussionEventToAddSchema = vine.object({
-    title: vine.string().trim(),
+    title: vine.string().trim().maxLength(250),
     isWritable: vine.boolean(),
     event_id: vine.number()
 });
 
 const discussionEventToUpdateSchema = vine.object({
     id: vine.number(),
-    title: vine.string().trim().optional(),
+    title: vine.string().trim().maxLength(250).optional(),
     isWritable: vine.boolean().optional(),
     event_id: vine.number().optional()
 });

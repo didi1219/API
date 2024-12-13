@@ -114,9 +114,7 @@ export const countRows = async (req, res) => {
 
 export const deleteDiscussionEvents = async (req,res) => {
     try{
-        for (const id of req.val.ids) {
-            await discussionEventModel.deleteDiscussionEvent(pool,{id});
-        }
+        await discussionEventModel.deleteDiscussionEvents(pool,req.val);
         res.sendStatus(204);
     }catch(error){
         res.sendStatus(500);

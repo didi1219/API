@@ -5,26 +5,26 @@ const userIdSchema = vine.object({
 });
 
 const userToAddSchema = vine.object({
-    email: vine.string().email().trim(),
-    password: vine.string(),
-    last_name: vine.string().trim(),
-    first_name: vine.string().trim(),
-    user_name: vine.string().trim(),
-    bio: vine.string()
+    email: vine.string().email().trim().maxLength(250),
+    password: vine.string().maxLength(250),
+    last_name: vine.string().trim().maxLength(250),
+    first_name: vine.string().trim().maxLength(250),
+    user_name: vine.string().trim().maxLength(250),
+    bio: vine.string().maxLength(500)
 })
 
 const userToUpdateSchema = vine.object({
     id: vine.number(),
-    password: vine.string(),
-    last_name: vine.string().trim(),
-    first_name: vine.string().trim(),
-    user_name: vine.string().trim(),
+    password: vine.string().maxLength(250),
+    last_name: vine.string().trim().maxLength(250),
+    first_name: vine.string().trim().maxLength(250),
+    user_name: vine.string().trim().maxLength(250),
     bio: vine.string()
 });
 
 const adminToLoginSchema = vine.object({
-    email: vine.string().email(),
-    password: vine.string()
+    email: vine.string().email().maxLength(250),
+    password: vine.string().maxLength(250)
 });
 
 export const

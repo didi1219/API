@@ -6,7 +6,7 @@ import internalIp from 'internal-ip';
 
 import {default as Router} from './routes/index.js';
 const app = express();
-const port = 3001;
+const port = 3002;
 
 const storage = multer.memoryStorage();
 const upload = multer({

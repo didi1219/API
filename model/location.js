@@ -22,6 +22,21 @@ export const deleteLocation = async (SQLClient, {id}) => {
     );
 };
 
+export const deleteManyLocations = async (SQLClient, ids) => {
+
+    try {
+        await SQLClient.query('BEGIN');
+
+        for (const id of ids) {
+            await deleteLocation(SQLClient, { id });
+        }
+        await SQLClient.query('COMMIT');
+    } catch (error) {
+        await SQLClient.query('ROLLBACK');
+        throw error;
+    }
+};
+
 export const updateLocation = async (SQLClient, {id,label,postalCode}) =>{
     let query = 'UPDATE location SET ';
     const querySet = [];

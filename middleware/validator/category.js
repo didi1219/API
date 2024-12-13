@@ -10,12 +10,12 @@ const nbCategoriesSchema = vine.object({
 });
 
 const categoryToAddSchema = vine.object({
-    title: vine.string().trim(),
+    title: vine.string().trim().maxLength(250),
 });
 
 const categoryToUpdateSchema = vine.object({
     id: vine.number(),
-    title: vine.string().trim().optional(),
+    title: vine.string().trim().maxLength(250).optional(),
 })
 
 export const
