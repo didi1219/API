@@ -32,11 +32,11 @@ CREATE TABLE event (
                        id integer primary key GENERATED ALWAYS AS IDENTITY,
                        title varchar(250) NOT NULL,
                        description varchar(250) NOT NULL,
-                       event_date DATE NOT NULL,
+                       event_start TIMESTAMP NOT NULL,
+                       event_end TIMESTAMP NOT NULL,
                        street_number varchar(250) NOT NULL,
                        isPrivate BOOLEAN NOT NULL,
                        picture_path varchar(250),
-                       duration int NOT NULL,
                        user_id integer REFERENCES users(id) DEFERRABLE INITIALLY IMMEDIATE,
                        location_id integer REFERENCES location(id) DEFERRABLE INITIALLY IMMEDIATE,
                        category_id integer REFERENCES category(id) DEFERRABLE INITIALLY IMMEDIATE
@@ -108,7 +108,7 @@ INSERT INTO location (label, postalCode) VALUES
 -- Fill `users` table
 INSERT INTO users (email, password, last_name, first_name, user_name, bio, isAdmin) VALUES
                                                                                         ('johndoe@example.com', '$argon2id$v=19$m=65536,t=3,p=4$oeWGTzbMpqd3J7IT1CHv1w$eOBf53KoHNm4V6OOH+uFtc+0HuBNlDqGdmGj1FuXtVs', 'Doe', 'John', 'johndoe', 'Passionné d événements culturels', true),
-                                                                                        ('janedoe@example.com', 'password456', 'Doe', 'Jane', 'janedoe', 'Amatrice de sport et de plein air', false),
+                                                                                        ('janedoe@example.com', '$argon2id$v=19$m=65536,t=3,p=4$oeWGTzbMpqd3J7IT1CHv1w$eOBf53KoHNm4V6OOH+uFtc+0HuBNlDqGdmGj1FuXtVs', 'Doe', 'Jane', 'janedoe', 'Amatrice de sport et de plein air', false),
                                                                                         ('user1@example.com', 'password1', 'Smith', 'John', 'johnsmith', 'Loves coding and coffee.', FALSE),
                                                                                         ('user3@example.com', 'password3', 'Brown', 'Charlie', 'charlieb', 'Avid reader and traveler.', FALSE),
                                                                                         ('user4@example.com', 'password4', 'Wilson', 'Emily', 'emilyw', 'Fitness enthusiast.', FALSE),
@@ -135,10 +135,38 @@ INSERT INTO users (email, password, last_name, first_name, user_name, bio, isAdm
                                                                                         ('user25@example.com', 'password25', 'Hill', 'Noah', 'noahhill', 'Guitarist.', FALSE);
 
 -- Fill `event` table
-INSERT INTO event (title, description, event_date, street_number, isPrivate, picture_path, duration, user_id, location_id, category_id) VALUES
-                                                                                                                                            ('Concert de Jazz', 'Un concert de jazz en plein air.', '2024-12-01', '12', false, 'images/event1.jpg', 120, 1, 1, 1),
-                                                                                                                                            ('Conférence Tech', 'Une conférence sur les dernières technologies.', '2024-11-15', '45', false, 'images/event2.jpg', 70, 2, 2, 2),
-                                                                                                                                            ('Marathon', 'Un marathon annuel pour les amateurs de course.', '2024-11-20', '78', false, 'images/event3.jpg', 130, 1, 3, 3);
+INSERT INTO event (title, description, event_start, event_end, street_number, isPrivate, picture_path, user_id, location_id, category_id)
+VALUES
+    ('Concert de Jazz',
+     'Un concert de jazz en plein air.',
+     '2024-12-01 18:00:00',
+     '2024-12-01 20:00:00',
+     '12',
+     false,
+     'images/event1.jpg',
+     1,
+     1,
+     1),
+    ('Conférence Tech',
+     'Une conférence sur les dernières technologies.',
+     '2024-11-15 09:00:00',
+     '2024-11-15 10:10:00',
+     '45',
+     false,
+     'images/event2.jpg',
+     2,
+     2,
+     2),
+    ('Marathon',
+     'Un marathon annuel pour les amateurs de course.',
+     '2024-11-20 07:00:00',
+     '2024-11-20 09:10:00',
+     '78',
+     false,
+     'images/event3.jpg',
+     1,
+     3,
+     3);
 
 -- Fill `notification` table
 INSERT INTO notification (title, content, event_id, creation_date, type) VALUES
