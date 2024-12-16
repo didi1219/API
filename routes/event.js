@@ -13,8 +13,8 @@ import {
     getNbEvents,
     getTotalRowEvent,
     getAllEventTitle,
-    deleteEvents
-    getNbSubscribers,
+    deleteEvents,
+    getNbSubscribers
 } from '../controler/event.js'
 import {
     eventManagementValidatorMiddleware as EMVM,
