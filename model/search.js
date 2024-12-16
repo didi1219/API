@@ -133,7 +133,7 @@ export const readPublicEvents = async (SQLClient,{ page, perPage}) => {
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const {rows} = await  SQLClient.query(
-        `SELECT e.id, e.title,e.description,e.event_date,e.street_number,e.picture_path,e.is_private,e.duration,u.user_name,l.label AS locality, c.title as category FROM event e INNER JOIN location l ON e.location_id = l.id INNER JOIN category c ON e.category_id = c.id INNER JOIN users u on u.id = e.user_id WHERE e.is_private = false ORDER BY e.id ASC LIMIT $1 OFFSET $2`,
+        `SELECT e.id, e.title,e.description,e.event_start,e.event_end,e.street_number,e.picture_path,e.is_private,u.user_name,l.label AS locality, c.title as category FROM event e INNER JOIN location l ON e.location_id = l.id INNER JOIN category c ON e.category_id = c.id INNER JOIN users u on u.id = e.user_id WHERE e.is_private = false ORDER BY e.id ASC LIMIT $1 OFFSET $2`,
         [
             size,
             offset
