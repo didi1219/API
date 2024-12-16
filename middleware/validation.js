@@ -10,9 +10,7 @@ import * as notificationValidator from './validator/notification.js';
 import * as userValidator from './validator/user.js';
 import * as pagingValidator from './validator/paging.js'
 import * as tabValidator from './validator/tabValidator.js'
-import {searchedEvents} from "./validator/eventManagement.js";
-import {searchedCategories} from "./validator/category.js";
-import {pagingSearchByCategories} from "./validator/paging.js";
+import * as searchValidator from './validator/search.js';
 
 export const adminValidatorMiddleware = {
     searchedUser : async (req, res, next) => {
@@ -90,14 +88,6 @@ export const categoryValidatorMiddleware = {
             res.status(400).send(error.messages);
         }
     },
-    searchedCategories : async (req, res, next) => {
-        try {
-            req.val = await categoryValidator.searchedCategories.validate(req.query);
-            next();
-        } catch (error) {
-            res.status(400).send(error.messages);
-        }
-    }
 };
 
 export const discussionEventValidatorMiddleware = {
@@ -114,6 +104,7 @@ export const discussionEventValidatorMiddleware = {
             req.val = await discussionEventValidator.discussionEventToAdd.validate(req.body);
             next();
         } catch (error){
+            console.log(error)
             res.status(400).send(error.messages);
         }
     },
@@ -128,14 +119,6 @@ export const discussionEventValidatorMiddleware = {
     discussionEventToDelete : async (req, res, next) => {
         try {
             req.val = await discussionEventValidator.discussionEventToDelete.validate(req.params);
-            next();
-        } catch (error) {
-            res.status(400).send(error.messages);
-        }
-    },
-    listDiscussions : async (req, res, next) => {
-        try {
-            req.val = await discussionEventValidator.listDiscussionEvents.validate(req.params);
             next();
         } catch (error) {
             res.status(400).send(error.messages);
@@ -181,6 +164,7 @@ export const eventValidatorMiddleware = {
             req.val = await eventValidator.eventToAdd.validate(req.body);
             next();
         } catch (error){
+            console.log(error)
             res.status(400).send(error.messages);
         }
     },
@@ -243,14 +227,6 @@ export const eventManagementValidatorMiddleware = {
             res.status(400).send(error.messages);
         }
     },
-    searchedEvents : async (req, res, next) => {
-        try {
-            req.val = await eventManagementValidator.searchedEvents.validate(req.query);
-            next();
-        } catch (error){
-            res.status(400).send(error.messages);
-        }
-    }
 };
 
 export const linkUserEventValidatorMiddleware = {
@@ -446,6 +422,17 @@ export const userValidatorMiddleware = {
     }
 };
 
+export const searchValidatorMiddleWare = {
+    searchedId : async (req, res, next ) => {
+        try {
+            req.val = await searchValidator.idSearched.validate(req.params);
+            next();
+        } catch (error) {
+            res.status(400).send(error.messages);
+        }
+    }
+};
+
 export const pagingValidatorMiddleWare={
     paging: async (req, res, next) => {
         try{
@@ -468,6 +455,7 @@ export const pagingValidatorMiddleWare={
             req.val = await pagingValidator.pagingSearchGeneral.validate(req.query);
             next();
         }catch(error){
+            console.log(error)
             res.status(400).send(error.messages)
         }
     },
@@ -499,9 +487,10 @@ export const pagingValidatorMiddleWare={
 export const tabValidatorMiddleware = {
     ids : async (req, res, next) => {
         try{
-            req.val = await tabValidator.ids.validate(req.query);
+            req.val = await tabValidator.ids.validate(req.body);
             next();
         }catch(error){
+            console.log(error);
             res.status(400).send(error.message);
         }
     }

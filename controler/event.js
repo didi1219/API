@@ -1,10 +1,10 @@
 import {pool} from '../database/database.js';
 import * as eventModel from '../model/event.js';
 
-export const getAllEventsOfUserCreated = async (req, res) => {
-    try{
+export const getNbEventsOfUserCreated = async (req, res) => {
+    try {
         req.val.user_id = req.session.id;
-        const event = await eventModel.readAllEventsOfUserCreated(pool,req.val);
+        const event = await eventModel.readNbEventsOfUserCreated(pool,req.val);
         if(event){
             res.json(event);
         } else {
@@ -27,9 +27,9 @@ export const getAllEventsOfUserSubscribed = async (req, res) => {
     } catch (error){
         res.sendStatus(500);
     }
-}
+};
 
-export const addEvent = async (req, res) => {
+export const addEventOneSelf = async (req, res) => {
     try {
         req.val.user_id = req.session.id;
         const id = await eventModel.createEvent(pool, req.val);
@@ -39,10 +39,10 @@ export const addEvent = async (req, res) => {
     }
 };
 
-export const deleteEvent = async (req, res) => {
+export const deleteEventOneSelf = async (req, res) => {
     try {
         req.val.user_id = req.session.id;
-        const event = await eventModel.readAllEventsOfUserCreated(pool,req.val);
+        const event = await eventModel.searchEvent(pool,req.val);
         req.val.id = event[req.val.id - 1].id;
 
         await eventModel.deleteEvent(pool,req.val);
@@ -52,11 +52,11 @@ export const deleteEvent = async (req, res) => {
     }
 };
 
-export const updateEvent = async (req, res) => {
+export const updateEventOneSelf = async (req, res) => {
     try {
         req.val.user_id = req.session.id;
 
-        const event = await eventModel.readAllEventsOfUserCreated(pool,req.val);
+        const event = await eventModel.searchEvent(pool,req.val);
         req.val.id = event[req.val.id - 1].id;
 
         await eventModel.updateEvent(pool,req.val);
@@ -66,12 +66,107 @@ export const updateEvent = async (req, res) => {
     }
 };
 
-
-export const getDiscussionEvents = async (req,res) => {
+export const getEvent = async(req,res) => {
     try {
-        const discussionEvents = await eventModel.listDiscussionEvent(pool, req.val);
-        res.status(200).send(discussionEvents);
+        const event = await eventModel.readEvent(pool,req.val);
+        if(event){
+            res.json(event);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch(error) {
+        res.sendStatus(500);
+    }
+};
+
+export const addEvent = async (req,res) => {
+    try {
+        const id = await eventModel.createEvent(pool,req.val);
+        res.status(201).json({id});
     } catch (error) {
         res.sendStatus(500);
     }
-}
+};
+
+export const deleteEvent = async (req,res) => {
+    try {
+        await eventModel.deleteEvent(pool,req.val);
+        res.sendStatus(204);
+    } catch (error){
+        res.sendStatus(500);
+    }
+};
+
+export const updateEvent = async (req,res) => {
+    try {
+        await eventModel.updateEvent(pool,req.val);
+        res.sendStatus(204);
+    } catch(error){
+        console.log(error)
+        res.sendStatus(500);
+    }
+};
+
+export const getDiscussionEvents = async (req,res) => {
+    try {
+        const response = await eventModel.listDiscussionEvent(pool, req.val);
+        if (response) {
+            res.json(response);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (error) {
+        res.sendStatus(500);
+    }
+};
+
+export const getAllEventTitle = async(req, res) => {
+    try {
+        const categories = await eventModel.readAllEventTitle(pool);
+        if(categories){
+            res.json(categories);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (error) {
+        res.sendStatus(500);
+    }
+};
+
+export const getNbEvents = async (req, res) => {
+    try {
+        const events = await eventModel.readNbEvents(pool, req.val);
+        if(events){
+            res.json(events);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (error){
+        res.sendStatus(500);
+    }
+};
+
+export const getTotalRowEvent = async (req, res) => {
+    try {
+        const totalRow = await eventModel.readTotalRowEvent(pool);
+        if(totalRow){
+            res.json(totalRow);
+        } else {
+            res.sendStatus(204);
+        }
+    } catch (error) {
+        res.sendStatus(500);
+    }
+};
+
+export const deleteEvents = async (req,res) => {
+    try{
+        for (const id of req.val.ids) {
+            await eventModel.deleteEvent(pool,{id});
+        }
+        res.sendStatus(204);
+    }catch(error){
+        res.sendStatus(500);
+    }
+};
+

@@ -1,51 +1,59 @@
-import vine from '@vinejs/vine'
+import vine from '@vinejs/vine';
 
 export const tabTransformCat = (req, res, next) => {
     if (req.query.categories) {
         req.query.categories = req.query.categories.split(',').map(Number);
     }
     next();
-}
+};
+
 export const tabTransformLoc = (req, res, next) => {
     if (req.query.localities) {
         req.query.localities = req.query.localities.split(',').map(Number);
     }
     next();
-}
+};
+
 const pagingSchema = vine.object({
     page: vine.number(),
     perPage: vine.number().min(1),
-})
+});
 
 const pagingSearchByNameSchema = vine.object({
     page: vine.number(),
     perPage: vine.number().min(1),
     name: vine.string().trim(),
-})
+});
+
 const pagingSearchGeneralSchema = vine.object({
     page: vine.number(),
     perPage: vine.number().min(1),
     search: vine.string().trim(),
-})
+});
+
 const pagingSearchByCategoriesSchema = vine.object({
     page: vine.number(),
     perPage: vine.number().min(1),
     categories: vine.array(vine.number())
-})
+});
+
 const pagingSearchByLocSchema = vine.object({
     page: vine.number(),
     perPage: vine.number().min(1),
     localities: vine.array(vine.number())
-})
+});
+
 const pagingSearchAllEventByOwnerSchema = vine.object({
     page: vine.number(),
     perPage: vine.number().min(1),
-})
+});
+
 const pagingWithIdSchema = vine.object({
     page: vine.number(),
     perPage: vine.number(),
     id: vine.number(),
-})
+});
+
 export const
     paging = vine.compile(pagingSchema),
     pagingSearchByName = vine.compile(pagingSearchByNameSchema),
@@ -53,4 +61,4 @@ export const
     pagingSearchByCategories = vine.compile(pagingSearchByCategoriesSchema),
     pagingSearchByLoc = vine.compile(pagingSearchByLocSchema),
     pagingSearchAllEventByOwner = vine.compile(pagingSearchAllEventByOwnerSchema),
-    pagingWithId = vine.compile(pagingWithIdSchema)
+    pagingWithId = vine.compile(pagingWithIdSchema);

@@ -3,28 +3,6 @@ import * as userModel from '../model/user.js';
 import {sign} from '../util/jwt.js';
 import {readPerson} from "../model/person.js";
 
-export const getUser = async (req, res) => {
-    try {
-        const user = await userModel.readUser(pool, req.val);
-        if (user) {
-            res.json(user);
-        } else {
-            res.sendStatus(404);
-        }
-    } catch (err) {
-        res.sendStatus(500);
-    }
-};
-
-export const addUser = async (req, res) => {
-    try {
-        const id = await userModel.createUser(pool, req.val);
-        res.status(201).json({id});
-    } catch (err) {
-        res.sendStatus(500);
-    }
-};
-
 export const deleteUser = async (req, res) => {
     try {
         await userModel.deleteUser(pool, req.val);
@@ -55,7 +33,6 @@ export const login = async (req, res) => {
             res.sendStatus(404);
         }
     } catch (err) {
-        console.error(err);
         res.sendStatus(500);
     }
 };
@@ -75,43 +52,15 @@ export const registration = async (req, res) => {
 };
 
 export const getUserInfo = async (req, res) => {
-    const {id}= req.session;
     try {
+        const {id} = req.session;
         const info = await userModel.getUserByID(pool,id);
-        res.send(info);
+        if (info) {
+            res.send(info);
+        } else {
+            res.sendStatus(404);
+        }
     } catch (e){
         res.sendStatus(500);
     }
 };
-
-export const getAllUsers = async (req,res) => {
-    try {
-        const response = await userModel.readAllUser(pool, req.val);
-        if(response) {
-            res.json(response);
-        } else {
-            res.sendStatus(404);
-        }
-    } catch {
-        res.sendStatus(500);
-    }
-}
-export const countRows = async (req, res) => {
-    try{
-        const response = await userModel.nbRows(pool);
-        return res.json(response);
-    }catch(error){
-        res.sendStatus(500);
-    }
-}
-export const deleteUsers = async (req,res) => {
-    try{
-        for (const id of req.val.ids) {
-            console.log(id)
-            await userModel.deleteUser(pool,{id});
-        }
-        res.sendStatus(204);
-    }catch(error){
-        res.sendStatus(500);
-    }
-}

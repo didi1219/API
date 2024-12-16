@@ -1,3 +1,5 @@
+import {calculOffset, verifyValueOfPerPage} from "../util/paging.js";
+
 export const readMessage = async (SQLClient, {id}) => {
     const {rows} = await SQLClient.query(
         "SELECT * FROM message WHERE  id = $1", [id]
@@ -59,9 +61,18 @@ export const updateMessage = async (SQLClient, {id,content, type, user_id, sendi
     }
 };
 
-export const readMessages = async (SQLClient, {offset}) => {
+export const readNbMessages = async (SQLClient, {page,perPage}) => {
+    const size = verifyValueOfPerPage(perPage);
+    const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        "SELECT * FROM message OFFSET $1 LIMIT 10", [offset]
+        "select m.id, m.content, m.type, m.sending_date, m.user_id, m.discussion_event_id, u.user_name, de.title as \"discussion_event\" from message m inner join users u on u.id = m.user_id inner join discussionevent de on de.id = m.discussion_event_id ORDER BY id LIMIT $1 OFFSET $2", [perPage, offset]
     );
     return rows;
+};
+
+export const readTotalRowMessages = async (SQLClient)=>{
+    const {rows} = await SQLClient.query(
+        "SELECT COUNT(*) as count_rows FROM message"
+    );
+    return rows[0]?.count_rows;
 };

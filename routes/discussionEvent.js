@@ -6,11 +6,12 @@ import {
     updateDiscussionEvent,
     deleteDiscussionEvent,
     getMessagesInDiscussion,
-    getAllDiscussionPaging,
+    getNbDiscussionsEvent,
     countNbRows,
     deleteDiscussionEvents,
     getNewerMessagesInDiscussion,
     getOlderMessagesInDiscussion,
+    getAllDiscussionTitle
 } from "../controler/discussionEvent.js";
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {admin} from "../middleware/authorization/mustBeAdmin.js";
@@ -30,9 +31,11 @@ router.get('/:id/messages/:offset', checkJWT, DVM.discussionEventToListMessages,
 router.get('/:id/newerMessages/:nextMessageID', checkJWT, DVM.discussionEventToListNewerMessages, inDiscussion, getNewerMessagesInDiscussion);
 router.get('/:id/olderMessages/:previousMessageID', checkJWT, DVM.discussionEventToListOlderMessages, inDiscussion, getOlderMessagesInDiscussion);
 
-router.get('/getall/paging?',checkJWT, PagingVM.paging,getAllDiscussionPaging);
-router.get('/nbRows/count/', checkJWT, countNbRows);
+router.get('/get/allTitle',checkJWT,getAllDiscussionTitle);
 
-router.delete('/many/deleteDiscussionEvent', checkJWT,tabIds,TabVM.ids,deleteDiscussionEvents)
+router.get('/nbDiscussionsEvent/search',checkJWT, PagingVM.paging,getNbDiscussionsEvent);
+router.get('/nbDiscussionsEvent/count/', checkJWT, countNbRows);
+
+router.delete('/many/deleteDiscussionEvent/', checkJWT,admin,tabIds,TabVM.ids,deleteDiscussionEvents)
 
 export default router;

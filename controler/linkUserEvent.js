@@ -1,7 +1,5 @@
 import {pool} from '../database/database.js';
 import * as linkUserEventModel from '../model/linkUserEvent.js';
-import {readAllLinkUserEvent} from "../model/linkUserEvent.js";
-import * as userModel from "../model/user.js";
 
 export const getLinkUserEvent = async (req, res) => {
     try {
@@ -39,32 +37,44 @@ export const updateLinkUserEvent = async (req, res) => {
         await linkUserEventModel.updateLinkUserEvent(pool, req.val);
         res.sendStatus(204);
     } catch (err) {
+        console.log(err)
         res.sendStatus(500);
     }
 };
-export const getAllLinkUserEvent = async (req, res) => {
-    try{
-        const response = await linkUserEventModel.readAllLinkUserEvent(pool, req.val);
-        res.json(response);
-    }catch(error){
+
+export const getNbLinkUserEvents = async (req, res) => {
+    try {
+        const response = await linkUserEventModel.readNbLinkUserEvents(pool, req.val);
+        if (response) {
+            res.json(response);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch(error) {
         res.sendStatus(500);
     }
-}
+};
+
 export const countRows = async (req, res) => {
     try{
-        const response = await linkUserEventModel.nbRows(pool);
-        return res.json(response);
-    }catch(error){
+        const response = await linkUserEventModel.readTotalRowLinkUserEvents(pool);
+        if (response) {
+            res.json(response);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch(error) {
         res.sendStatus(500);
     }
-}
+};
+
 export const deleteLinkUserEvents = async (req,res) => {
-    try{
+    try {
         for (const ids of req.val.ids) {
             await linkUserEventModel.deleteLinkUserEvent(pool, ids);
         }
         res.sendStatus(200);
-    }catch(error){
+    } catch(error) {
         res.sendStatus(500);
     }
-}
+};

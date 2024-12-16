@@ -4,10 +4,10 @@ import {
     addLocation,
     deleteLocation,
     updateLocation,
-    getAllLocations,
+    getNbLocations,
     countRows,
-    getAllLocation,
-    deleteLocations
+    getAllLocations,
+    deleteLocations,
 } from '../controler/location.js'
 
 import {checkJWT} from "../middleware/identification/JWT.js";
@@ -16,7 +16,6 @@ import {locationValidatorMiddleware as LVM} from "../middleware/validation.js";
 import {pagingValidatorMiddleWare as PagingVM} from "../middleware/validation.js";
 import {tabValidatorMiddleware as TabVM} from "../middleware/validation.js";
 import {tabIds} from "../middleware/validator/tabValidator.js";
-import {createDiscussionEvent} from "../model/discussionEvent.js";
 
 
 const router = new Router();
@@ -26,11 +25,11 @@ router.post('/',checkJWT,admin,LVM.locationToAdd,addLocation);
 router.delete('/:id',checkJWT,admin,LVM.locationToDelete,deleteLocation);
 router.patch('/',checkJWT,admin,LVM.locationToUpdate,updateLocation);
 
-router.get('/get/all',getAllLocation);
+router.get('/get/allTitle',checkJWT,getAllLocations);
 
-router.get('/getAll/location', checkJWT,PagingVM.paging,getAllLocations);
-router.get('/nbLocation/count/',checkJWT,countRows);
+router.get('/nbLocations/search', checkJWT,PagingVM.paging,getNbLocations);
+router.get('/nbLocations/count/',checkJWT,countRows);
 
-router.delete('/many/deleteLocation',checkJWT,tabIds,TabVM.ids,deleteLocations);
+router.delete('/many/deleteLocation/',checkJWT,admin,tabIds,TabVM.ids,deleteLocations);
 
 export default router;

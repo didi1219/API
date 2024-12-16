@@ -11,15 +11,16 @@ const userToAddSchema = vine.object({
     first_name: vine.string().trim(),
     user_name: vine.string().trim(),
     bio: vine.string()
-})
+});
 
 const userToUpdateSchema = vine.object({
     id: vine.number(),
-    password: vine.string(),
-    last_name: vine.string().trim(),
-    first_name: vine.string().trim(),
-    user_name: vine.string().trim(),
-    bio: vine.string()
+    email : vine.string().email().trim().optional(),
+    password: vine.string().optional(),
+    last_name: vine.string().trim().optional(),
+    first_name: vine.string().trim().optional(),
+    user_name: vine.string().trim().optional(),
+    bio: vine.string().optional()
 });
 
 const adminToLoginSchema = vine.object({

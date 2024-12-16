@@ -4,11 +4,6 @@ const categoryIDSchema = vine.object({
     id: vine.number(),
 });
 
-const nbCategoriesSchema = vine.object({
-    page: vine.number(),
-    perPage: vine.number(),
-});
-
 const categoryToAddSchema = vine.object({
     title: vine.string().trim(),
 });
@@ -16,11 +11,10 @@ const categoryToAddSchema = vine.object({
 const categoryToUpdateSchema = vine.object({
     id: vine.number(),
     title: vine.string().trim().optional(),
-})
+});
 
 export const
     searchedCategory = vine.compile(categoryIDSchema),
     categoryToAdd = vine.compile(categoryToAddSchema),
     categoryToUpdate = vine.compile(categoryToUpdateSchema),
-    categoryToDelete = vine.compile(categoryToUpdateSchema),
-    searchedCategories = vine.compile(nbCategoriesSchema);
+    categoryToDelete = vine.compile(categoryToUpdateSchema);

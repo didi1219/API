@@ -1,5 +1,5 @@
 import { hash } from '../util/index.js';
-import {calculOffset, verifyValueOfPerPage} from "../util/paging.js";
+import {calculOffset, verifyValueOfPerPage} from '../util/paging.js';
 
 export const userExists = async (SQLClient, {email}) => {
     const {rows} = await SQLClient.query(
@@ -61,7 +61,7 @@ export const deleteUser = async (SQLClient, {id}) => {
         await SQLClient.query('DELETE FROM users WHERE id = $1', [id]);
 
         return await SQLClient.query('COMMIT');
-    } catch (error){
+    } catch (error) {
         await SQLClient.query('ROLLBACK');
         throw error;
     }
@@ -101,21 +101,32 @@ export const updateUser = async(SQLClient,id, {email, password, last_name, first
         query += `${querySet.join(', ')} WHERE id = $${queryValues.length}`;
         return await SQLClient.query(query, queryValues);
     } else {
+        console.log(query);
+        console.log(querySet);
         throw new Error('No field given');
     }
 };
 
-export const readAllUser = async (SQLClient,{page,perPage}) => {
+export const readAllUsers = async (SQLClient) => {
+    const {rows} = await SQLClient.query(
+        'SELECT id,first_name, last_name, user_name FROM users ORDER BY id'
+    );
+    return rows;
+};
+
+
+export const readNbUsers = async (SQLClient,{page,perPage}) => {
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        "SELECT * FROM users LIMIT $1 OFFSET $2",[perPage, offset]
-    )
+        'SELECT id , email, last_name, first_name, user_name, bio FROM users ORDER BY id LIMIT $1 OFFSET $2',[perPage, offset]
+    );
     return rows;
-}
-export const nbRows = async (SQLClient)=>{
+};
+
+export const readTotalRowUsers = async (SQLClient)=>{
     const {rows} = await SQLClient.query(
-        "SELECT COUNT(*) as count_rows FROM users"
-    )
-    return rows[0].count_rows;
-}
+        'SELECT COUNT(*) as count_rows FROM users'
+    );
+    return rows[0]?.count_rows;
+};

@@ -4,7 +4,7 @@ import{
     addNotification,
     updateNotification,
     deleteNotification,
-    getAllNotifications,
+    getNbNotifications,
     countRows,
     deleteNotifications
 } from "../controler/notification.js";
@@ -23,9 +23,9 @@ router.post('/',checkJWT,admin,NVM.notificationToAdd, addNotification);
 router.patch('/',checkJWT,admin,NVM.notificationToUpdate, updateNotification)
 router.delete('/:id',checkJWT,admin,NVM.notificationToDelete, deleteNotification);
 
-router.get('/getAll/notification',checkJWT,PagingVM.paging,getAllNotifications);
-router.get('/nbNotification/count/',checkJWT,countRows)
+router.get('/nbNotifications/search',checkJWT,PagingVM.paging,getNbNotifications);
+router.get('/nbNotifications/count/',checkJWT,countRows);
 
-router.delete('/many/deleteNotification',checkJWT,tabIds,TabVM.ids ,deleteNotifications);
+router.delete('/many/deleteNotification/',checkJWT,admin,tabIds,TabVM.ids ,deleteNotifications);
 
 export default router;

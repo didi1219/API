@@ -1,23 +1,15 @@
 import Router from 'express-promise-router';
 import {
-    addUser,
     updateUser,
-    getUser,
     deleteUser,
     registration,
     login,
     getUserInfo,
-    getAllUsers,
-    countRows,
-    deleteUsers
 } from "../controler/user.js";
 
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {userValidatorMiddleware as UVM} from "../middleware/validation.js";
-import {pagingValidatorMiddleWare as PagingVM} from "../middleware/validation.js";
-import {tabValidatorMiddleware as TabVM} from "../middleware/validation.js";
-import {tabIds} from "../middleware/validator/tabValidator.js";
-
+import {getAllUsersTitle} from "../controler/admin.js";
 
 const router = Router();
 
@@ -26,9 +18,7 @@ router.post('/login',UVM.login,login);
 router.get('/me',checkJWT,getUserInfo);
 router.patch('/me',checkJWT,UVM.update,updateUser);
 
-router.get('/getAll/users',checkJWT,PagingVM.paging,getAllUsers);
-router.get('/nbUser/totalCount/', checkJWT,countRows);
-router.delete('/many/deleteUser',checkJWT,tabIds,TabVM.ids,deleteUsers);
+router.get('/get/allTitle',checkJWT,getAllUsersTitle);
 
 
 export default router;

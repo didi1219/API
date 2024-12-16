@@ -9,7 +9,7 @@ const eventToAddSchema = vine.object({
     description: vine.string(),
     event_date: vine.date(),
     street_number: vine.string(),
-    isPrivate: vine.boolean(),
+    is_private: vine.boolean(),
     picture_path: vine.string().trim(),
     duration: vine.number(),
     location_id: vine.number(),
@@ -22,15 +22,11 @@ const eventToUpdateSchema = vine.object({
     description: vine.string().optional(),
     event_date: vine.date().optional(),
     street_number: vine.string().optional(),
-    isPrivate: vine.boolean().optional(),
+    is_private: vine.boolean().optional(),
     picture_path: vine.string().trim().optional(),
     duration: vine.number().optional(),
     location_id: vine.number().optional(),
     category_id: vine.number().optional()
-});
-
-const eventToListDiscussionSchema = vine.object({
-    id: vine.number()
 });
 
 export const
@@ -38,4 +34,4 @@ export const
     eventToAdd = vine.compile(eventToAddSchema),
     eventToUpdate = vine.compile(eventToUpdateSchema),
     eventToDelete = vine.compile(eventIDSchema),
-    eventToListDiscussion = vine.compile(eventToListDiscussionSchema);
+    eventToListDiscussion = vine.compile(eventIDSchema);

@@ -7,13 +7,13 @@ const locationIDSchema = vine.object({
 
 const locationToAddSchema = vine.object({
     label: vine.string().trim(),
-    postalCode: vine.number()
+    postal_code: vine.number()
 });
 
 const locationToUpdateSchema = vine.object({
     id: vine.number(),
     label: vine.string().trim().optional(),
-    postalCode: vine.number().optional()
+    postal_code: vine.number().optional()
 });
 
 export const
