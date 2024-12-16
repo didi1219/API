@@ -217,7 +217,7 @@ export const countSubscribers = async (SQLClient, {id: event_id}) => {
     return rows[0].count;
 }
 export const createEventWithInvitations = async (SQLClient, {
-    title, description, event_start,event_end, street_number, picture_path, duration, user_id, location_id, category_id, users_id
+    title, description, event_start,event_end, street_number, picture_path, user_id, location_id, category_id, users_id
 }) => {
     const failedInsertions = [];
     const successfulInsertions = [];
@@ -225,7 +225,7 @@ export const createEventWithInvitations = async (SQLClient, {
     try {
         const eventId = await createEvent(SQLClient, {
             title, description, event_start,event_end, street_number,
-            picture_path, duration, user_id, location_id, category_id,
+            picture_path, user_id, location_id, category_id,
             is_private: true
         });
         for (const user_id of users_id) {

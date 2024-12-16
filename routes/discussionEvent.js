@@ -36,6 +36,6 @@ router.get('/get/allTitle',checkJWT,getAllDiscussionTitle);
 router.get('/nbDiscussionsEvent/search',checkJWT, PagingVM.paging,getNbDiscussionsEvent);
 router.get('/nbDiscussionsEvent/count/', checkJWT, countNbRows);
 
-router.delete('/many/deleteDiscussionEvent/', checkJWT,admin,tabIds,TabVM.ids,deleteDiscussionEvents)
+router.delete('/many/deleteDiscussionEvent/', checkJWT,admin,TabVM.ids,deleteDiscussionEvents)
 
 export default router;

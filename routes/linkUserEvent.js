@@ -15,8 +15,9 @@ import {
 } from "../controler/linkUserEvent.js";
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {admin} from "../middleware/authorization/mustBeAdmin.js";
-import {linkUserEventValidatorMiddleware as LUEVM} from "../middleware/validation.js";
+import {linkUserEventValidatorMiddleware as LUEVM, tabValidatorMiddleware as TabVM} from "../middleware/validation.js";
 import {pagingValidatorMiddleWare as PagingVM} from "../middleware/validation.js";
+import {tabIds} from "../middleware/validator/tabValidator.js";
 
 const router = Router();
 
@@ -30,7 +31,7 @@ router.get('/nbLinkUserEvents/count/',checkJWT,countRows);
 router.get('/get/Invitation/',checkJWT,getInvitationNotAcceptedByCurrentId);
 router.get('/favorite/event', checkJWT,PagingVM.paging,getFavoriteEvent);
 
-router.delete('/many/deleteLinkUserEvent/',checkJWT,admin,LUEVM.linkUserEventToDeleteMany,deleteLinkUserEvents);
+router.delete('/many/deleteLinkUserEvent/',checkJWT,admin,TabVM.ids,deleteLinkUserEvents);
 
 router.patch('/invitation/accept/:event_id', checkJWT,LUEVM.linkUserEventInvitationPatch,acceptInvitation);
 router.patch('/invitation/decline/:event_id', checkJWT,LUEVM.linkUserEventInvitationPatch,declineInvitation);

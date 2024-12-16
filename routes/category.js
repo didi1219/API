@@ -30,6 +30,6 @@ router.get('/get/allTitle',getAllCategories);
 router.get('/nbCategories/search',checkJWT,PagingVM.paging,getNbCategories);
 router.get('/nbCategories/count/',checkJWT,getTotalRowCategories);
 
-router.delete('/many/deleteCategory/',checkJWT,admin,tabIds,TabVM.ids,deleteCategories);
+router.delete('/many/deleteCategory/',checkJWT,admin,TabVM.ids,deleteCategories);
 
 export default router;

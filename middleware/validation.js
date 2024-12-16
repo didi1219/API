@@ -304,23 +304,6 @@ export const linkUserEventValidatorMiddleware = {
             res.status(400).send(error.messages);
         }
     },
-    linkUserEventToDeleteMany : async (req,res,next) => {
-        try{
-            const items = req.body;
-            if(!Array.isArray(items)){
-                res.status(400).send("Need an array");
-            }else{
-                req.val={};
-                req.val.ids = [];
-                for (const item of items){
-                    req.val.ids.push(await linkUserEventValidator.linkUserEventToDelete.validate(item));
-                }
-                next();
-            }
-        }catch(error){
-            res.status(400).send(error.messages);
-        }
-    },
     linkUserEventInvitationPatch : async (req,res,next) => {
         try{
             req.val = await linkUserEventValidator.linkUserEventInvitationPatch.validate(req.params)

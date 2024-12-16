@@ -26,11 +26,11 @@ export const deleteLinkUserEvent = async (SQLClient, {id}) => {
     );
 };
 
-export const deleteManyLinkUserEvents = async (SQLClient, linkUserEvents) => {
+export const deleteManyLinkUserEvents = async (SQLClient, {ids}) => {
     try {
         await SQLClient.query('BEGIN');
-        for (const id of linkUserEvents) {
-            await deleteLinkUserEvent(SQLClient, id);
+        for (const id of ids) {
+            await deleteLinkUserEvent(SQLClient, {id});
         }
         await SQLClient.query('COMMIT');
     } catch (error) {
@@ -75,7 +75,7 @@ export const readNbLinkUserEvents = async (SQLClient, {page, perPage}) => {
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        "select l.user_id, l.event_id, l.is_accepted, l.is_waiting, e.title AS \"event\", u.user_name from linkuserevent l inner join users u on u.id = l.user_id inner join event e on e.id = l.event_id ORDER BY l.user_id LIMIT $1 OFFSET $2", [perPage, offset]
+        "select l.id, l.user_id, l.event_id, l.is_accepted, l.is_waiting, e.title AS \"event\", u.user_name from linkuserevent l inner join users u on u.id = l.user_id inner join event e on e.id = l.event_id ORDER BY l.user_id LIMIT $1 OFFSET $2", [perPage, offset]
     );
     return rows;
 };
