@@ -5,8 +5,13 @@ import {readPerson} from "../model/person.js";
 
 export const getUser = async (req, res) => {
     try {
-        const user = await userModel.readUser(pool, req.val);
-        if (user) {
+        const data = await userModel.readUser(pool, req.val);
+        if (data) {
+            const user = {
+                id: data.id,
+                user_name: data.user_name,
+                bio: data.bio
+            };
             res.json(user);
         } else {
             res.sendStatus(404);

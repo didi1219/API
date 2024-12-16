@@ -1,5 +1,8 @@
 import vine from '@vinejs/vine';
 
+const userIDSchema = vine.object({
+    id: vine.number()
+});
 
 const userSchema = vine.object({
     email: vine.string().email().trim(),
@@ -26,6 +29,7 @@ const updateSchema = vine.object({
 
 
 export const
+    searchedUser = vine.compile(userIDSchema),
     user = vine.compile(userSchema),
     login = vine.compile(loginSchema),
     update = vine.compile(updateSchema);

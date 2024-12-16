@@ -75,3 +75,12 @@ export const getDiscussionEvents = async (req,res) => {
         res.sendStatus(500);
     }
 }
+
+export const getNbSubscribers = async (req, res) => {
+    try {
+        const nbSubscribers = await eventModel.countSubscribers(pool, req.val);
+        res.status(200).send({count: nbSubscribers});
+    } catch (error) {
+        res.sendStatus(500);
+    }
+}

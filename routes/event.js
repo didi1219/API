@@ -6,6 +6,7 @@ import {
     deleteEvent,
     updateEvent,
     getDiscussionEvents,
+    getNbSubscribers,
 } from '../controler/event.js'
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {inEvent} from "../middleware/authorization/mustBeInEvent.js";
@@ -16,6 +17,7 @@ const router = new Router();
 
 router.get('/created',checkJWT,PagingVM.paging,getAllEventsOfUserCreated);
 router.get('/subscribed',checkJWT,PagingVM.paging,getAllEventsOfUserSubscribed);
+router.get('/nbSubscribers/:id',checkJWT,EVM.searchedEvent,getNbSubscribers);
 router.post('/',checkJWT,EVM.eventToAdd,addEvent);
 router.patch('/',checkJWT,EVM.eventToUpdate,updateEvent);
 router.delete('/:id',checkJWT,EVM.eventToDelete,deleteEvent);

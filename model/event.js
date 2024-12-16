@@ -200,3 +200,10 @@ export const nbRows = async (SQLClient)=>{
     )
     return rows[0].count_rows;
 }
+
+export const countSubscribers = async (SQLClient, {id: event_id}) => {
+    const {rows} = await SQLClient.query(
+        'SELECT COUNT(*) as count FROM linkuserevent WHERE event_id = $1 AND isAccepted = true', [event_id]
+    );
+    return rows[0].count;
+}
