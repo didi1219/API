@@ -9,25 +9,25 @@ export const getCategory = async (req,res) => {
         } else {
             res.sendStatus(404);
         }
-    }catch(error){
+    } catch(error) {
         res.sendStatus(500);
     }
-}
+};
 
 export const addCategory = async (req,res) => {
     try {
         const id = await categoryModel.createCategory(pool,req.val);
         res.status(201).json({id});
-    } catch (error){
+    } catch (error) {
         res.sendStatus(500);
     }
-}
+};
 
 export const deleteCategory = async (req,res) => {
-    try{
+    try {
         await categoryModel.deleteCategory(pool,req.val);
         res.sendStatus(204)
-    } catch (error){
+    } catch (error) {
         res.sendStatus(500);
     }
 };
@@ -36,7 +36,7 @@ export const updateCategory = async (req,res) => {
     try {
       await categoryModel.updateCategory(pool,req.val);
       res.sendStatus(204);
-    }catch(error){
+    } catch(error) {
       res.sendStatus(500);
     }
 };
@@ -54,18 +54,15 @@ export const getAllCategories = async(req, res) => {
     }
 };
 
-export const getCategories = async (req, res) => {
+export const getNbCategories = async (req, res) => {
     try {
-
-        const page = parseInt(req.query.page) || 1;
-        const perPage = parseInt(req.query.perPage) || 10;
-        const categories = await categoryModel.readCategories(pool, {page,perPage});
-        if(categories){
+        const categories = await categoryModel.readNbCategories(pool, req.val);
+        if  (categories) {
             res.json(categories);
         } else {
             res.sendStatus(404);
         }
-    } catch (error){
+    } catch (error) {
         res.sendStatus(500);
     }
 };
@@ -73,7 +70,7 @@ export const getCategories = async (req, res) => {
 export const getTotalRowCategories = async (req, res) => {
     try {
         const totalRow = await categoryModel.readTotalRowCategories(pool);
-        if(totalRow){
+        if (totalRow) {
             res.json(totalRow);
         } else {
             res.sendStatus(204);
@@ -82,11 +79,12 @@ export const getTotalRowCategories = async (req, res) => {
         res.sendStatus(500);
     }
 };
+
 export const deleteCategories = async (req,res) => {
     try{
         await categoryModel.deleteCategories(pool,req.val);
         res.sendStatus(204);
-    }catch(error){
+    } catch(error) {
         res.sendStatus(500);
     }
-}
+};

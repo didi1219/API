@@ -8,15 +8,15 @@ const linkUserEventIDSchema = vine.object({
 const linkUserEventToAddSchema = vine.object({
     event_id: vine.number(),
     user_id: vine.number(),
-    isWaiting: vine.boolean(),
-    isAccepted: vine.boolean(),
+    is_waiting: vine.boolean(),
+    is_accepted: vine.boolean(),
 });
 
 const linkUserEventToUpdateSchema = vine.object({
     event_id: vine.number(),
     user_id: vine.number(),
-    isWaiting: vine.boolean().optional(),
-    isAccepted: vine.boolean().optional(),
+    is_waiting: vine.boolean().optional(),
+    is_accepted: vine.boolean().optional(),
 });
 const linUserEventInvitationPatchSchema = vine.object({
     event_id: vine.number()

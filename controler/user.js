@@ -3,28 +3,6 @@ import * as userModel from '../model/user.js';
 import {sign} from '../util/jwt.js';
 import {readPerson} from "../model/person.js";
 
-export const getUser = async (req, res) => {
-    try {
-        const user = await userModel.readUser(pool, req.val);
-        if (user) {
-            res.json(user);
-        } else {
-            res.sendStatus(404);
-        }
-    } catch (err) {
-        res.sendStatus(500);
-    }
-};
-
-export const addUser = async (req, res) => {
-    try {
-        const id = await userModel.createUser(pool, req.val);
-        res.status(201).json({id});
-    } catch (err) {
-        res.sendStatus(500);
-    }
-};
-
 export const deleteUser = async (req, res) => {
     try {
         await userModel.deleteUser(pool, req.val);
@@ -74,10 +52,14 @@ export const registration = async (req, res) => {
 };
 
 export const getUserInfo = async (req, res) => {
-    const {id}= req.session;
     try {
+        const {id} = req.session;
         const info = await userModel.getUserByID(pool,id);
-        res.send(info);
+        if (info) {
+            res.send(info);
+        } else {
+            res.sendStatus(404);
+        }
     } catch (e){
         res.sendStatus(500);
     }

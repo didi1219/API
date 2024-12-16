@@ -7,9 +7,9 @@ export const readLocation = async (SQLClient, {id}) =>{
     return rows[0];
 };
 
-export const createLocation = async (SQLClient, {label,postalCode}) => {
+export const createLocation = async (SQLClient, {label,postal_code}) => {
     const {rows} = await SQLClient.query(
-        'INSERT INTO location (label,postalCode) VALUES ($1,$2) RETURNING id', [label,postalCode]
+        'INSERT INTO location (label,postal_code) VALUES ($1,$2) RETURNING id', [label,postal_code]
     );
     return rows[0]?.id;
 };
@@ -21,6 +21,7 @@ export const deleteLocation = async (SQLClient, {id}) => {
         'DELETE FROM location WHERE id = $1', [id]
     );
 };
+
 
 export const deleteManyLocations = async (SQLClient, ids) => {
 
@@ -37,7 +38,7 @@ export const deleteManyLocations = async (SQLClient, ids) => {
     }
 };
 
-export const updateLocation = async (SQLClient, {id,label,postalCode}) =>{
+export const updateLocation = async (SQLClient, {id,label,postal_code}) =>{
     let query = 'UPDATE location SET ';
     const querySet = [];
     const queryValues = [];
@@ -45,9 +46,9 @@ export const updateLocation = async (SQLClient, {id,label,postalCode}) =>{
         queryValues.push(label);
         querySet.push(`label = $${queryValues.length}`);
     }
-    if(postalCode){
-        queryValues.push(postalCode);
-        querySet.push(`postalCode = $${queryValues.length}`);
+    if(postal_code){
+        queryValues.push(postal_code);
+        querySet.push(`postal_code = $${queryValues.length}`);
     }
     if(queryValues.length > 0){
         queryValues.push(id);
@@ -58,17 +59,25 @@ export const updateLocation = async (SQLClient, {id,label,postalCode}) =>{
     }
 };
 
-export const readAllLocations = async (SQLClient, {page,perPage}) => {
+export const readAllLocations = async (SQLClient) => {
+    const {rows} = await SQLClient.query(
+        'SELECT * FROM location ORDER BY id'
+    );
+    return rows;
+};
+
+export const readNbLocations = async (SQLClient, {page,perPage}) => {
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        "SELECT * FROM location LIMIT $1 OFFSET $2", [perPage, offset]
-    )
+        "SELECT * FROM location ORDER BY id LIMIT $1 OFFSET $2", [perPage, offset]
+    );
     return rows;
-}
-export const nbRows = async (SQLClient)=>{
+};
+
+export const readTotalRowLocations = async (SQLClient)=>{
     const {rows} = await SQLClient.query(
         "SELECT COUNT(*) as count_rows FROM location"
-    )
-    return rows[0].count_rows;
-}
+    );
+    return rows[0]?.count_rows;
+};

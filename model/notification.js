@@ -19,7 +19,7 @@ export const createNotification = async (SQLClient, {title, content, event_id, c
      ]
     );
     return rows[0]?.id;
-}
+};
 
 export const deleteNotification = async (SQLClient, {id}) => {
     const {rows} = await SQLClient.query(
@@ -70,17 +70,19 @@ export const updateNotification = async (SQLClient, {id, title, content, event_i
         throw new Error("No field given");
     }
 };
-export const readAllNotifications = async (SQLClient,{page,perPage}) => {
+
+export const readNbNotifications = async (SQLClient,{page,perPage}) => {
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        "SELECT * FROM notification LIMIT $1 OFFSET $2", [perPage, offset]
-    )
-    return rows
-}
-export const nbRows = async (SQLClient)=>{
+        `select n.id, n.title, n.content, n.event_id,  n.creation_date, n.type, n.creation_date, e.title as "event" from notification n inner join event e on e.id = n.event_id ORDER BY id LIMIT $1 OFFSET $2;`, [perPage, offset]
+    );
+    return rows;
+};
+
+export const readTotalRowNotifications = async (SQLClient)=>{
     const {rows} = await SQLClient.query(
         "SELECT COUNT(*) as count_rows FROM notification"
-    )
-    return rows[0].count_rows;
-}
+    );
+    return rows[0]?.count_rows;
+};

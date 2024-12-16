@@ -4,9 +4,10 @@ import {
     addLocation,
     deleteLocation,
     updateLocation,
-    getAllLocations,
+    getNbLocations,
     countRows,
-    deleteLocations
+    getAllLocations,
+    deleteLocations,
 } from '../controler/location.js'
 
 import {checkJWT} from "../middleware/identification/JWT.js";
@@ -24,9 +25,11 @@ router.post('/',checkJWT,admin,LVM.locationToAdd,addLocation);
 router.delete('/:id',checkJWT,admin,LVM.locationToDelete,deleteLocation);
 router.patch('/',checkJWT,admin,LVM.locationToUpdate,updateLocation);
 
-router.get('/getAll/location', checkJWT,PagingVM.paging,getAllLocations);
-router.get('/nbLocation/count/',checkJWT,countRows);
+router.get('/get/allTitle',checkJWT,getAllLocations);
 
-router.delete('/many/deleteLocation',checkJWT,TabVM.ids,deleteLocations);
+router.get('/nbLocations/search', checkJWT,PagingVM.paging,getNbLocations);
+router.get('/nbLocations/count/',checkJWT,countRows);
+
+router.delete('/many/deleteLocation/',checkJWT,admin,TabVM.ids,deleteLocations);
 
 export default router;

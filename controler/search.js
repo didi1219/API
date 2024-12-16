@@ -10,7 +10,7 @@ export const searchEventByName = async (req,res) => {
         } else {
             res.sendStatus(404);
         }
-    } catch(error){
+    } catch(error) {
         res.sendStatus(500);
     }
 };
@@ -28,49 +28,54 @@ export const searchEvent = async (req, res) =>{
     }
 };
 
-export const getNbRowsBySearch = async (req,res) => {
-    try{
-        const nbRows = await searchModel.readNbRowEventGeneric(pool, req.val);
-        if(nbRows){
-            res.json({nbRows});
-        }else{
+export const getPublicEvents = async (req,res) => {
+    try {
+        const response = await searchModel.readPublicEvents(pool,req.val);
+        if(response) {
+            res.json({response});
+        } else {
             res.sendStatus(404);
         }
-    }catch(error){
-        console.log(error)
+    } catch (error) {
         res.sendStatus(500);
     }
-}
+};
+
+export const getTotalRowEventGenericSearched = async (req, res) => {
+    try {
+        const response = await searchModel.readTotalRowEventGenericSearched(pool, req.val);
+        if(response){
+            res.json({response});
+        } else {
+            res.sendStatus(500);
+        }
+    } catch (error) {
+        res.sendStatus(500);
+    }
+};
 
 export const getEventCategories = async (req,res) => {
     try {
-        const events = await searchModel.readEventByCategories(pool,req.val);
-        res.json({events});
-    }catch (error){
-        console.log(error)
+        const response = await searchModel.readEventByCategories(pool,req.val);
+        if(response) {
+            res.json({response});
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (error) {
         res.sendStatus(500);
     }
 };
 
 export const getEventByLoc = async (req,res) => {
     try {
-        const result = await searchModel.readEventByLocalities(pool, req.val);
-        res.json({result})
-    } catch(error){
-        console.log(error)
-        res.sendStatus(500);
-    }
-};
-
-export const getAllEv = async(req,res) => {
-    try {
-        const response = await searchModel.readAllEvents(pool,req.val);
+        const response = await searchModel.readEventByLocalities(pool, req.val);
         if(response) {
             res.json({response});
         } else {
             res.sendStatus(404);
         }
-    } catch (error){
+    } catch(error){
         res.sendStatus(500);
     }
 };
@@ -106,6 +111,7 @@ export const getNbEventByOwner = async(req,res) => {
             res.sendStatus(404);
         }
     }catch(error){
+        console.log(error)
         res.sendStatus(500);
     }
 };

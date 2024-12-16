@@ -1,6 +1,7 @@
 import Router from 'express-promise-router';
 import {
     updateUser,
+    deleteUser,
     registration,
     login,
     getUserInfo,
@@ -12,10 +13,7 @@ import {
 
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {userValidatorMiddleware as UVM} from "../middleware/validation.js";
-import {pagingValidatorMiddleWare as PagingVM} from "../middleware/validation.js";
-import {tabValidatorMiddleware as TabVM} from "../middleware/validation.js";
-import {tabIds} from "../middleware/validator/tabValidator.js";
-
+import {getAllUsersTitle} from "../controler/admin.js";
 
 const router = Router();
 

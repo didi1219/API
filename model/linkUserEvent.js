@@ -6,13 +6,13 @@ export const readLinkUserEvent = async (SQLClient, {user_id, event_id}) => {
     return rows[0];
 };
 
-export const createLinkUserEvent = async (SQLClient, {user_id, event_id, isWaiting, isAccepted}) => {
-    const {rows} = await SQLClient.query('INSERT INTO linkuserevent (user_id, event_id, isWaiting, isAccepted) VALUES ($1, $2, $3, $4)',
+export const createLinkUserEvent = async (SQLClient, {user_id, event_id, is_waiting, is_accepted}) => {
+    const {rows} = await SQLClient.query('INSERT INTO linkuserevent (user_id, event_id, is_waiting, is_accepted) VALUES ($1, $2, $3, $4)',
         [
             user_id,
             event_id,
-            isWaiting,
-            isAccepted
+            is_waiting,
+            is_accepted
         ]);
     return rows[0];
 };
@@ -22,9 +22,6 @@ export const deleteLinkUserEvent = async (SQLClient, {user_id, event_id}) => {
 };
 
 export const deleteManyLinkUserEvents = async (SQLClient, linkUserEvents) => {
-    if (!Array.isArray(linkUserEvents) || linkUserEvents.length === 0) {
-        throw new Error('No linkUserEvents provided for deletion.');
-    }
     try {
         await SQLClient.query('BEGIN');
         for (const { user_id, event_id } of linkUserEvents) {
@@ -37,18 +34,18 @@ export const deleteManyLinkUserEvents = async (SQLClient, linkUserEvents) => {
     }
 }
 
-export const updateLinkUserEvent = async (SQLClient, { user_id, event_id, isWaiting, isAccepted }) => {
+export const updateLinkUserEvent = async (SQLClient, { user_id, event_id, is_waiting, is_accepted }) => {
     let query = 'UPDATE linkUserEvent SET ';
     const querySet = [];
     const queryValues = [];
 
-    if (typeof isWaiting !== 'undefined') {
-        queryValues.push(isWaiting);
-        querySet.push(`isWaiting = $${queryValues.length}`);
+    if (typeof is_waiting !== 'undefined') {
+        queryValues.push(is_waiting);
+        querySet.push(`is_waiting = $${queryValues.length}`);
     }
-    if (typeof isAccepted !== 'undefined') {
-        queryValues.push(isAccepted);
-        querySet.push(`isAccepted = $${queryValues.length}`);
+    if (typeof is_accepted !== 'undefined') {
+        queryValues.push(is_accepted);
+        querySet.push(`is_accepted = $${queryValues.length}`);
     }
 
     if (querySet.length > 0) {
@@ -62,19 +59,20 @@ export const updateLinkUserEvent = async (SQLClient, { user_id, event_id, isWait
     }
 };
 
-export const readAllLinkUserEvent = async (SQLClient, {page, perPage}) => {
+export const readNbLinkUserEvents = async (SQLClient, {page, perPage}) => {
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        "SELECT * FROM linkuserevent LIMIT $1 OFFSET $2", [perPage, offset]
-    )
+        "select l.user_id, l.event_id, l.is_accepted, l.is_waiting, e.title AS \"event\", u.user_name from linkuserevent l inner join users u on u.id = l.user_id inner join event e on e.id = l.event_id ORDER BY l.user_id LIMIT $1 OFFSET $2", [perPage, offset]
+    );
     return rows;
-}
-export const nbRows = async (SQLClient)=>{
+};
+
+export const readTotalRowLinkUserEvents = async (SQLClient)=>{
     const {rows} = await SQLClient.query(
         "SELECT COUNT(*) as count_rows FROM linkuserevent"
-    )
-    return rows[0].count_rows;
+    );
+    return rows[0]?.count_rows;
 }
 
 export const readInvitationNotAcceptedByCurrentId = async (SQLClient,{user_id}) =>{
@@ -100,3 +98,4 @@ export const readFavoriteEvent = async (SQLClient, {user_id, page, perPage}) => 
     return rows;
 }
 
+;

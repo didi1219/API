@@ -4,17 +4,12 @@ const eventIDSchema = vine.object({
     id: vine.number(),
 });
 
-const nbEventsSchema = vine.object({
-    page: vine.number(),
-    perPage: vine.number(),
-});
-
 const eventToAddSchema = vine.object({
     title: vine.string().trim().maxLength(250),
     description: vine.string().maxLength(250),
     event_date: vine.date(),
     street_number: vine.string().maxLength(250),
-    isPrivate: vine.boolean(),
+    is_private: vine.boolean(),
     picture_path: vine.string().trim().maxLength(250),
     duration: vine.number(),
     user_id: vine.number(),
@@ -39,7 +34,7 @@ const eventToUpdateSchema = vine.object({
     description: vine.string().maxLength(250).optional(),
     event_date: vine.date().optional(),
     street_number: vine.string().maxLength(250).optional(),
-    isPrivate: vine.boolean().optional(),
+    is_private: vine.boolean().optional(),
     picture_path: vine.string().trim().maxLength(250).optional(),
     duration: vine.number().optional(),
     user_id: vine.number().optional(),

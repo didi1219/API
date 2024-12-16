@@ -56,12 +56,12 @@ export const updateCategory = async (SQLClient, {id,title}) => {
 
 export const readAllCategories = async (SQLClient) => {
     const {rows} = await SQLClient.query(
-        'SELECT * FROM category'
+        'SELECT * FROM category ORDER BY id'
     );
     return rows;
 };
 
-export const readCategories = async (SQLClient, {page, perPage}) => {
+export const readNbCategories = async (SQLClient, {page, perPage}) => {
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
@@ -70,8 +70,9 @@ export const readCategories = async (SQLClient, {page, perPage}) => {
     return rows;
 };
 
-export const readTotalRowCategories = async (SQLClient) =>{
-    const query = `SELECT COUNT(*) AS total_rows FROM category`;
-    const { rows } = await SQLClient.query(query);
-    return rows[0].total_rows;
+export const readTotalRowCategories = async (SQLClient)=>{
+    const {rows} = await SQLClient.query(
+        "SELECT COUNT(*) as count_rows FROM event"
+    );
+    return rows[0]?.count_rows;
 };

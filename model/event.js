@@ -8,17 +8,17 @@ export const readEvent = async (SQLClient, {id}) =>{
     return rows[0];
 };
 
-export const createEvent = async (SQLClient, {title,description,event_date,street_number,isPrivate,picture_path,duration,user_id,location_id,category_id}) => {
+export const createEvent = async (SQLClient, {title,description,event_date,street_number,is_private,picture_path,duration,user_id,location_id,category_id}) => {
     try {
         await SQLClient.query('BEGIN');
         const {rows} = await SQLClient.query(
-            'INSERT INTO event (title,description,event_date,street_number,isPrivate,picture_path,duration,user_id,location_id,category_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING id',
+            'INSERT INTO event (title,description,event_date,street_number,is_private,picture_path,duration,user_id,location_id,category_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING id',
             [
                 title,
                 description,
                 event_date,
                 street_number,
-                isPrivate,
+                is_private,
                 picture_path,
                 duration,
                 user_id,
@@ -29,7 +29,7 @@ export const createEvent = async (SQLClient, {title,description,event_date,stree
         const eventId = rows[0]?.id;
 
         await SQLClient.query(
-            'INSERT INTO discussionEvent (title,isWritable, event_id) VALUES ($1,$2,$3)',
+            'INSERT INTO discussionEvent (title,is_writable, event_id) VALUES ($1,$2,$3)',
             ["Information",false,eventId]
         );
         await SQLClient.query('COMMIT');
@@ -99,9 +99,9 @@ export const updateEvent = async (SQLClient, {id, title, description, event_date
         queryValues.push(street_number);
         querySet.push(`street_number = $${queryValues.length}`);
     }
-    if(isPrivate){
-        queryValues.push(isPrivate);
-        querySet.push(`isPrivate = $${queryValues.length}`);
+    if(typeof is_private !== 'undefined'){
+        queryValues.push(is_private);
+        querySet.push(`is_private = $${queryValues.length}`);
     }
     if(picture_path){
         queryValues.push(picture_path);
@@ -132,7 +132,14 @@ export const updateEvent = async (SQLClient, {id, title, description, event_date
     }
 };
 
-export const readAllEventsOfUserCreated = async (SQLClient, {user_id, perPage, page}) => {
+export const searchEvent = async (SQLClient, {user_id}) => {
+    const {rows} = await SQLClient.query(
+        'SELECT * FROM event where user_id = $1 ORDER BY id', [user_id]
+    );
+    return rows;
+};
+
+export const readNbEventsOfUserCreated = async (SQLClient, {user_id, perPage, page}) => {
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
@@ -145,7 +152,7 @@ export const readAllEventsOfUserSubscribed = async (SQLClient, {user_id, perPage
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        'select event.id, event.title, event.description, event.event_date, event.street_number, event.isprivate, event.picture_path, event.duration,event.location_id, event.category_id, l.isaccepted, l.iswaiting from event inner join linkuserevent l on event.id = l.event_id where l.user_id = $1 and l.isAccepted = true LIMIT $2 OFFSET $3', [user_id, size, offset]
+        'select event.id, event.title, event.description, event.event_date, event.street_number, event.is_private, event.picture_path, event.duration,event.location_id, event.category_id, l.is_accepted, l.is_waiting from event inner join linkuserevent l on event.id = l.event_id where l.user_id = $1 and l.is_accepted = true LIMIT $2 OFFSET $3', [user_id, size, offset]
     );
     return rows;
 };
@@ -180,39 +187,27 @@ export const listDiscussionEvent = async (SQLClient, { id }) => {
     return rows;
 };
 
-
-/*
-export const searchEvent = async (SQLClient, {user_id}) => {
-    try {
-       const {rows} = await SQLClient.query(
-            'SELECT * FROM event where user_id = $1', [user_id]
-       );
-       return rows;
-    } catch (error){
-        throw new Error();
-    }
-};*/
-
-export const readEvents = async (SQLClient, {page, perPage}) => {
-    const size = verifyValueOfPerPage(perPage);
-    const offset = calculOffset({size, page});
+export const readAllEventTitle = async (SQLClient) => {
     const {rows} = await SQLClient.query(
-        `SELECT * FROM event ORDER BY id LIMIT $1 OFFSET $2`,[perPage,offset]
+        'SELECT title, id FROM event ORDER BY id'
     );
     return rows;
 };
 
-export const readTotalRowEvent = async (SQLClient) =>{
-    const query = `SELECT COUNT(*) AS total_rows FROM event`;
-    const { rows } = await SQLClient.query(query);
-    return rows[0].total_rows;
+export const readNbEvents = async (SQLClient, {page, perPage}) => {
+    const size = verifyValueOfPerPage(perPage);
+    const offset = calculOffset({size, page});
+    const {rows} = await SQLClient.query(
+        `select e.id, e.title, e.description, e.event_date, e.street_number,e.picture_path, e.is_private as "is_private", e.duration, e.user_id, u.user_name as "user_name", l.label as "locality", l.id as "location_id", c.title as "category", c.id as "category_id" FROM event e inner join location l on e.location_id = l.id inner join category c on e.category_id = c.id inner join users u on u.id = e.user_id ORDER BY id LIMIT $1 OFFSET $2`,[perPage,offset]
+    );
+    return rows;
 };
 
-export const nbRows = async (SQLClient)=>{
+export const readTotalRowEvent = async (SQLClient)=>{
     const {rows} = await SQLClient.query(
         "SELECT COUNT(*) as count_rows FROM event"
     )
-    return rows[0].count_rows;
+    return rows[0]?.count_rows;
 }
 export const createEventWithInvitations = async (SQLClient, {
     title, description, event_date, street_number, picture_path, duration, user_id, location_id, category_id, users_id

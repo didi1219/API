@@ -4,12 +4,17 @@ import{
     addMessage,
     deleteMessage,
     updateMessage,
-    listMessages,
-    deletemessages,
+    getNbMessages,
+    countRows,
+    deleteMessages
 } from "../controler/message.js"
+import {
+    messageValidatorMiddleware as MVM,
+    pagingValidatorMiddleWare as PagingVM,
+    tabValidatorMiddleware as TabVM
+} from "../middleware/validation.js";
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {admin} from "../middleware/authorization/mustBeAdmin.js";
-import {messageValidatorMiddleware as MVM} from "../middleware/validation.js";
 import {hasWriteRights} from "../middleware/authorization/mustHaveWriteRights.js";
 import {tabValidatorMiddleware as TabVM} from "../middleware/validation.js";
 
@@ -20,8 +25,9 @@ router.post('/', checkJWT, hasWriteRights, MVM.messageToAdd, addMessage);
 router.patch('/',checkJWT,admin,MVM.messageToUpdate, updateMessage);
 router.delete('/:id',checkJWT,admin,MVM.messageToDelete, deleteMessage);
 
-router.get('/all/:offset', checkJWT, admin, MVM.listMessages, listMessages);
+router.get('/nbMessages/search', checkJWT,PagingVM.paging,getNbMessages);
+router.get('/nbMessages/count/',checkJWT,countRows);
 
-router.delete('/many/deleteMessage/', checkJWT, admin,TabVM.ids,deletemessages)
+router.delete('/many/deleteMessages/',checkJWT,admin,TabVM.ids ,deleteMessages);
 
 export default router;

@@ -38,30 +38,42 @@ export const updateLinkUserEvent = async (req, res) => {
         await linkUserEventModel.updateLinkUserEvent(pool, req.val);
         res.sendStatus(204);
     } catch (err) {
+        console.log(err)
         res.sendStatus(500);
     }
 };
-export const getAllLinkUserEvent = async (req, res) => {
-    try{
-        const response = await linkUserEventModel.readAllLinkUserEvent(pool, req.val);
-        res.json(response);
-    }catch(error){
+
+export const getNbLinkUserEvents = async (req, res) => {
+    try {
+        const response = await linkUserEventModel.readNbLinkUserEvents(pool, req.val);
+        if (response) {
+            res.json(response);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch(error) {
         res.sendStatus(500);
     }
-}
+};
+
 export const countRows = async (req, res) => {
     try{
-        const response = await linkUserEventModel.nbRows(pool);
-        return res.json(response);
-    }catch(error){
+        const response = await linkUserEventModel.readTotalRowLinkUserEvents(pool);
+        if (response) {
+            res.json(response);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch(error) {
         res.sendStatus(500);
     }
-}
+};
+
 export const deleteLinkUserEvents = async (req,res) => {
     try{
         await linkUserEventModel.deleteManyLinkUserEvents(pool, ids);
         res.sendStatus(200);
-    }catch(error){
+    } catch(error) {
         res.sendStatus(500);
     }
 }
