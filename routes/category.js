@@ -26,6 +26,6 @@ router.get('/get/all',getAllCategories);
 router.get('/nbCategories/search?',checkJWT,PVM.searchedCategories,getCategories);
 router.get('/nbCategories/totalCount/',checkJWT,getTotalRowCategories);
 
-router.delete('/many/deleteCategory',checkJWT,tabIds,TabVM.ids,deleteCategories);
+router.delete('/many/deleteCategory',checkJWT,TabVM.ids,deleteCategories);
 
 export default router;

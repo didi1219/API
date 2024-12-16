@@ -258,6 +258,31 @@ export const eventManagementValidatorMiddleware = {
         }catch(error){
             res.status(400).send(error.messages);
         }
+    },
+    eventToCountRows : async (req, res, next) =>{
+        try{
+            req.val = await eventManagementValidator.eventToCountRows.validate(req.query);
+            next();
+        }catch(error){
+            res.status(400).send(error.messages);
+        }
+    },
+    eventToCountRowsSearchByLocalities : async (req, res, next) => {
+        try{
+            req.val = await eventManagementValidator.eventToCountRowsSearchByLocalities.validate(req.body);
+            next();
+        }catch(error){
+            console.log(error)
+            res.status(400).send(error.messages);
+        }
+    },
+    eventToCountRowsSearchByCategories : async (req, res, next) => {
+        try{
+            req.val = await eventManagementValidator.eventToCountRowsSearchByCategories.validate(req.body);
+            next();
+        }catch(error){
+            res.status(400).send(error.messages);
+        }
     }
 };
 
@@ -489,7 +514,7 @@ export const pagingValidatorMiddleWare={
     },
     pagingSearchByCategories : async (req,res, next) => {
         try{
-            req.val = await pagingValidator.pagingSearchByCategories.validate(req.query);
+            req.val = await pagingValidator.pagingSearchByCategories.validate(req.body);
             next();
         }catch(error){
             res.status(400).send(error.messages);
@@ -515,10 +540,10 @@ export const pagingValidatorMiddleWare={
 export const tabValidatorMiddleware = {
     ids : async (req, res, next) => {
         try{
-            req.val = await tabValidator.ids.validate(req.query);
+            req.val = await tabValidator.ids.validate(req.body);
             next();
         }catch(error){
-            res.status(400).send(error.message);
+            res.status(400).send(error.messages);
         }
     }
 }

@@ -66,7 +66,7 @@ export const deleteEvent = async (SQLClient, {id}) => {
     }
 };
 
-export const deleteManyEvents = async (SQLClient, ids) => {
+export const deleteManyEvents = async (SQLClient, {ids}) => {
     try {
         await SQLClient.query('BEGIN');
         for (const id of ids) {

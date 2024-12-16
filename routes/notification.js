@@ -26,6 +26,6 @@ router.delete('/:id',checkJWT,admin,NVM.notificationToDelete, deleteNotification
 router.get('/getAll/notification',checkJWT,PagingVM.paging,getAllNotifications);
 router.get('/nbNotification/count/',checkJWT,countRows)
 
-router.delete('/many/deleteNotification',checkJWT,tabIds,TabVM.ids ,deleteNotifications);
+router.delete('/many/deleteNotification/',checkJWT,TabVM.ids ,deleteNotifications);
 
 export default router;

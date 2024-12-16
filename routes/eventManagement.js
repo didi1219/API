@@ -30,8 +30,9 @@ router.get('/nbEvents/totalCount/',checkJWT,getTotalRowEvent);
 
 router.get('/discussion/event',checkJWT, PagingVM.pagingWithId,getDiscussionEvents);
 
-router.delete('/many/deleteEvent',checkJWT,tabIds,TabVM.ids,deleteEvents);
+router.delete('/many/deleteEvent',checkJWT,TabVM.ids,deleteEvents);
 
-router.post('/createPrivate/withInvitation/',checkJWT,EVM.eventToAddWithInvitation,addEventWithInvitations)
+router.post('/createPrivate/withInvitation/',checkJWT,EVM.eventToAddWithInvitation,addEventWithInvitations);
+
 
 export default router;

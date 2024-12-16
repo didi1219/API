@@ -81,6 +81,7 @@ export const deleteEvents = async (req,res) => {
         await eventModel.deleteManyEvents(pool,req.val);
         res.sendStatus(204);
     }catch(error){
+        console.log(error);
         res.sendStatus(500);
     }
 }

@@ -33,6 +33,6 @@ router.get('/:id/olderMessages/:previousMessageID', checkJWT, DVM.discussionEven
 router.get('/getall/paging?',checkJWT, PagingVM.paging,getAllDiscussionPaging);
 router.get('/nbRows/count/', checkJWT, countNbRows);
 
-router.delete('/many/deleteDiscussionEvent', checkJWT,tabIds,TabVM.ids,deleteDiscussionEvents)
+router.delete('/many/deleteDiscussionEvent', checkJWT,TabVM.ids,deleteDiscussionEvents)
 
 export default router;

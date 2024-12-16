@@ -46,11 +46,22 @@ const eventToUpdateSchema = vine.object({
     location_id: vine.number().optional(),
     category_id: vine.number().optional(),
 });
-
+const eventToCountRowsSchema = vine.object({
+    search: vine.string()
+})
+const eventToCountRowsSearchByCategoriesSchema = vine.object({
+    categories: vine.array(vine.number())
+})
+const eventToCountRowsSearchByLocalitiesSchema = vine.object({
+    localities: vine.array(vine.number())
+})
 export const
     searchedEvent = vine.compile(eventIDSchema),
     eventToAdd = vine.compile(eventToAddSchema),
     eventToUpdate = vine.compile(eventToUpdateSchema),
     eventToDelete = vine.compile(eventIDSchema),
     searchedEvents = vine.compile(nbEventsSchema),
-    eventToAddWithInvitations = vine.compile(eventToAddWithInvitationsSchema);
+    eventToAddWithInvitations = vine.compile(eventToAddWithInvitationsSchema),
+    eventToCountRows = vine.compile(eventToCountRowsSchema),
+    eventToCountRowsSearchByCategories = vine.compile(eventToCountRowsSearchByCategoriesSchema),
+    eventToCountRowsSearchByLocalities = vine.compile(eventToCountRowsSearchByLocalitiesSchema);

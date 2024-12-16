@@ -90,3 +90,13 @@ export const isFavoritePatch = async (SQLClient,{user_id,event_id}) => {
     )
     return rows;
 }
+
+export const readFavoriteEvent = async (SQLClient, {user_id, page, perPage}) => {
+    const size = verifyValueOfPerPage(perPage);
+    const offset = calculOffset({size, page});
+    const {rows} = await SQLClient.query(
+        "SELECT * FROM linkuserevent l INNER JOIN event e on l.event_id = e.id where l.user_id = $1 LIMIT $2 OFFSET $3 ", [user_id, size,offset]
+    )
+    return rows;
+}
+

@@ -13,12 +13,17 @@ export const readEventByName = async (SQLClient, {name,perPage, page})=> {
 };
 
 export const readEventGeneric = async (SQLClient, { page, perPage, search }) => {
-    const searchDecode = decodeURI()
     const searchConcat = `%${search}%`;
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const { rows } = await SQLClient.query("SELECT e.id, e.title AS EvenTitle, e.description, e.event_date, e.street_number,  l.label AS locality, c.title AS categorytitle FROM event e INNER JOIN location l ON e.location_id = l.id INNER JOIN category c ON e.category_id = c.id WHERE e.title ILIKE $1 OR l.label ILIKE $1 OR c.title ILIKE $1 ORDER BY e.id ASC LIMIT $2 OFFSET $3", [searchConcat, size, offset]);
     return rows;
+};
+
+export const readNbRowEventGeneric = async (SQLClient, { search }) => {
+    const searchConcat = `%${search}%`;
+    const { rows } = await SQLClient.query("SELECT COUNT(*) as count_rows FROM event e INNER JOIN location l ON e.location_id = l.id INNER JOIN category c ON e.category_id = c.id WHERE e.title ILIKE $1 OR l.label ILIKE $1 OR c.title ILIKE $1", [searchConcat]);
+    return rows[0].count_rows;
 };
 
 export const readEventByCategories = async (SQLClient, {categories, page , perPage})=> {
@@ -31,6 +36,14 @@ export const readEventByCategories = async (SQLClient, {categories, page , perPa
     return rows;
 };
 
+export const readNbRowsSearchByCategories = async (SQLClient, {categories})=> {
+    const sqlCategories = categories.map((_, index) => `$${index + 1}`).join(', ');
+    const {rows} = await SQLClient.query(
+        `SELECT COUNT(*) as count_rows FROM event WHERE category_id IN (${sqlCategories})`, [...categories]
+    )
+    return rows[0].count_rows;
+};
+
 export const readEventByLocalities = async (SQLClient, { localities, page, perPage }) => {
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({ size, page });
@@ -41,6 +54,15 @@ export const readEventByLocalities = async (SQLClient, { localities, page, perPa
     );
 
     return rows;
+};
+
+export const readNbRowsSearchByLocalities = async (SQLClient, { localities}) => {
+    const sqlLocalities = localities.map((_, index) => `$${index + 1}`).join(', ');
+    const { rows } = await SQLClient.query(
+        `SELECT COUNT(*) AS count_rows FROM event WHERE location_id IN (${sqlLocalities})`,
+        [...localities]
+    );
+    return rows[0].count_rows;
 };
 
 export const readAllEvents = async (SQLClient,{page, perPage})=>{
@@ -69,18 +91,16 @@ export const readEventByOwner = async(SQLClient, {id, perPage, page}) =>{
     return rows;
 };
 
-export const readNbEventOwner = async(SQLClient, {id, perPage, page}) =>{
-    const size = verifyValueOfPerPage(perPage);
-    const offset = calculOffset({size, page});
+export const readNbEventOwner = async(SQLClient, {id}) =>{
     const {rows} = await SQLClient.query(
-        "SELECT COUNT(*) FROM event WHERE user_id = $1 LIMIT $2 OFFSET $3", [id, size,offset]
+        "SELECT COUNT(*) as count_rows FROM event WHERE user_id = $1", [id]
     )
-    return rows[0];
+    return rows[0].count_rows;
 };
 
 export const readNbEventUser = async(SQLClient, {id})=>{
     const {rows} = await SQLClient.query(
-        "SELECT COUNT(*) FROM linkuserevent WHERE user_id = $1 AND isAccepted",[id]
+        "SELECT COUNT(*)as count_rows FROM linkuserevent WHERE user_id = $1 AND isAccepted",[id]
     )
-    return rows[0];
+    return rows[0].count_rows;
 };

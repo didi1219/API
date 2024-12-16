@@ -26,7 +26,7 @@ router.patch('/me',checkJWT,UVM.update,updateUser);
 
 router.get('/getAll/users',checkJWT,PagingVM.paging,getAllUsers);
 router.get('/nbUser/count/', checkJWT,countRows);
-router.delete('/many/deleteUser',checkJWT,tabIds,TabVM.ids,deleteUsers);
+router.delete('/many/deleteUser/',checkJWT,TabVM.ids,deleteUsers);
 
 router.get('/checkEmail/',checkJWT,checkEmailExist);
 

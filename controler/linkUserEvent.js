@@ -1,7 +1,6 @@
 import {pool} from '../database/database.js';
 import * as linkUserEventModel from '../model/linkUserEvent.js';
-import {readAllLinkUserEvent} from "../model/linkUserEvent.js";
-import * as userModel from "../model/user.js";
+
 
 export const getLinkUserEvent = async (req, res) => {
     try {
@@ -118,6 +117,20 @@ export const isFavorite = async (req,res) => {
         req.val.user_id = req.session.id;
         await linkUserEventModel.isFavoritePatch(pool,req.val);
         res.sendStatus(204);
+    }catch(error){
+        res.sendStatus(500);
+    }
+}
+
+export const getFavoriteEvent = async (req,res) => {
+    try{
+        req.val.user_id = req.session.id;
+        const response = await linkUserEventModel.readFavoriteEvent(pool, req.val);
+        if(response){
+            res.status(200).json({response});
+        }else{
+            res.sendStatus(404);
+        }
     }catch(error){
         res.sendStatus(500);
     }
