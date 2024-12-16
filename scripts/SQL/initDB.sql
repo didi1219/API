@@ -2,6 +2,8 @@ DROP TABLE IF EXISTS category CASCADE;
 
 CREATE TABLE category (
                           id integer primary key GENERATED ALWAYS AS IDENTITY,
+                          icon_component_name varchar(250) NOT NULL,
+                          icon_name varchar(250) NOT NULL,
                           title varchar(250) NOT NULL
 );
 
@@ -31,7 +33,7 @@ DROP TABLE IF EXISTS event CASCADE;
 CREATE TABLE event (
                        id integer primary key GENERATED ALWAYS AS IDENTITY,
                        title varchar(250) NOT NULL,
-                       description varchar(250) NOT NULL,
+                       description varchar(250) ,
                        event_start TIMESTAMP NOT NULL,
                        event_end TIMESTAMP NOT NULL,
                        street_number varchar(250) NOT NULL,
@@ -76,28 +78,30 @@ CREATE TABLE message(
 DROP TABLE IF EXISTS linkUserEvent CASCADE;
 
 CREATE TABLE linkUserEvent (
+                               id integer primary key GENERATED ALWAYS AS IDENTITY,
                                user_id INTEGER REFERENCES users(id) DEFERRABLE INITIALLY IMMEDIATE,
                                event_id INTEGER REFERENCES event(id) DEFERRABLE INITIALLY IMMEDIATE,
                                is_waiting BOOLEAN NOT NULL,
                                is_accepted BOOLEAN NOT NULL,
+                               is_favorite BOOLEAN NOT NULL,
                                CONSTRAINT unique_user_event UNIQUE (user_id, event_id)
 );
 
 -- Fill `category` table
-INSERT INTO category (title) VALUES
-                                 ('Music'),
-                                 ('Festival'),
-                                 ('Conference'),
-                                 ('Party'),
-                                 ('Sport'),
-                                 ('Art'),
-                                 ('Cinema'),
-                                 ('Literature'),
-                                 ('Technology'),
-                                 ('Video Games'),
-                                 ('Food'),
-                                 ('Education'),
-                                 ('Environment');
+INSERT INTO category (title,icon_component_name,icon_name) VALUES
+                                 ('Music','Feather','music'),
+                                 ('Festival','MaterialIcons','festival'),
+                                 ('Conference','Octicons','comment-discussion'),
+                                 ('Party','MaterialCommunityIcons','party-popper'),
+                                 ('Sport','MaterialIcons','sports-soccer'),
+                                 ('Art','Octicons','paintbrush'),
+                                 ('Cinema','FontAwesome6','video'),
+                                 ('Literature','AntDesign','book'),
+                                 ('Technology','MaterialIcons','computer'),
+                                 ('Video Games','MaterialIcons','games'),
+                                 ('Food','MaterialIcons','fastfood'),
+                                 ('Education','MaterialCommunityIcons','book-education'),
+                                 ('Environment','FontAwesome','tree');
 
 
 -- Fill `users` table
@@ -190,14 +194,14 @@ INSERT INTO message (content, type, sending_date, user_id, discussion_event_id) 
                                                                                     ('La conférence abordera-t-elle les dernières avancées en IA ?', 0, '2024-12-05', 5, 7);
 
 -- Fill `linkUserEvent` table
-INSERT INTO linkUserEvent (user_id, event_id, is_waiting, is_accepted) VALUES
-                                                                         (1, 1, false, true),
-                                                                         (2, 2, false, true),
-                                                                         (1, 3, true, false),
-                                                                         (2, 3, true, false), -- Jane Doe attend une confirmation pour le Festival Electro
-                                                                         (3, 4, false, true), -- John Smith participe au Marathon
-                                                                         (4, 5, false, true), -- Charlie Brown participe à la Soirée Disco
-                                                                         (5, 6, false, true), -- Emily Wilson participe à la Conférence Tech
-                                                                         (6, 8, true, false), -- Mike Taylor attend une confirmation pour la Soirée de fin d’année
-                                                                         (7, 8, false, true), -- Sarah Johnson participe à la Soirée de fin d’année
-                                                                         (8, 1, true, false); -- David Lee attend une confirmation pour le Concert de Jazz
+INSERT INTO linkUserEvent (user_id, event_id, is_waiting, is_accepted,is_favorite) VALUES
+                                                                         (1, 1, false, true,false),
+                                                                         (2, 2, false, true,false),
+                                                                         (1, 3, true, false,false),
+                                                                         (2, 3, true, false,false), -- Jane Doe attend une confirmation pour le Festival Electro
+                                                                         (3, 4, false, true,false), -- John Smith participe au Marathon
+                                                                         (4, 5, false, true,false), -- Charlie Brown participe à la Soirée Disco
+                                                                         (5, 6, false, true,false), -- Emily Wilson participe à la Conférence Tech
+                                                                         (6, 8, true, false,false), -- Mike Taylor attend une confirmation pour la Soirée de fin d’année
+                                                                         (7, 8, false, true,false), -- Sarah Johnson participe à la Soirée de fin d’année
+                                                                         (8, 1, true, false,false); -- David Lee attend une confirmation pour le Concert de Jazz

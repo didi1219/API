@@ -1,8 +1,7 @@
 import vine from '@vinejs/vine';
 
 const linkUserEventIDSchema = vine.object({
-    event_id: vine.number(),
-    user_id: vine.number(),
+    id: vine.number(),
 });
 
 const linkUserEventToAddSchema = vine.object({
@@ -13,14 +12,16 @@ const linkUserEventToAddSchema = vine.object({
 });
 
 const linkUserEventToUpdateSchema = vine.object({
+    id: vine.number(),
     event_id: vine.number(),
     user_id: vine.number(),
     is_waiting: vine.boolean().optional(),
     is_accepted: vine.boolean().optional(),
 });
+
 const linUserEventInvitationPatchSchema = vine.object({
     event_id: vine.number()
-})
+});
 
 export const
     searchedLinkUserEvent = vine.compile(linkUserEventIDSchema),

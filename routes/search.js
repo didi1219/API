@@ -5,7 +5,6 @@ import {
     getTotalRowEventGenericSearched,
     getEventCategories,
     getEventByLoc,
-    setFavoriteEvent,
     getAllEventOfOwner,
     getNbEventByOwner,
     getNbEventByUser,
@@ -34,8 +33,8 @@ router.get('/events/type/public/',checkJWT,PagingVM.paging,getPublicEvents);
 router.get('/event/byCategory/',checkJWT,tabTransformCat,PagingVM.pagingSearchByCategories,getEventCategories);
 router.get('/event/byLocality',checkJWT,tabTransformLoc,PagingVM.pagingSearchByLoc,getEventByLoc);
 
-router.get('/nbRows/byOwner/:id',checkJWT,admin,EMVM.searchedEvent,getNbEventByOwner);
-router.get('/nbRows/byUser/:id',checkJWT,EMVM.searchedEvent,getNbEventByUser);
+router.get('/nbRows/byOwner/:id',checkJWT,admin,SM.searchedId,getNbEventByOwner);
+router.get('/nbRows/byUser/:id',checkJWT,SM.searchedId,getNbEventByUser);
 router.get('/nbRows/generic',checkJWT,decodeQuery,EMVM.eventToCountRows,getTotalRowEventGenericSearched);
 router.get('/nbRows/byCategories/', checkJWT, EMVM.eventToCountRowsSearchByCategories, getNbRowsSearchByCategories);
 router.get('/nbRows/byLocalities/',checkJWT, EMVM.eventToCountRowsSearchByLocalities, getNbRowsSearchByLocalities);

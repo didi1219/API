@@ -22,13 +22,13 @@ const router = Router();
 
 router.post('/',checkJWT,admin,LUEVM.linkUserEventToAdd, addLinkUserEvent);
 router.patch('/',checkJWT,admin,LUEVM.linkUserEventToUpdate, updateLinkUserEvent);
-router.get('/',LUEVM.searchedLinkUserEvent, getLinkUserEvent);
-router.delete('/',checkJWT,admin,LUEVM.linkUserEventToDelete, deleteLinkUserEvent);
+router.get('/:id',LUEVM.searchedLinkUserEvent, getLinkUserEvent);
+router.delete('/:id',checkJWT,admin,LUEVM.linkUserEventToDelete, deleteLinkUserEvent);
 
 router.get('/nbLinkUserEvents/search',checkJWT,PagingVM.paging,getNbLinkUserEvents);
 router.get('/nbLinkUserEvents/count/',checkJWT,countRows);
-router.get('/getInvitation/',checkJWT,getInvitationNotAcceptedByCurrentId);
-router.get('/favoriteEvent', checkJWT,PagingVM.paging,getFavoriteEvent);
+router.get('/get/Invitation/',checkJWT,getInvitationNotAcceptedByCurrentId);
+router.get('/favorite/event', checkJWT,PagingVM.paging,getFavoriteEvent);
 
 router.delete('/many/deleteLinkUserEvent/',checkJWT,admin,LUEVM.linkUserEventToDeleteMany,deleteLinkUserEvents);
 

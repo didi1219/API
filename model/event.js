@@ -152,7 +152,7 @@ export const readAllEventsOfUserSubscribed = async (SQLClient, {user_id, perPage
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        'select event.id, event.title, event.description, event.event_date, event.street_number, event.is_private, event.picture_path, event.duration,event.location_id, event.category_id, l.is_accepted, l.is_waiting from event inner join linkuserevent l on event.id = l.event_id where l.user_id = $1 and l.is_accepted = true LIMIT $2 OFFSET $3', [user_id, size, offset]
+        'select event.id, event.title, event.description, event.event_start,event.event_end, event.street_number, event.is_private, event.picture_path,event.location_id, event.category_id, l.is_accepted, l.is_waiting from event inner join linkuserevent l on event.id = l.event_id where l.user_id = $1 and l.is_accepted = true LIMIT $2 OFFSET $3', [user_id, size, offset]
     );
     return rows;
 };
@@ -198,7 +198,7 @@ export const readNbEvents = async (SQLClient, {page, perPage}) => {
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        `select e.id, e.title, e.description, e.event_start,e.event_end, e.street_number,e.picture_path, e.is_private as "is_private", e.user_id, u.user_name as "user_name", l.label as "locality", l.id as "location_id", c.title as "category", c.id as "category_id" FROM event e inner join location l on e.location_id = l.id inner join category c on e.category_id = c.id inner join users u on u.id = e.user_id ORDER BY id LIMIT $1 OFFSET $2`,[perPage,offset]
+        `select e.id, e.title, e.description, e.event_start,e.event_end, e.street_number,e.picture_path, e.is_private as "is_private", e.user_id, u.user_name as "user_name", l.label as "locality", l.id as "location_id", c.title as "category", c.id as "category_id", c.icon_component_name, c.icon_name FROM event e inner join location l on e.location_id = l.id inner join category c on e.category_id = c.id inner join users u on u.id = e.user_id ORDER BY id LIMIT $1 OFFSET $2`,[perPage,offset]
     );
     return rows;
 };
@@ -212,7 +212,7 @@ export const readTotalRowEvent = async (SQLClient)=>{
 
 export const countSubscribers = async (SQLClient, {id: event_id}) => {
     const {rows} = await SQLClient.query(
-        'SELECT COUNT(*) as count FROM linkuserevent WHERE event_id = $1 AND isAccepted = true', [event_id]
+        'SELECT COUNT(*) as count FROM linkuserevent WHERE event_id = $1 AND is_accepted = true', [event_id]
     );
     return rows[0].count;
 }

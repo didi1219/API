@@ -7,10 +7,10 @@ export const readCategory = async (SQLClient, {id}) => {
     return rows[0];
 };
 
-export const createCategory = async (SQLClient, {title}) => {
+export const createCategory = async (SQLClient, {title,icon_component_name,icon_name}) => {
     const {rows} = await SQLClient.query(
-        'INSERT INTO category (title) VALUES ($1) RETURNING id',
-        [title]
+        'INSERT INTO category (title,icon_component_name,icon_name) VALUES ($1,$2,$3) RETURNING id',
+        [title,icon_component_name,icon_name]
     );
     return rows[0]?.id;
 };
@@ -37,13 +37,21 @@ export const deleteCategories = async (SQLClient, {ids}) => {
 
 
 
-export const updateCategory = async (SQLClient, {id,title}) => {
+export const updateCategory = async (SQLClient, {id,title,icon_component_name,icon_name}) => {
     let query = 'UPDATE category SET ';
     const querySet = [];
     const queryValues = [];
     if (title){
         queryValues.push(title);
         querySet.push(`title = $${queryValues.length}`);
+    }
+    if (icon_component_name){
+        queryValues.push(title);
+        querySet.push(`icon_component_name = $${queryValues.length}`);
+    }
+    if (icon_name){
+        queryValues.push(title);
+        querySet.push(`icon_name = $${queryValues.length}`);
     }
     if(queryValues.length > 0){
         queryValues.push(id);
@@ -65,7 +73,7 @@ export const readNbCategories = async (SQLClient, {page, perPage}) => {
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        `SELECT * FROM category ORDER BY id LIMIT $1 OFFSET $2`,[perPage, offset]
+        `SELECT id, title , icon_component_name, icon_name FROM category ORDER BY id LIMIT $1 OFFSET $2`,[perPage, offset]
     );
     return rows;
 };
