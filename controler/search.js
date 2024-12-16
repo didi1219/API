@@ -47,7 +47,7 @@ export const getTotalRowEventGenericSearched = async (req, res) => {
         if(response){
             res.json({response});
         } else {
-            res.sendStatus(500);
+            res.sendStatus(404);
         }
     } catch (error) {
         res.sendStatus(500);
