@@ -55,7 +55,7 @@ export const
     eventToAdd = vine.compile(eventToAddSchema),
     eventToUpdate = vine.compile(eventToUpdateSchema),
     eventToDelete = vine.compile(eventIDSchema),
-    searchedEvents = vine.compile(nbEventsSchema),
+    searchedEvents = vine.compile(eventIDSchema),
     eventToAddWithInvitations = vine.compile(eventToAddWithInvitationsSchema),
     eventToCountRows = vine.compile(eventToCountRowsSchema),
     eventToCountRowsSearchByCategories = vine.compile(eventToCountRowsSearchByCategoriesSchema),

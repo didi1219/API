@@ -14,6 +14,9 @@ import {
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {userValidatorMiddleware as UVM} from "../middleware/validation.js";
 import {getAllUsersTitle} from "../controler/admin.js";
+import { pagingValidatorMiddleWare as PagingVM } from '../middleware/validation.js';
+import { admin } from '../middleware/authorization/mustBeAdmin.js';
+import { tabValidatorMiddleware as TabVM } from '../middleware/validation.js';
 
 const router = Router();
 
@@ -27,6 +30,8 @@ router.get('/nbUser/count/', checkJWT,countRows);
 router.delete('/many/deleteUser/',checkJWT,TabVM.ids,deleteUsers);
 
 router.get('/checkEmail/',checkJWT,checkEmailExist);
+
+router.get('/get/allTitle', checkJWT,admin, getAllUsersTitle)
 
 
 export default router;

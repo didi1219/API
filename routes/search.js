@@ -9,7 +9,6 @@ import {
     getAllEventOfOwner,
     getNbEventByOwner,
     getNbEventByUser,
-    getNbRowsBySearch,
     getNbRowsSearchByCategories,
     getNbRowsSearchByLocalities,
     getPublicEvents

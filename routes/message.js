@@ -16,7 +16,6 @@ import {
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {admin} from "../middleware/authorization/mustBeAdmin.js";
 import {hasWriteRights} from "../middleware/authorization/mustHaveWriteRights.js";
-import {tabValidatorMiddleware as TabVM} from "../middleware/validation.js";
 
 const router = Router();
 
