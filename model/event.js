@@ -93,7 +93,7 @@ export const updateEvent = async (SQLClient, {id, title, description, event_star
     }
     if (event_start){
         queryValues.push(event_start);
-        querySet.push(`event_date = $${queryValues.length}`);
+        querySet.push(`event_start = $${queryValues.length}`);
     }
     if (event_end){
         queryValues.push(event_end);
@@ -198,7 +198,7 @@ export const readNbEvents = async (SQLClient, {page, perPage}) => {
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        `select e.id, e.title, e.description, e.event_date, e.street_number,e.picture_path, e.is_private as "is_private", e.duration, e.user_id, u.user_name as "user_name", l.label as "locality", l.id as "location_id", c.title as "category", c.id as "category_id" FROM event e inner join location l on e.location_id = l.id inner join category c on e.category_id = c.id inner join users u on u.id = e.user_id ORDER BY id LIMIT $1 OFFSET $2`,[perPage,offset]
+        `select e.id, e.title, e.description, e.event_start,e.event_end, e.street_number,e.picture_path, e.is_private as "is_private", e.user_id, u.user_name as "user_name", l.label as "locality", l.id as "location_id", c.title as "category", c.id as "category_id" FROM event e inner join location l on e.location_id = l.id inner join category c on e.category_id = c.id inner join users u on u.id = e.user_id ORDER BY id LIMIT $1 OFFSET $2`,[perPage,offset]
     );
     return rows;
 };
@@ -217,20 +217,20 @@ export const countSubscribers = async (SQLClient, {id: event_id}) => {
     return rows[0].count;
 }
 export const createEventWithInvitations = async (SQLClient, {
-    title, description, event_date, street_number, picture_path, duration, user_id, location_id, category_id, users_id
+    title, description, event_start,event_end, street_number, picture_path, duration, user_id, location_id, category_id, users_id
 }) => {
     const failedInsertions = [];
     const successfulInsertions = [];
 
     try {
         const eventId = await createEvent(SQLClient, {
-            title, description, event_date, street_number,
+            title, description, event_start,event_end, street_number,
             picture_path, duration, user_id, location_id, category_id,
-            isPrivate: true
+            is_private: true
         });
         for (const user_id of users_id) {
             try {
-                await createLinkUserEvent(SQLClient, { user_id, event_id: eventId, isWaiting: true, isAccepted: false });
+                await createLinkUserEvent(SQLClient, { user_id, event_id: eventId, is_waiting: true, is_accepted: false });
                 successfulInsertions.push(user_id);
             } catch (error) {
                 failedInsertions.push({ user_id, error });

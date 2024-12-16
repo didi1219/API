@@ -101,15 +101,17 @@ INSERT INTO category (title) VALUES
 
 
 -- Fill `users` table
+-- Fill `location` table (Not `users` table)
 INSERT INTO location (label, postal_code) VALUES
-                                             ('Namur', 5000),
-                                             ('Charleroi', 6000),
-                                             ('Liège', 4000),
-                                             ('Mons', 7000),
-                                             ('Arlon', 6700),
-                                             ('Tournai', 7500),
-                                             ('Wavre', 1300),
-                                             ('Dinant', 5500);
+                                              ('Namur', 5000),
+                                              ('Charleroi', 6000),
+                                              ('Liège', 4000),
+                                              ('Mons', 7000),
+                                              ('Arlon', 6700),
+                                              ('Tournai', 7500),
+                                              ('Wavre', 1300),
+                                              ('Dinant', 5500);
+
 
 
 -- Fill `users` table
@@ -141,18 +143,19 @@ INSERT INTO users (email, password, last_name, first_name, user_name, bio, isAdm
                                                                                         ('emilylopezbio@example.com', 'password24', 'Lopez', 'Emily', 'emilylopez', 'Biologist.', FALSE),
                                                                                         ('noahhillguitar@example.com', 'password25', 'Hill', 'Noah', 'noahhill', 'Guitarist.', FALSE);
 
--- Fill `event` table
-INSERT INTO event (title, description, event_date, street_number, is_private, picture_path, duration, user_id, location_id, category_id) VALUES
-                                                                                                                                            ('Concert de Jazz', 'Un concert de jazz en plein air.', '2025-05-10', 'Avenue des Musiciens', false, '88c3437f-4f1c-411d-a17f-3ebe39afd1f4.jpeg', 120, 1, 1, 1),
-                                                                                                                                            ('Gala Bienvenue', 'Une invitation au lancement de la compagnie ! ', '2025-06-15', 'Rue des Innovations', false, '8095d8cf-b644-4ef8-9b20-f81f83994c6e.jpeg', 70, 2, 2, 4),
-                                                                                                                                            ('Festival Electro', 'Une soirée pleine de fun !', '2025-07-22', 'Place des Raves', true, '352d37d2-4ce5-4aac-960e-3cd464c32a2c.jpeg', 200, 1, 3, 2),
-                                                                                                                                            ('Marathon', 'Un marathon annuel pour les amateurs de course.', '2025-04-18', 'Avenue du Sport', false, '0e60132e-53b0-40b1-81cb-fc1abc048b32.jpeg', 130, 1, 3, 5),
-                                                                                                                                            ('Soirée Disco', 'Soirée en boite avec les potes !', '2025-08-01', 'Le Dancehall', true, 'f6049db1-fbc1-49cf-879e-4ef10e153919.jpeg', 300, 1, 3, 4),
-                                                                                                                                            ('Conférence Technologique', 'Un salon où les entreprises de technologie du monde entier présentent leurs dernières innovations et gadgets.', '2025-01-15', 'Centre des Expositions', false, '0f43555d-5b88-45c6-b2c0-8f4d660c3678.jpeg', 300, 6, 6, 3),
-                                                                                                                                            ('Sport en club', 'Participez à notre tournoi de sport', '2024-12-15', 'Complexe Sportif', false, '94eb113a-a90b-4a1a-ae1e-b11f4b6e7f35.jpeg', 120, 7, 7, 5),
-                                                                                                                                            ('Soirée de fin d année', 'Venez vivre la joie de la fin des examens !', '2024-12-20', 'Rue du ferant 45', true, '270c5ef6-4aad-4bd0-b91a-19d88c60d558.jpeg', 360, 8, 8, 4),
-                                                                                                                                            ('Nouvel An', 'Une soirée parfaite pour le nouvel an !', '2024-12-31', 'Place du Marché', true, 'f05b87f7-1795-4ba0-84f8-8064f208e725.jpeg', 240, 9, 5, 2),
-                                                                                                                                            ('Buffet de Noel', 'Découvrez des produits artisanaux pour les fêtes dans un buffet à volonté !', '2024-12-25', 'Place du Théâtre', false, 'e6020ebb-c2d4-4c48-b68e-d6648fc5733b.jpeg', 180, 10, 1, 11);
+
+INSERT INTO event (title, description, event_start, event_end, street_number, is_private, picture_path, user_id, location_id, category_id)
+VALUES
+    ('Concert de Jazz', 'Un concert de jazz en plein air.', '2025-05-10', '2025-05-10', 'Avenue des Musiciens', false, '88c3437f-4f1c-411d-a17f-3ebe39afd1f4.jpeg', 1, 1, 1),
+    ('Gala Bienvenue', 'Une invitation au lancement de la compagnie ! ', '2025-06-10', '2025-06-15', 'Rue des Innovations', false, '8095d8cf-b644-4ef8-9b20-f81f83994c6e.jpeg', 2, 2, 4),
+    ('Festival Electro', 'Une soirée pleine de fun !', '2025-07-22', '2025-07-22', 'Place des Raves', true, '352d37d2-4ce5-4aac-960e-3cd464c32a2c.jpeg', 1, 3, 2),
+    ('Marathon', 'Un marathon annuel pour les amateurs de course.', '2025-04-18', '2025-04-18', 'Avenue du Sport', false, '0e60132e-53b0-40b1-81cb-fc1abc048b32.jpeg', 1, 3, 5),
+    ('Soirée Disco', 'Soirée en boite avec les potes !', '2025-08-01', '2025-08-01', 'Le Dancehall', true, 'f6049db1-fbc1-49cf-879e-4ef10e153919.jpeg', 1, 3, 4),
+    ('Conférence Technologique', 'Un salon où les entreprises de technologie du monde entier présentent leurs dernières innovations et gadgets.', '2025-01-15', '2025-01-15', 'Centre des Expositions', false, '0f43555d-5b88-45c6-b2c0-8f4d660c3678.jpeg', 6, 6, 3),
+    ('Sport en club', 'Participez à notre tournoi de sport', '2024-12-15', '2024-12-15', 'Complexe Sportif', false, '94eb113a-a90b-4a1a-ae1e-b11f4b6e7f35.jpeg', 7, 7, 5),
+    ('Soirée de fin d année', 'Venez vivre la joie de la fin des examens !', '2024-12-20', '2024-12-20', 'Rue du ferant 45', true, '270c5ef6-4aad-4bd0-b91a-19d88c60d558.jpeg', 8, 8, 4),
+    ('Nouvel An', 'Une soirée parfaite pour le nouvel an !', '2024-12-31', '2024-12-31', 'Place du Marché', true, 'f05b87f7-1795-4ba0-84f8-8064f208e725.jpeg', 9, 5,4),
+    ('Buffet de Noel', 'Découvrez des produits artisanaux pour les fêtes dans un buffet à volonté !', '2024-12-25', '2024-12-25', 'Place du Théâtre', false, 'e6020ebb-c2d4-4c48-b68e-d6648fc5733b.jpeg', 10, 1, 11);
 
 
 -- Fill `notification` table
