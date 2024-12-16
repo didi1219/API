@@ -1,11 +1,17 @@
 import {calculOffset, verifyValueOfPerPage} from "../util/paging.js";
 import {createLinkUserEvent} from "./linkUserEvent.js";
+import {formatDateTime} from "../util/formatDate.js";
 
 export const readEvent = async (SQLClient, {id}) =>{
     const {rows} = await SQLClient.query(
         'SELECT * FROM event WHERE id = $1',[id]
     );
-    return rows[0];
+    const event = rows[0];
+
+    event.event_start = formatDateTime(event.event_start);
+    event.event_end = formatDateTime(event.event_end);
+
+    return event;
 };
 
 export const createEvent = async (SQLClient, {title,description,event_start,event_end,street_number,is_private,picture_path,user_id,location_id,category_id}) => {
@@ -143,8 +149,14 @@ export const readNbEventsOfUserCreated = async (SQLClient, {user_id, perPage, pa
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        'SELECT * FROM event where user_id = $1 ORDER BY id LIMIT $2 OFFSET $3', [user_id, size, offset]
+        'select e.id, e.title, e.description, e.event_start, e.event_end, e.street_number, e.is_private, e.picture_path, e.user_id, e.location_id, e.category_id, l.label as "locality", c.icon_component_name, c.icon_name from event e inner join category c on c.id = e.category_id inner join location l on l.id = e.location_id where user_id = $1 ORDER BY id LIMIT $2 OFFSET $3', [user_id, size, offset]
     );
+
+    rows.map((item) => {
+        item.event_start = formatDateTime(item.event_start);
+        item.event_end = formatDateTime(item.event_end);
+    });
+
     return rows;
 };
 
@@ -152,8 +164,14 @@ export const readAllEventsOfUserSubscribed = async (SQLClient, {user_id, perPage
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        'select event.id, event.title, event.description, event.event_start,event.event_end, event.street_number, event.is_private, event.picture_path,event.location_id, event.category_id, l.is_accepted, l.is_waiting from event inner join linkuserevent l on event.id = l.event_id where l.user_id = $1 and l.is_accepted = true LIMIT $2 OFFSET $3', [user_id, size, offset]
+        'select event.id, event.title, event.description, event.event_start,event.event_end, event.street_number, event.is_private, event.picture_path,event.location_id, event.category_id,c.icon_name,c.icon_component_name,loc.label as "locality", l.is_accepted, l.is_waiting from event inner join linkuserevent l on event.id = l.event_id inner join category c on c.id = event.category_id inner join location loc on loc.id = event.location_id where l.user_id = $1 and l.is_accepted = true LIMIT $2 OFFSET $3', [user_id, size, offset]
     );
+
+    rows.map((item) => {
+        item.event_start = formatDateTime(item.event_start);
+        item.event_end = formatDateTime(item.event_end);
+    });
+
     return rows;
 };
 
@@ -200,6 +218,12 @@ export const readNbEvents = async (SQLClient, {page, perPage}) => {
     const {rows} = await SQLClient.query(
         `select e.id, e.title, e.description, e.event_start,e.event_end, e.street_number,e.picture_path, e.is_private as "is_private", e.user_id, u.user_name as "user_name", l.label as "locality", l.id as "location_id", c.title as "category", c.id as "category_id", c.icon_component_name, c.icon_name FROM event e inner join location l on e.location_id = l.id inner join category c on e.category_id = c.id inner join users u on u.id = e.user_id ORDER BY id LIMIT $1 OFFSET $2`,[perPage,offset]
     );
+
+    rows.map((item) => {
+        item.event_start = formatDateTime(item.event_start);
+        item.event_end = formatDateTime(item.event_end);
+    });
+
     return rows;
 };
 
