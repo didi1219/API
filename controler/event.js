@@ -158,7 +158,6 @@ export const getTotalRowEvent = async (req, res) => {
         res.sendStatus(500);
     }
 };
-
 export const deleteEvents = async (req,res) => {
     try{
         await eventModel.deleteManyEvents(pool, req.val)
@@ -168,3 +167,13 @@ export const deleteEvents = async (req,res) => {
     }
 };
 
+
+
+export const getNbSubscribers = async (req, res) => {
+    try {
+        const nbSubscribers = await eventModel.countSubscribers(pool, req.val);
+        res.status(200).send({count: nbSubscribers});
+    } catch (error) {
+        res.sendStatus(500);
+    }
+}

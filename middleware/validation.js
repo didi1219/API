@@ -444,6 +444,14 @@ export const notificationValidatorMiddleware = {
 };
 
 export const userValidatorMiddleware = {
+    searchedUser: async (req, res, next) => {
+        try {
+            req.val = await userValidator.searchedUser.validate(req.params);
+            next();
+        } catch (error) {
+            res.status(400).send(error.messages);
+        }
+    },
     login: async (req, res, next) => {
         try {
             req.val = await userValidator.login.validate(req.body);

@@ -32,11 +32,11 @@ CREATE TABLE event (
                        id integer primary key GENERATED ALWAYS AS IDENTITY,
                        title varchar(250) NOT NULL,
                        description varchar(250) NOT NULL,
-                       event_date DATE NOT NULL,
+                       event_start TIMESTAMP NOT NULL,
+                       event_end TIMESTAMP NOT NULL,
                        street_number varchar(250) NOT NULL,
                        is_private BOOLEAN NOT NULL,
                        picture_path varchar(250),
-                       duration int NOT NULL,
                        user_id integer REFERENCES users(id) DEFERRABLE INITIALLY IMMEDIATE,
                        location_id integer REFERENCES location(id) DEFERRABLE INITIALLY IMMEDIATE,
                        category_id integer REFERENCES category(id) DEFERRABLE INITIALLY IMMEDIATE

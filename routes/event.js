@@ -14,6 +14,7 @@ import {
     getTotalRowEvent,
     getAllEventTitle,
     deleteEvents
+    getNbSubscribers,
 } from '../controler/event.js'
 import {
     eventManagementValidatorMiddleware as EMVM,
@@ -29,6 +30,7 @@ const router = new Router();
 
 router.get('/created',checkJWT,PagingVM.paging,getNbEventsOfUserCreated);
 router.get('/subscribed',checkJWT,PagingVM.paging,getAllEventsOfUserSubscribed);
+router.get('/nbSubscribers/:id',checkJWT,EVM.searchedEvent,getNbSubscribers);
 router.post('/oneself/',checkJWT,EVM.eventToAdd,addEventOneSelf);
 router.patch('/oneself/',checkJWT,EVM.eventToUpdate,updateEventOneSelf);
 router.delete('/:id',checkJWT,EVM.eventToDelete,deleteEventOneSelf);

@@ -8,19 +8,19 @@ export const readEvent = async (SQLClient, {id}) =>{
     return rows[0];
 };
 
-export const createEvent = async (SQLClient, {title,description,event_date,street_number,is_private,picture_path,duration,user_id,location_id,category_id}) => {
+export const createEvent = async (SQLClient, {title,description,event_start,event_end,street_number,is_private,picture_path,user_id,location_id,category_id}) => {
     try {
         await SQLClient.query('BEGIN');
         const {rows} = await SQLClient.query(
-            'INSERT INTO event (title,description,event_date,street_number,is_private,picture_path,duration,user_id,location_id,category_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING id',
+            'INSERT INTO event (title,description,event_start,event_end,street_number,is_private,picture_path,user_id,location_id,category_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING id',
             [
                 title,
                 description,
-                event_date,
+                event_start,
+                event_end,
                 street_number,
                 is_private,
                 picture_path,
-                duration,
                 user_id,
                 location_id,
                 category_id
@@ -79,7 +79,7 @@ export const deleteManyEvents = async (SQLClient, {ids}) => {
     }
 };
 
-export const updateEvent = async (SQLClient, {id, title, description, event_date, street_number,is_private,picture_path,duration, user_id, location_id, category_id}) => {
+export const updateEvent = async (SQLClient, {id, title, description, event_start, event_end, street_number,is_private,picture_path, user_id, location_id, category_id}) => {
     let query = 'UPDATE event SET ';
     const querySet = [];
     const queryValues = [];
@@ -91,9 +91,13 @@ export const updateEvent = async (SQLClient, {id, title, description, event_date
         queryValues.push(description);
         querySet.push(`description = $${queryValues.length}`);
     }
-    if (event_date){
-        queryValues.push(event_date);
+    if (event_start){
+        queryValues.push(event_start);
         querySet.push(`event_date = $${queryValues.length}`);
+    }
+    if (event_end){
+        queryValues.push(event_end);
+        querySet.push(`event_end = $${queryValues.length}`);
     }
     if(street_number){
         queryValues.push(street_number);
@@ -106,10 +110,6 @@ export const updateEvent = async (SQLClient, {id, title, description, event_date
     if(picture_path){
         queryValues.push(picture_path);
         querySet.push(`picture_path = $${queryValues.length}`);
-    }
-    if(duration){
-        queryValues.push(duration);
-        querySet.push(`duration = $${queryValues.length}`);
     }
     if(user_id){
         queryValues.push(user_id);
@@ -208,6 +208,13 @@ export const readTotalRowEvent = async (SQLClient)=>{
         "SELECT COUNT(*) as count_rows FROM event"
     )
     return rows[0]?.count_rows;
+}
+
+export const countSubscribers = async (SQLClient, {id: event_id}) => {
+    const {rows} = await SQLClient.query(
+        'SELECT COUNT(*) as count FROM linkuserevent WHERE event_id = $1 AND isAccepted = true', [event_id]
+    );
+    return rows[0].count;
 }
 export const createEventWithInvitations = async (SQLClient, {
     title, description, event_date, street_number, picture_path, duration, user_id, location_id, category_id, users_id

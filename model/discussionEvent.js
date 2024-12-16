@@ -70,7 +70,7 @@ export const updateDiscussionEvent = async (SQLClient, {id, title,isWritable, ev
 };
 
 
-export const readMessagesInDiscussion = async (SQLClient, { discussion_event_id, offset }) => {
+export const readMessagesInDiscussion = async (SQLClient, { id: discussion_event_id, offset }) => {
     const { rows } = await SQLClient.query(
         `SELECT 
             m.id AS messageId,
@@ -94,7 +94,7 @@ export const readMessagesInDiscussion = async (SQLClient, { discussion_event_id,
     return rows;
 };
 
-export const readNewerMessagesInDiscussion = async (SQLClient, { discussion_event_id, nextMessageID }) => {
+export const readNewerMessagesInDiscussion = async (SQLClient, { id: discussion_event_id, nextMessageID }) => {
     const { rows } = await SQLClient.query(
         `SELECT
             m.id AS messageId,
@@ -122,7 +122,7 @@ export const readNewerMessagesInDiscussion = async (SQLClient, { discussion_even
     return rows;
 };
 
-export const readOlderMessagesInDiscussion = async (SQLClient, { discussion_event_id, previousMessageID }) => {
+export const readOlderMessagesInDiscussion = async (SQLClient, { id: discussion_event_id, previousMessageID }) => {
     const { rows } = await SQLClient.query(
         `SELECT
             m.id AS messageId,

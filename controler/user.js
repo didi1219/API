@@ -3,6 +3,33 @@ import * as userModel from '../model/user.js';
 import {sign} from '../util/jwt.js';
 import {readPerson} from "../model/person.js";
 
+export const getUser = async (req, res) => {
+    try {
+        const data = await userModel.readUser(pool, req.val);
+        if (data) {
+            const user = {
+                id: data.id,
+                user_name: data.user_name,
+                bio: data.bio
+            };
+            res.json(user);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err) {
+        res.sendStatus(500);
+    }
+};
+
+export const addUser = async (req, res) => {
+    try {
+        const id = await userModel.createUser(pool, req.val);
+        res.status(201).json({id});
+    } catch (err) {
+        res.sendStatus(500);
+    }
+};
+
 export const deleteUser = async (req, res) => {
     try {
         await userModel.deleteUser(pool, req.val);
