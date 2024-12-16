@@ -6,7 +6,8 @@ import{
     deleteNotification,
     getNbNotifications,
     countRows,
-    deleteNotifications
+    deleteNotifications,
+    getNotificationByCurrentUser
 } from "../controler/notification.js";
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {admin} from "../middleware/authorization/mustBeAdmin.js";
@@ -25,6 +26,8 @@ router.delete('/:id',checkJWT,admin,NVM.notificationToDelete, deleteNotification
 
 router.get('/nbNotifications/search',checkJWT,PagingVM.paging,getNbNotifications);
 router.get('/nbNotifications/count/',checkJWT,countRows);
+
+router.get('/get/currentUser', checkJWT,PagingVM.paging, getNotificationByCurrentUser)
 
 router.delete('/many/deleteNotification/',checkJWT,admin,TabVM.ids ,deleteNotifications);
 

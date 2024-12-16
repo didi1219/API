@@ -11,7 +11,11 @@ import {
     getNbEventByUser,
     getNbRowsSearchByCategories,
     getNbRowsSearchByLocalities,
-    getPublicEvents
+    getPublicEvents,
+    getEventSearchFollowByCurrentUser,
+    getEventSeachByOwner,
+    countRowsEventGenericByFollow,
+    countRowsEventGenericByOwner
 } from "../controler/search.js";
 import {checkJWT} from "../middleware/identification/JWT.js";
 import { pagingValidatorMiddleWare as PagingVM} from "../middleware/validation.js";
@@ -35,6 +39,12 @@ router.get('/nbRows/byUser/:id',checkJWT,EMVM.searchedEvent,getNbEventByUser);
 router.get('/nbRows/generic',checkJWT,decodeQuery,EMVM.eventToCountRows,getTotalRowEventGenericSearched);
 router.get('/nbRows/byCategories/', checkJWT, EMVM.eventToCountRowsSearchByCategories, getNbRowsSearchByCategories);
 router.get('/nbRows/byLocalities/',checkJWT, EMVM.eventToCountRowsSearchByLocalities, getNbRowsSearchByLocalities);
+
+router.get('/events/searchByOwner',checkJWT,PagingVM.pagingSearchGeneral,getEventSeachByOwner);
+router.get('/events/searchByFollow',checkJWT,PagingVM.pagingSearchGeneral,getEventSearchFollowByCurrentUser);
+router.get('/nbRows/searchByOwner', checkJWT,PagingVM.pagingSearchGeneral,countRowsEventGenericByOwner);
+router.get('/nbRows/searchByFollow', checkJWT,PagingVM.pagingSearchGeneral,countRowsEventGenericByFollow);
+
 
 export default router;
 

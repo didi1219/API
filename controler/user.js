@@ -33,6 +33,7 @@ export const login = async (req, res) => {
             res.sendStatus(404);
         }
     } catch (err) {
+        console.log(err)
         res.sendStatus(500);
     }
 };
@@ -95,6 +96,17 @@ export const checkEmailExist = async (req,res) => {
         const {idEmailExist, emailDoesntExist} = await userModel.checkIfEmailExists(pool,req.body);
         res.json({idEmailExist, emailDoesntExist});
     }catch(error){
+        res.sendStatus(500);
+    }
+}
+
+export const deleteCurrentUser = async (req, res) => {
+    try{
+        const id = req.session.id;
+        await userModel.deleteUser(pool, {id});
+        res.sendStatus(204);
+    }catch(error){
+        console.log(error)
         res.sendStatus(500);
     }
 }

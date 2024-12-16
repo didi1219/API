@@ -161,9 +161,7 @@ export const getTotalRowEvent = async (req, res) => {
 
 export const deleteEvents = async (req,res) => {
     try{
-        for (const id of req.val.ids) {
-            await eventModel.deleteEvent(pool,{id});
-        }
+        await eventModel.deleteManyEvents(pool, req.val)
         res.sendStatus(204);
     }catch(error){
         res.sendStatus(500);

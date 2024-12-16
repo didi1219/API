@@ -8,7 +8,8 @@ import {
     getAllUsers,
     countRows,
     deleteUsers,
-    checkEmailExist
+    checkEmailExist,
+    deleteCurrentUser
 } from "../controler/user.js";
 
 import {checkJWT} from "../middleware/identification/JWT.js";
@@ -31,7 +32,9 @@ router.delete('/many/deleteUser/',checkJWT,TabVM.ids,deleteUsers);
 
 router.get('/checkEmail/',checkJWT,checkEmailExist);
 
-router.get('/get/allTitle', checkJWT,admin, getAllUsersTitle)
+router.get('/get/allTitle', checkJWT,admin, getAllUsersTitle);
+
+router.delete('/delete/currentUser/', checkJWT, deleteCurrentUser);
 
 
 export default router;

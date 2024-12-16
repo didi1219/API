@@ -1,3 +1,4 @@
+import { user } from '../middleware/validator/user.js';
 import {calculOffset,verifyValueOfPerPage} from '../util/paging.js'
 
 export const readEventByName = async (SQLClient, {name,perPage, page})=> {
@@ -139,4 +140,68 @@ export const readPublicEvents = async (SQLClient,{ page, perPage}) => {
         ]
     );
     return rows;
+};
+
+export const readEventGenericByUser = async (SQLClient, { page, perPage, search, user_id }) => {
+    const searchConcat = `%${search}%`;
+    const size = verifyValueOfPerPage(perPage);
+    const offset = calculOffset({size, page});
+    const { rows } = await SQLClient.query(
+        'SELECT * FROM event e INNER JOIN location l ON e.location_id = l.id INNER JOIN category c ON e.category_id = c.id  inner join linkuserevent link on link.event_id = e.id where link.user_id = $1 AND e.title ILIKE $2 OR l.label ILIKE $2 OR c.title ILIKE $2 LIMIT $3 OFFSET $4',
+        [
+            user_id,
+            searchConcat,
+            size,
+            offset
+        ]
+    );
+    return rows;
+};
+
+export const readEventGenericByOwner = async (SQLClient, { page, perPage, search, user_id }) => {
+    const searchConcat = `%${search}%`;
+    const size = verifyValueOfPerPage(perPage);
+    const offset = calculOffset({size, page});
+    const { rows } = await SQLClient.query(
+        'SELECT * FROM event e INNER JOIN location l ON e.location_id = l.id INNER JOIN category c ON e.category_id = c.id where e.user_id = $1 AND e.title ILIKE $2 OR l.label ILIKE $2  OR c.title ILIKE $2 LIMIT $3 OFFSET $4',
+        [
+            user_id,
+            searchConcat,
+            size,
+            offset
+        ]
+    );
+    return rows;
+};
+
+export const nbRowsEventGenericByOwner = async(SQLClient, { page, perPage, search, user_id }) => {
+    const searchConcat = `%${search}%`;
+    const size = verifyValueOfPerPage(perPage);
+    const offset = calculOffset({size, page});
+    const { rows } = await SQLClient.query(
+        'SELECT COUNT(*) as rows_count FROM event e INNER JOIN location l ON e.location_id = l.id INNER JOIN category c ON e.category_id = c.id where e.user_id = $1 AND e.title ILIKE $2 OR l.label ILIKE $2  OR c.title ILIKE $2 LIMIT $3 OFFSET $4',
+        [
+            user_id,
+            searchConcat,
+            size,
+            offset
+        ]
+    );
+    return rows[0]?.rows_count;
+}
+
+export const nbRowsEventGenericByFollow = async (SQLClient, { page, perPage, search, user_id }) => {
+    const searchConcat = `%${search}%`;
+    const size = verifyValueOfPerPage(perPage);
+    const offset = calculOffset({size, page});
+    const { rows } = await SQLClient.query(
+        'SELECT COUNT(*) as rows_count FROM event e INNER JOIN location l ON e.location_id = l.id INNER JOIN category c ON e.category_id = c.id  inner join linkuserevent link on link.event_id = e.id where link.user_id = $1 AND e.title ILIKE $2 OR l.label ILIKE $2 OR c.title ILIKE $2 LIMIT $3 OFFSET $4',
+        [
+            user_id,
+            searchConcat,
+            size,
+            offset
+        ]
+    );
+    return rows[0].rows_count;
 };

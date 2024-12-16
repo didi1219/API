@@ -75,7 +75,7 @@ export const readNbNotifications = async (SQLClient,{page,perPage}) => {
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        `select n.id, n.title, n.content, n.event_id,  n.creation_date, n.type, n.creation_date, e.title as "event" from notification n inner join event e on e.id = n.event_id ORDER BY id LIMIT $1 OFFSET $2;`, [perPage, offset]
+        `select n.id, n.title, n.content, n.event_id,  n.creation_date, n.type, n.creation_date, e.title as "event" from notification n inner join event e on e.id = n.event_id ORDER BY id LIMIT $1 OFFSET $2;`, [size, offset]
     );
     return rows;
 };
@@ -85,4 +85,13 @@ export const readTotalRowNotifications = async (SQLClient)=>{
         "SELECT COUNT(*) as count_rows FROM notification"
     );
     return rows[0]?.count_rows;
+};
+
+export const getNotificationByUser = async (SQLClient,{user_id,perPage,page}) => {
+    const size = verifyValueOfPerPage(perPage);
+    const offset = calculOffset({size, page});
+    const {rows} = await SQLClient.query(
+        "SELECT n.title, n.content, e.title FROM notification n inner join event e on n.event_id = e.id inner join linkuserevent l on l.event_id = e.id where l.user_id = $1 AND l.is_accepted LIMIT $2 OFFSET $3",[user_id, size,offset]
+    )
+    return rows;
 };

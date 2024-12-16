@@ -79,7 +79,7 @@ export const deleteManyEvents = async (SQLClient, {ids}) => {
     }
 };
 
-export const updateEvent = async (SQLClient, {id, title, description, event_date, street_number,isPrivate,picture_path,duration, user_id, location_id, category_id}) => {
+export const updateEvent = async (SQLClient, {id, title, description, event_date, street_number,is_private,picture_path,duration, user_id, location_id, category_id}) => {
     let query = 'UPDATE event SET ';
     const querySet = [];
     const queryValues = [];

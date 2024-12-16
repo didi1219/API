@@ -75,3 +75,17 @@ export const deleteNotifications = async (req,res) => {
         res.sendStatus(500);
     }
 };
+
+export const getNotificationByCurrentUser = async (req, res) => {
+    try{
+        req.val.user_id = req.session.id;
+        const response = await notificationModel.getNotificationByUser(pool,req.val)
+        if(response){
+            res.status(201).json({response});
+        }else{
+            res.sendStatus(404);
+        }
+    }catch(error){
+        res.sendStatus(500);
+    }
+}
