@@ -11,7 +11,8 @@ import {
     acceptInvitation,
     declineInvitation,
     isFavorite,
-    getFavoriteEvent
+    getFavoriteEvent,
+    getNbLinkUserEventByCurrentUser
 } from "../controler/linkUserEvent.js";
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {admin} from "../middleware/authorization/mustBeAdmin.js";
@@ -29,6 +30,8 @@ router.get('/nbLinkUserEvents/search',checkJWT,PagingVM.paging,getNbLinkUserEven
 router.get('/nbLinkUserEvents/count/',checkJWT,countRows);
 router.get('/getInvitation/',checkJWT,getInvitationNotAcceptedByCurrentId);
 router.get('/favoriteEvent', checkJWT,PagingVM.paging,getFavoriteEvent);
+
+router.get('/nbLinkUserEvent/byUser/', checkJWT,getNbLinkUserEventByCurrentUser);
 
 router.delete('/many/deleteLinkUserEvent/',checkJWT,admin,LUEVM.linkUserEventToDeleteMany,deleteLinkUserEvents);
 

@@ -147,3 +147,13 @@ export const getFavoriteEvent = async (req,res) => {
         res.sendStatus(500);
     }
 }
+
+export const getNbLinkUserEventByCurrentUser = async (req, res) =>{
+    try{
+        const user_id = req.session.id;
+        const response = await linkUserEventModel.getNbLinkUserEventByUser(pool,{user_id});
+        res.status(200).json({response});
+    }catch(error){
+        res.sendStatus(500);
+    }
+}

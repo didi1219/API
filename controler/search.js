@@ -41,6 +41,15 @@ export const getPublicEvents = async (req,res) => {
     }
 };
 
+export const countNbRowPublicEvent = async (req,res) =>{
+    try{
+        const response = await searchModel.nbRowsreadPublicEvents(pool);
+        res.status(200).send(response);
+    }catch(error){
+        res.sendStatus(500);
+    }
+}
+
 export const getTotalRowEventGenericSearched = async (req, res) => {
     try {
         const response = await searchModel.readTotalRowEventGenericSearched(pool, req.val);
@@ -104,7 +113,8 @@ export const getAllEventOfOwner = async (req,res) => {
 
 export const getNbEventByOwner = async(req,res) => {
     try{
-        const nbRows = await searchModel.readNbEventOwner(pool, req.val);
+        const id = req.session.id;
+        const nbRows = await searchModel.readNbEventOwner(pool, {id});
         if(nbRows) {
             res.json({nbRows});
         } else {
@@ -112,19 +122,6 @@ export const getNbEventByOwner = async(req,res) => {
         }
     }catch(error){
         console.log(error)
-        res.sendStatus(500);
-    }
-};
-
-export const getNbEventByUser = async (req, res)=>{
-    try{
-        const nbRows = await searchModel.readNbEventUser(pool,req.val);
-        if(nbRows) {
-            res.json({nbRows});
-        } else {
-            res.sendStatus(404);
-        }
-    } catch(error){
         res.sendStatus(500);
     }
 };

@@ -1,3 +1,4 @@
+import { user } from "../middleware/validator/user.js";
 import {calculOffset, verifyValueOfPerPage} from "../util/paging.js";
 
 export const readLinkUserEvent = async (SQLClient, {user_id, event_id}) => {
@@ -99,3 +100,10 @@ export const readFavoriteEvent = async (SQLClient, {user_id, page, perPage}) => 
 }
 
 ;
+
+export const getNbLinkUserEventByUser = async (SQLClient,{user_id}) =>{
+    const {rows} = await SQLClient.query(
+        "SELECT COUNT(*) as rows_count FROM linkuserevent WHERE user_id = $1 AND is_accepted",[user_id]
+    )
+    return rows[0].rows_count;
+}

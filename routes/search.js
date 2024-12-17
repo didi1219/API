@@ -5,17 +5,15 @@ import {
     getTotalRowEventGenericSearched,
     getEventCategories,
     getEventByLoc,
-    setFavoriteEvent,
-    getAllEventOfOwner,
     getNbEventByOwner,
-    getNbEventByUser,
     getNbRowsSearchByCategories,
     getNbRowsSearchByLocalities,
     getPublicEvents,
     getEventSearchFollowByCurrentUser,
     getEventSeachByOwner,
     countRowsEventGenericByFollow,
-    countRowsEventGenericByOwner
+    countRowsEventGenericByOwner,
+    countNbRowPublicEvent
 } from "../controler/search.js";
 import {checkJWT} from "../middleware/identification/JWT.js";
 import { pagingValidatorMiddleWare as PagingVM} from "../middleware/validation.js";
@@ -34,8 +32,7 @@ router.get('/events/type/public/',checkJWT,PagingVM.paging,getPublicEvents);
 router.get('/event/byCategory/',checkJWT,tabTransformCat,PagingVM.pagingSearchByCategories,getEventCategories);
 router.get('/event/byLocality',checkJWT,tabTransformLoc,PagingVM.pagingSearchByLoc,getEventByLoc);
 
-router.get('/nbRows/byOwner/:id',checkJWT,admin,EMVM.searchedEvent,getNbEventByOwner);
-router.get('/nbRows/byUser/:id',checkJWT,EMVM.searchedEvent,getNbEventByUser);
+router.get('/nbRows/byOwner/',checkJWT,getNbEventByOwner);;
 router.get('/nbRows/generic',checkJWT,decodeQuery,EMVM.eventToCountRows,getTotalRowEventGenericSearched);
 router.get('/nbRows/byCategories/', checkJWT, EMVM.eventToCountRowsSearchByCategories, getNbRowsSearchByCategories);
 router.get('/nbRows/byLocalities/',checkJWT, EMVM.eventToCountRowsSearchByLocalities, getNbRowsSearchByLocalities);
@@ -44,7 +41,7 @@ router.get('/events/searchByOwner',checkJWT,PagingVM.pagingSearchGeneral,getEven
 router.get('/events/searchByFollow',checkJWT,PagingVM.pagingSearchGeneral,getEventSearchFollowByCurrentUser);
 router.get('/nbRows/searchByOwner', checkJWT,PagingVM.pagingSearchGeneral,countRowsEventGenericByOwner);
 router.get('/nbRows/searchByFollow', checkJWT,PagingVM.pagingSearchGeneral,countRowsEventGenericByFollow);
-
+router.get('/nbRows/type/public/',checkJWT,countNbRowPublicEvent)
 
 export default router;
 
