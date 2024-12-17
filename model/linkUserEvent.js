@@ -80,6 +80,19 @@ export const readNbLinkUserEvents = async (SQLClient, {page, perPage}) => {
     return rows;
 };
 
+export const subscribeAEvent = async (SQLClient, {user_id,event_id}) => {
+    await SQLClient.query(
+        'INSERT INTO linkuserevent (user_id,event_id,is_accepted,is_waiting,is_favorite) VALUES ($1,$2,$3,$4,$5);',
+        [
+            user_id,
+            event_id,
+            true,
+            false,
+            false
+        ]
+    );
+};
+
 export const readTotalRowLinkUserEvents = async (SQLClient)=>{
     const {rows} = await SQLClient.query(
         "SELECT COUNT(*) as count_rows FROM linkuserevent"

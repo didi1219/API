@@ -4,6 +4,10 @@ const linkUserEventIDSchema = vine.object({
     id: vine.number(),
 });
 
+const linkUserEventFollowSchema = vine.object({
+    event_id: vine.number(),
+});
+
 const linkUserEventToAddSchema = vine.object({
     event_id: vine.number(),
     user_id: vine.number(),
@@ -25,6 +29,7 @@ const linUserEventInvitationPatchSchema = vine.object({
 
 export const
     searchedLinkUserEvent = vine.compile(linkUserEventIDSchema),
+    linkUserEventToFollow = vine.compile(linkUserEventFollowSchema),
     linkUserEventToAdd = vine.compile(linkUserEventToAddSchema),
     linkUserEventToUpdate = vine.compile(linkUserEventToUpdateSchema),
     linkUserEventToDelete = vine.compile(linkUserEventIDSchema),
