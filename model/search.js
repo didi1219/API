@@ -1,4 +1,3 @@
-import { user } from '../middleware/validator/user.js';
 import {calculOffset,verifyValueOfPerPage} from '../util/paging.js'
 
 export const readEventByName = async (SQLClient, {name,perPage, page})=> {
@@ -6,7 +5,7 @@ export const readEventByName = async (SQLClient, {name,perPage, page})=> {
     const offset = calculOffset({size, page});
     const nameConcat = `%${name}%`
     const {rows} = await SQLClient.query(
-        'SELECT * FROM event WHERE title ORDER BY id ILIKE $1 LIMIT $2 OFFSET $3',
+        'SELECT * FROM event WHERE title ILIKE $1 ORDER BY id LIMIT $2 OFFSET $3',
         [
             nameConcat,
             size,
@@ -85,15 +84,13 @@ export const readEventByLocalities = async (SQLClient, { localities, page, perPa
     return rows;
 };
 
-export const readAllEvents = async (SQLClient,{page, perPage})=>{
-    const size = verifyValueOfPerPage(perPage);
-    const offset = calculOffset({size, page});
+
+export const setFavorite = async (SQLClient, {id}) =>{
     const {rows} = await SQLClient.query(
-        "SELECT * FROM event ORDER BY id LIMIT $1 OFFSET $2", [size, offset]
+        `UPDATE event SET is_favorite = NOT is_favorite WHERE id = $1`, [id]
     )
     return rows;
 };
-
 
 export const readEventByOwner = async(SQLClient, {id, perPage, page}) =>{
     const size = verifyValueOfPerPage(perPage);

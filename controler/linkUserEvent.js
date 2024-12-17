@@ -38,7 +38,6 @@ export const updateLinkUserEvent = async (req, res) => {
         await linkUserEventModel.updateLinkUserEvent(pool, req.val);
         res.sendStatus(204);
     } catch (err) {
-        console.log(err)
         res.sendStatus(500);
     }
 };
@@ -71,18 +70,10 @@ export const countRows = async (req, res) => {
 
 export const deleteLinkUserEvents = async (req,res) => {
     try{
-        await linkUserEventModel.deleteManyLinkUserEvents(pool, ids);
+        await linkUserEventModel.deleteManyLinkUserEvents(pool, req.val);
         res.sendStatus(200);
     } catch(error) {
-        res.sendStatus(500);
-    }
-}
-
-export const addInvitations = async (req,res) => {
-    try {
-        await linkUserEventModel.createInvitations(pool,req.val);
-        res.sendStatus(201);
-    } catch (error){
+        console.log(error)
         res.sendStatus(500);
     }
 }
@@ -105,7 +96,6 @@ export const getInvitationNotAcceptedByCurrentId = async (req, res) =>{
 export const acceptInvitation = async (req, res) => {
     try{
         req.val.user_id = req.session.id;
-        console.log(req.val.user_id);
         await linkUserEventModel.updateLinkUserEvent(pool,{user_id:req.val.user_id, event_id:req.val.event_id, isWaiting : false, isAccepted : true});
         res.sendStatus(204);
     }catch(error){
@@ -146,7 +136,18 @@ export const getFavoriteEvent = async (req,res) => {
     }catch(error){
         res.sendStatus(500);
     }
-}
+};
+
+export const followAEvent = async (req, res) => {
+    try {
+        req.val.user_id = req.session.id;
+        await linkUserEventModel.subscribeAEvent(pool,req.val);
+        res.sendStatus(201)
+    } catch (error) {
+        console.log(error)
+        res.sendStatus(500);
+    }
+};
 
 export const getNbLinkUserEventByCurrentUser = async (req, res) =>{
     try{

@@ -23,11 +23,10 @@ export const deleteLocation = async (SQLClient, {id}) => {
 };
 
 
-export const deleteManyLocations = async (SQLClient, ids) => {
+export const deleteManyLocations = async (SQLClient, {ids}) => {
 
     try {
         await SQLClient.query('BEGIN');
-
         for (const id of ids) {
             await deleteLocation(SQLClient, { id });
         }

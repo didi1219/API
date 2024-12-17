@@ -11,6 +11,7 @@ import * as userValidator from './validator/user.js';
 import * as pagingValidator from './validator/paging.js'
 import * as tabValidator from './validator/tabValidator.js'
 import * as searchValidator from './validator/search.js';
+import {linkUserEventToFollow} from "./validator/linkUserEvent.js";
 
 export const adminValidatorMiddleware = {
     searchedUser : async (req, res, next) => {
@@ -216,6 +217,7 @@ export const eventManagementValidatorMiddleware = {
             req.val = await eventManagementValidator.eventToUpdate.validate(req.body);
             next();
         } catch (error) {
+            console.log(error)
             res.status(400).send(error.messages);
         }
     },
@@ -273,7 +275,7 @@ export const eventManagementValidatorMiddleware = {
 export const linkUserEventValidatorMiddleware = {
     searchedLinkUserEvent : async (req, res, next) => {
         try {
-            req.val = await linkUserEventValidator.searchedLinkUserEvent.validate(req.query);
+            req.val = await linkUserEventValidator.searchedLinkUserEvent.validate(req.params);
             next();
         } catch (error) {
             res.status(400).send(error.messages);
@@ -297,35 +299,26 @@ export const linkUserEventValidatorMiddleware = {
     },
     linkUserEventToDelete : async (req, res, next) => {
         try {
-            req.val = await linkUserEventValidator.linkUserEventToDelete.validate (req.query);
+            req.val = await linkUserEventValidator.linkUserEventToDelete.validate (req.params);
             next();
         } catch (error) {
             res.status(400).send(error.messages);
         }
     },
-    linkUserEventToDeleteMany : async (req,res,next) => {
+    linkUserEventInvitationPatch : async (req,res,next) => {
         try{
-            const items = req.body;
-            if(!Array.isArray(items)){
-                res.status(400).send("Need an array");
-            }else{
-                req.val={};
-                req.val.ids = [];
-                for (const item of items){
-                    req.val.ids.push(await linkUserEventValidator.linkUserEventToDelete.validate(item));
-                }
-                next();
-            }
+            req.val = await linkUserEventValidator.linkUserEventInvitationPatch.validate(req.params);
+            next();
         }catch(error){
             res.status(400).send(error.messages);
         }
     },
-    linkUserEventInvitationPatch : async (req,res,next) => {
-        try{
-            req.val = await linkUserEventValidator.linkUserEventInvitationPatch.validate(req.params)
-            next()
-        }catch(error){
-            res.status(400).send(error.messages)
+    linkUserEventToFollow : async (req, res, next) => {
+        try {
+            req.val = await linkUserEventValidator.linkUserEventToFollow.validate(req.body);
+            next();
+        } catch (error) {
+            res.status(400).send(error.messages);
         }
     }
 };
@@ -540,6 +533,7 @@ export const pagingValidatorMiddleWare={
         }
     }
 }
+
 export const tabValidatorMiddleware = {
     ids : async (req, res, next) => {
         try{

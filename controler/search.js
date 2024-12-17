@@ -89,15 +89,6 @@ export const getEventByLoc = async (req,res) => {
     }
 };
 
-export const setFavoriteEvent = async (req,res)=>{
-    try{
-        await searchModel.setFavorite(pool,req.params);
-        res.sendStatus(204);
-    } catch(error){
-        res.sendStatus(500);
-    }
-};
-
 export const getAllEventOfOwner = async (req,res) => {
     try{
         const response = await searchModel.readEventByOwner(pool, req.val);

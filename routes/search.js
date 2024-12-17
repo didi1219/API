@@ -5,6 +5,7 @@ import {
     getTotalRowEventGenericSearched,
     getEventCategories,
     getEventByLoc,
+    getAllEventOfOwner,
     getNbEventByOwner,
     getNbRowsSearchByCategories,
     getNbRowsSearchByLocalities,
@@ -28,7 +29,7 @@ const router = new Router();
 router.get('/eventName/name',checkJWT,PagingVM.pagingSearchByName,searchEventByName);
 router.get('/events/search',checkJWT,PagingVM.pagingSearchGeneral,searchEvent);
 router.get('/events/count',checkJWT,decodeQuery,PagingVM.pagingSearchGeneral,getTotalRowEventGenericSearched);
-router.get('/events/type/public/',checkJWT,PagingVM.paging,getPublicEvents);
+router.get('/events/type/public',checkJWT,PagingVM.paging,getPublicEvents);
 router.get('/event/byCategory/',checkJWT,tabTransformCat,PagingVM.pagingSearchByCategories,getEventCategories);
 router.get('/event/byLocality',checkJWT,tabTransformLoc,PagingVM.pagingSearchByLoc,getEventByLoc);
 

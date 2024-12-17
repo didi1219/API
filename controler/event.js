@@ -102,7 +102,6 @@ export const updateEvent = async (req,res) => {
         await eventModel.updateEvent(pool,req.val);
         res.sendStatus(204);
     } catch(error){
-        console.log(error)
         res.sendStatus(500);
     }
 };
