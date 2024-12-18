@@ -4,7 +4,7 @@ const linkUserEventIDSchema = vine.object({
     id: vine.number(),
 });
 
-const linkUserEventFollowSchema = vine.object({
+const linkUserEventEventIDSchema = vine.object({
     event_id: vine.number(),
 });
 
@@ -23,16 +23,13 @@ const linkUserEventToUpdateSchema = vine.object({
     is_accepted: vine.boolean().optional(),
 });
 
-const linUserEventInvitationPatchSchema = vine.object({
-    event_id: vine.number()
-});
-
 export const
     searchedLinkUserEvent = vine.compile(linkUserEventIDSchema),
-    linkUserEventToFollow = vine.compile(linkUserEventFollowSchema),
-    linkUserEventToUnFollow = vine.compile(linkUserEventFollowSchema),
-    linkUserEventIsAccepted = vine.compile(linkUserEventFollowSchema),
+    linkUserEventToFollow = vine.compile(linkUserEventEventIDSchema),
+    linkUserEventToUnFollow = vine.compile(linkUserEventEventIDSchema),
+    linkUserEventIsAccepted = vine.compile(linkUserEventEventIDSchema),
     linkUserEventToAdd = vine.compile(linkUserEventToAddSchema),
     linkUserEventToUpdate = vine.compile(linkUserEventToUpdateSchema),
     linkUserEventToDelete = vine.compile(linkUserEventIDSchema),
-    linkUserEventInvitationPatch = vine.compile(linUserEventInvitationPatchSchema);
+    linkUserEventInvitationPatch = vine.compile(linkUserEventEventIDSchema),
+    linkUserEventRatioFavorite = vine.compile(linkUserEventEventIDSchema);

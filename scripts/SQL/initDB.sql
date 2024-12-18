@@ -203,7 +203,7 @@ INSERT INTO message (content, type, sending_date, user_id, discussion_event_id) 
 
 -- Fill `linkUserEvent` table
 INSERT INTO linkUserEvent (user_id, event_id, is_waiting, is_accepted,is_favorite) VALUES
-                                                                         (1, 1, false, true,false),
+                                                                         (1, 1, false, true,true),
                                                                          (2, 2, false, true,false),
                                                                          (1, 3, true, false,false),
                                                                          (2, 3, true, false,false), -- Jane Doe attend une confirmation pour le Festival Electro
