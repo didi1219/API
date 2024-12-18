@@ -1,5 +1,6 @@
 import { user } from "../middleware/validator/user.js";
 import {calculOffset, verifyValueOfPerPage} from "../util/paging.js";
+import User from "../routes/user.js";
 
 export const readLinkUserEvent = async (SQLClient, {id}) => {
 
@@ -81,7 +82,7 @@ export const readNbLinkUserEvents = async (SQLClient, {page, perPage}) => {
     return rows;
 };
 
-export const subscribeAEvent = async (SQLClient, {user_id,event_id}) => {
+export const subscribeAnEvent = async (SQLClient, {user_id,event_id}) => {
     await SQLClient.query(
         'INSERT INTO linkuserevent (user_id,event_id,is_accepted,is_waiting,is_favorite) VALUES ($1,$2,$3,$4,$5);',
         [
@@ -94,12 +95,25 @@ export const subscribeAEvent = async (SQLClient, {user_id,event_id}) => {
     );
 };
 
+export const unFollowAnEvent = async (SQLClient, {user_id,event_id}) => {
+    return await SQLClient.query(
+        'DELETE FROM linkuserevent WHERE user_id = $1 AND event_id = $2', [user_id,event_id],
+    );
+};
+
+export const linkUserEventAccepted = async (SQLClient, {user_id,event_id}) => {
+    const {rows} = await SQLClient.query(
+        'select is_accepted from linkuserevent where user_id = $1 and event_id = $2',[user_id,event_id],
+    );
+    return rows[0];
+};
+
 export const readTotalRowLinkUserEvents = async (SQLClient)=>{
     const {rows} = await SQLClient.query(
         "SELECT COUNT(*) as count_rows FROM linkuserevent"
     );
     return rows[0]?.count_rows;
-}
+};
 
 export const readInvitationNotAcceptedByCurrentId = async (SQLClient,{user_id, page, perPage}) =>{
     const size = verifyValueOfPerPage(perPage);
@@ -129,9 +143,7 @@ export const readFavoriteEvent = async (SQLClient, {user_id, page, perPage}) => 
         "SELECT * FROM linkuserevent l INNER JOIN event e on l.event_id = e.id where l.user_id = $1 LIMIT $2 OFFSET $3 ", [user_id, size,offset]
     )
     return rows;
-}
-
-;
+};
 
 export const getNbLinkUserEventByUser = async (SQLClient,{user_id}) =>{
     const {rows} = await SQLClient.query(

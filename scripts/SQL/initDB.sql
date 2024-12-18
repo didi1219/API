@@ -183,15 +183,23 @@ INSERT INTO discussionEvent (title, is_writable, event_id) VALUES
                                                               ('Discussion Soirée de fin d’année', true, 8),
                                                               ('Espace Échanges Conférence Tech', true, 6);
 
+
 -- Fill `message` table
 INSERT INTO message (content, type, sending_date, user_id, discussion_event_id) VALUES
-                                                                                    ('Vivement le concert !', 0, '2024-11-30', 1, 1),
-                                                                                    ('Hâte d en apprendre plus sur les nouvelles technologies.', 0, '2024-11-30', 2, 2),
-                                                                                    ('J’ai hâte de danser toute la nuit au Festival Electro !', 0, '2025-07-18', 1, 4),
-                                                                                    ('Quelqu’un peut m’expliquer où trouver des places pour le Festival ?', 0, '2025-07-19', 2, 4),
-                                                                                    ('Le marathon de cette année promet d’être épique !', 0, '2025-04-10', 3, 5),
-                                                                                    ('La Soirée Disco sera incroyable !', 0, '2025-07-20', 4, 6),
-                                                                                    ('La conférence abordera-t-elle les dernières avancées en IA ?', 0, '2024-12-05', 5, 7);
+                                                                                    ('Vivement le concert !', 0, '2024-11-30 18:30:00', 1, 1),
+                                                                                    ('Hâte d en apprendre plus sur les nouvelles technologies.', 0, '2024-11-30 19:00:00', 2, 2),
+                                                                                    ('J’ai hâte de danser toute la nuit au Festival Electro !', 0, '2025-07-18 20:00:00', 1, 4),
+                                                                                    ('Quelqu’un peut m’expliquer où trouver des places pour le Festival ?', 0, '2025-07-19 09:30:00', 2, 4),
+                                                                                    ('Le marathon de cette année promet d’être épique !', 0, '2025-04-10 07:00:00', 3, 5),
+                                                                                    ('La Soirée Disco sera incroyable !', 0, '2025-07-20 22:00:00', 4, 6),
+                                                                                    ('La conférence abordera-t-elle les dernières avancées en IA ?', 0, '2024-12-05 14:00:00', 5, 7),
+                                                                                    ('Vivement le concert de ce soir, je suis trop impatient !', 0, '2024-11-30 17:45:00', 1, 1),
+                                                                                    ('Est-ce que quelqu’un a déjà vu ce groupe en live ? Je suis curieux !', 0, '2024-11-30 18:00:00', 2, 1),
+                                                                                    ('Quelles chansons du groupe souhaitez-vous entendre pendant le concert ?', 0, '2024-11-30 18:15:00', 3, 1),
+                                                                                    ('Si quelqu’un a des bons plans pour les billets, faites-moi signe !', 0, '2024-12-01 12:30:00', 4, 1),
+                                                                                    ('La scène va être gigantesque, ça promet !', 0, '2024-12-01 13:00:00', 5, 1),
+                                                                                    ('Je suis super excité pour l’avant-concert ! Est-ce qu’on se retrouve tous pour un verre avant ?', 0, '2024-12-01 14:00:00', 6, 1),
+                                                                                    ('J’ai entendu dire qu’il y a une surprise spéciale pendant le concert, quelqu’un en sait plus ?', 0, '2024-12-02 11:00:00', 7, 1);
 
 -- Fill `linkUserEvent` table
 INSERT INTO linkUserEvent (user_id, event_id, is_waiting, is_accepted,is_favorite) VALUES

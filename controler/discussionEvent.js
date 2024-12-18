@@ -63,6 +63,7 @@ export const getNewerMessagesInDiscussion = async (req, res) => {
             res.sendStatus(404);
         }
     } catch(err) {
+        console.log(err)
         res.sendStatus(500);
     }
 };

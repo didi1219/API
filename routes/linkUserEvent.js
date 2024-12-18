@@ -13,13 +13,14 @@ import {
     isFavorite,
     getFavoriteEvent,
     getNbLinkUserEventByCurrentUser,
-    followAEvent
+    followAEvent,
+    unFollowAnEvent,
+    linkUserEventAccepted
 } from "../controler/linkUserEvent.js";
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {admin} from "../middleware/authorization/mustBeAdmin.js";
 import {linkUserEventValidatorMiddleware as LUEVM, tabValidatorMiddleware as TabVM} from "../middleware/validation.js";
 import {pagingValidatorMiddleWare as PagingVM} from "../middleware/validation.js";
-import {tabIds} from "../middleware/validator/tabValidator.js";
 
 const router = Router();
 
@@ -36,6 +37,8 @@ router.get('/favorite/event', checkJWT,PagingVM.paging,getFavoriteEvent);
 router.post('/follow/event/',checkJWT,LUEVM.linkUserEventToFollow,followAEvent);
 
 router.get('/nbLinkUserEvent/byUser/', checkJWT,getNbLinkUserEventByCurrentUser);
+router.delete('/unfollow/event/:event_id',checkJWT,LUEVM.linkUserEventToUnFollow,unFollowAnEvent);
+router.get('/follow/accepted/:event_id',checkJWT,LUEVM.linkUserEventIsAccepted,linkUserEventAccepted)
 
 router.delete('/many/deleteLinkUserEvent/',checkJWT,admin,TabVM.ids,deleteLinkUserEvents);
 
