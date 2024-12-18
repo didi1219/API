@@ -12,7 +12,8 @@ import {
     declineInvitation,
     isFavorite,
     getFavoriteEvent,
-    followAEvent
+    followAEvent,
+    unFollowAnEvent
 } from "../controler/linkUserEvent.js";
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {admin} from "../middleware/authorization/mustBeAdmin.js";
@@ -33,6 +34,7 @@ router.get('/get/Invitation/',checkJWT,getInvitationNotAcceptedByCurrentId);
 router.get('/favorite/event', checkJWT,PagingVM.paging,getFavoriteEvent);
 
 router.post('/follow/event/',checkJWT,LUEVM.linkUserEventToFollow,followAEvent);
+router.delete('/unfollow/event/:id',checkJWT,LUEVM.linkUserEventToUnFollow,unFollowAnEvent);
 
 router.delete('/many/deleteLinkUserEvent/',checkJWT,admin,TabVM.ids,deleteLinkUserEvents);
 

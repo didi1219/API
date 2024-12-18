@@ -141,9 +141,19 @@ export const getFavoriteEvent = async (req,res) => {
 export const followAEvent = async (req, res) => {
     try {
         req.val.user_id = req.session.id;
-        await linkUserEventModel.subscribeAEvent(pool,req.val);
+        await linkUserEventModel.subscribeAnEvent(pool,req.val);
         res.sendStatus(201)
     } catch (error) {
         res.sendStatus(500);
     }
 };
+
+export const unFollowAnEvent = async (req, res) => {
+    try {
+        req.val.user_id = req.session.id;
+        await linkUserEventModel.unFollowAnEvent(pool,req.val);
+        res.sendStatus(200);
+    } catch (error) {
+        res.sendStatus(500);
+    }
+}

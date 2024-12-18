@@ -80,7 +80,7 @@ export const readNbLinkUserEvents = async (SQLClient, {page, perPage}) => {
     return rows;
 };
 
-export const subscribeAEvent = async (SQLClient, {user_id,event_id}) => {
+export const subscribeAnEvent = async (SQLClient, {user_id,event_id}) => {
     await SQLClient.query(
         'INSERT INTO linkuserevent (user_id,event_id,is_accepted,is_waiting,is_favorite) VALUES ($1,$2,$3,$4,$5);',
         [
@@ -92,6 +92,12 @@ export const subscribeAEvent = async (SQLClient, {user_id,event_id}) => {
         ]
     );
 };
+
+export const unFollowAnEvent = async (SQLClient, {user_id,event_id}) => {
+    return await SQLClient.query(
+        'DELETE FROM linkuserevent WHERE user_id = $1 AND event_id = $2', [user_id,event_id],
+    );
+}
 
 export const readTotalRowLinkUserEvents = async (SQLClient)=>{
     const {rows} = await SQLClient.query(

@@ -66,11 +66,16 @@ export const login = async (req, res) => {
 
 export const registration = async (req, res) => {
     try {
-        const exist = await userModel.userExists(pool,req.val);
-        if(exist){
+        const existEmail = await userModel.userExists(pool,req.val);
+        const existUserName = await userModel.checkPseudoExist(pool,req.val);
+        if(!existEmail && !existUserName){
             await userModel.createUser(pool,req.val);
             res.sendStatus(201);
-        } else {
+        } else if(existEmail && existUserName){
+            res.status(409).send('Email & Pseudo already used');
+        }else if(existUserName){
+            res.status(409).send('Pseudo already used');
+        }else{
             res.status(409).send('Email already used');
         }
     } catch(e) {

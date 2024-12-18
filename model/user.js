@@ -8,6 +8,13 @@ export const userExists = async (SQLClient, {email}) => {
     return rows.count > 0;
 };
 
+export const checkPseudoExist = async(SQLClient,{user_name})=>{
+    const {rows} = await SQLClient.query(
+        'SELECT COUNT(*) as rows_count FROM users WHERE user_name = $1', [user_name]
+    )
+    return rows[0].rows_count > 0;
+}
+
 export const readUserByEmail = async (SQLClient, {email}) => {
     const {rows} = await SQLClient.query(
         'SELECT * FROM users WHERE email = $1', [email]
