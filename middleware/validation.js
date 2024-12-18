@@ -328,6 +328,14 @@ export const linkUserEventValidatorMiddleware = {
         } catch(error) {
             res.status(400).send(error.messages);
         }
+    },
+    linkUserEventIsAccepted : async (req, res, next) => {
+        try {
+            req.val = await linkUserEventValidator.linkUserEventIsAccepted.validate(req.params);
+            next();
+        } catch (error) {
+            res.status(400).send(error.messages);
+        }
     }
 };
 

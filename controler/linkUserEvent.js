@@ -156,4 +156,18 @@ export const unFollowAnEvent = async (req, res) => {
     } catch (error) {
         res.sendStatus(500);
     }
-}
+};
+
+export const linkUserEventAccepted = async(req, res) => {
+    try {
+        req.val.user_id = req.session.id;
+        const response = await linkUserEventModel.linkUserEventAccepted(pool,req.val);
+        if(response){
+            res.json(response);
+        } else {
+            res.json(404);
+        }
+    } catch (error) {
+        res.sendStatus(500);
+    }
+};

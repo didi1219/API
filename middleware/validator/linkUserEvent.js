@@ -31,6 +31,7 @@ export const
     searchedLinkUserEvent = vine.compile(linkUserEventIDSchema),
     linkUserEventToFollow = vine.compile(linkUserEventFollowSchema),
     linkUserEventToUnFollow = vine.compile(linkUserEventFollowSchema),
+    linkUserEventIsAccepted = vine.compile(linkUserEventFollowSchema),
     linkUserEventToAdd = vine.compile(linkUserEventToAddSchema),
     linkUserEventToUpdate = vine.compile(linkUserEventToUpdateSchema),
     linkUserEventToDelete = vine.compile(linkUserEventIDSchema),
