@@ -88,3 +88,4 @@ export const deleteCategories = async (req,res) => {
         res.sendStatus(500);
     }
 };
+

@@ -1,4 +1,4 @@
-import vine from '@vinejs/vine'
+import vine from '@vinejs/vine';
 
 const userIdSchema = vine.object({
     id: vine.number()
@@ -11,7 +11,7 @@ const userToAddSchema = vine.object({
     first_name: vine.string().trim().maxLength(250),
     user_name: vine.string().trim().maxLength(250),
     bio: vine.string().maxLength(500)
-})
+});
 
 const userToUpdateSchema = vine.object({
     id: vine.number(),

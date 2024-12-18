@@ -1,7 +1,6 @@
 import * as searchModel from "../model/search.js";
 import {pool} from "../database/database.js";
 
-
 export const searchEventByName = async (req,res) => {
     try {
         const response = await searchModel.readEventByName(pool, req.val);
@@ -44,7 +43,11 @@ export const getPublicEvents = async (req,res) => {
 export const countNbRowPublicEvent = async (req,res) =>{
     try{
         const response = await searchModel.nbRowsreadPublicEvents(pool);
-        res.status(200).send(response);
+        if(response){
+            res.json(response)
+        } else {
+            res.sendStatus(404);
+        }
     }catch(error){
         res.sendStatus(500);
     }
@@ -55,7 +58,6 @@ export const getTotalRowEventGenericSearched = async (req, res) => {
         const response = await searchModel.readTotalRowEventGenericSearched(pool, req.val);
         res.json({response});
     } catch (error) {
-        console.log(error)
         res.sendStatus(500);
     }
 };
@@ -78,19 +80,6 @@ export const getEventByLoc = async (req,res) => {
         const response = await searchModel.readEventByLocalities(pool, req.val);
         if(response) {
             res.json({response});
-        } else {
-            res.sendStatus(404);
-        }
-    } catch(error){
-        res.sendStatus(500);
-    }
-};
-
-export const getAllEventOfOwner = async (req,res) => {
-    try{
-        const response = await searchModel.readEventByOwner(pool, req.val);
-        if(response) {
-            res.json(response);
         } else {
             res.sendStatus(404);
         }

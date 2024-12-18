@@ -35,8 +35,6 @@ export const deleteCategories = async (SQLClient, {ids}) => {
     }
 };
 
-
-
 export const updateCategory = async (SQLClient, {id,title,icon_component_name,icon_name}) => {
     let query = 'UPDATE category SET ';
     const querySet = [];

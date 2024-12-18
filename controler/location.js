@@ -1,6 +1,5 @@
 import {pool} from '../database/database.js';
 import * as locationModel from '../model/location.js';
-import {readAllLocations} from "../model/location.js";
 
 export const getLocation = async (req,res) =>{
     try {

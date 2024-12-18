@@ -194,7 +194,6 @@ export const getRatioFavoriteEvent = async (req, res) => {
         const response = await linkUserEventModel.ratioFavorite(pool,req.val);
         res.status(200).json({response});
     } catch (error) {
-        console.log(error)
         res.sendStatus(500);
     }
-}
+};

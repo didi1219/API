@@ -14,7 +14,6 @@ export const isUserInDiscussion = async (userID, discussionID) => {
 
         return rows[0].hasaccess;
     } catch (error) {
-        console.error('Error checking user access to discussion:', error);
         throw error;
     }
 };
@@ -32,7 +31,6 @@ export const isUserInEvent = async (userID, eventID) => {
 
         return rows[0].hasaccess;
     } catch (error) {
-        console.error('Error checking user access to event:', error);
         throw error;
     }
 };
@@ -51,7 +49,6 @@ export const hasUserWriteRights = async (userID, discussionID) => {
 
         return rows[0].hasaccess;
     } catch (error) {
-        console.error('Error checking user write rights to discussion:', error);
         throw error;
     }
 }

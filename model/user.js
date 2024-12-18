@@ -85,7 +85,7 @@ export const deleteManyUsers = async (SQLClient, {ids}) => {
         await SQLClient.query('ROLLBACK');
         throw error;
     }
-}
+};
 
 export const updateUser = async(SQLClient,id, {email, password, last_name, first_name, user_name, bio}) => {
     let query = 'UPDATE users SET ';
@@ -121,8 +121,6 @@ export const updateUser = async(SQLClient,id, {email, password, last_name, first
         query += `${querySet.join(', ')} WHERE id = $${queryValues.length}`;
         return await SQLClient.query(query, queryValues);
     } else {
-        console.log(query);
-        console.log(querySet);
         throw new Error('No field given');
     }
 };

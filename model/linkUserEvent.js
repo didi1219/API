@@ -37,7 +37,7 @@ export const deleteManyLinkUserEvents = async (SQLClient, {ids}) => {
         await SQLClient.query('ROLLBACK');
         throw error;
     }
-}
+};
 
 export const updateLinkUserEvent = async (SQLClient, {id, user_id, event_id, is_waiting, is_accepted}) => {
     let query = 'UPDATE linkUserEvent SET ';
@@ -120,19 +120,21 @@ export const readInvitationNotAcceptedByCurrentId = async (SQLClient,{user_id, p
         "SELECT * FROM linkuserevent l INNER JOIN event e on l.event_id = e.id WHERE l.user_id = $1 AND is_waiting LIMIT $2 OFFSET $3",[user_id, size, offset]
     )
     return rows;
-}
+};
+
 export const nbRowsInvitationNotAcceptedByCurrentId = async (SQLClient,{user_id}) => {
     const {rows} = await SQLClient.query(
         "SELECT COUNT(*) as rows_count FROM linkuserevent l INNER JOIN event e on l.event_id = e.id WHERE l.user_id = $1 AND is_waiting",[user_id]
     )
     return rows[0].rows_count;
-}
+};
+
 export const isFavoritePatch = async (SQLClient,{user_id,event_id}) => {
     const {rows} = await SQLClient.query(
         "UPDATE linkuserevent SET is_favorite = NOT is_favorite WHERE user_id = $1 AND event_id = $2",[user_id,event_id]
     )
     return rows;
-}
+};
 
 export const readFavoriteEvent = async (SQLClient, {user_id, page, perPage}) => {
     const size = verifyValueOfPerPage(perPage);
