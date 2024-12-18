@@ -164,10 +164,3 @@ export const checkIfEmailExists = async (SQLClient, {emails}) => {
     }
     return {idEmailExist, emailDoesntExist};
 };
-
-export const checkPseudoExist = async(SQLClient,{user_name})=>{
-    const {rows} = await SQLClient.query(
-        'SELECT COUNT(*) as rows_count FROM users WHERE user_name = $1', [user_name]
-    )
-    return rows[0].rows_count > 0; 
-}
