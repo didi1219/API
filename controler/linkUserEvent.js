@@ -144,7 +144,6 @@ export const followAEvent = async (req, res) => {
         await linkUserEventModel.subscribeAEvent(pool,req.val);
         res.sendStatus(201)
     } catch (error) {
-        console.log(error)
         res.sendStatus(500);
     }
 };

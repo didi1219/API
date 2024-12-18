@@ -60,19 +60,18 @@ export const login = async (req, res) => {
             res.sendStatus(404);
         }
     } catch (err) {
-        console.log(err)
         res.sendStatus(500);
     }
 };
 
 export const registration = async (req, res) => {
     try {
-        const exist = await userModel.userExists(pool,req.val.email);
+        const exist = await userModel.userExists(pool,req.val);
         if(exist){
-            res.status(409).send('Email already used');
-        } else {
             await userModel.createUser(pool,req.val);
             res.sendStatus(201);
+        } else {
+            res.status(409).send('Email already used');
         }
     } catch(e) {
         res.sendStatus(500);
@@ -114,7 +113,6 @@ export const deleteUsers = async (req,res) => {
         await userModel.deleteManyUsers(pool,req.val);
         res.sendStatus(204);
     }catch(error){
-        console.log(error)
         res.sendStatus(500);
     }
 }
@@ -133,7 +131,6 @@ export const deleteCurrentUser = async (req, res) => {
         await userModel.deleteUser(pool, {id});
         res.sendStatus(204);
     }catch(error){
-        console.log(error)
         res.sendStatus(500);
     }
 }
