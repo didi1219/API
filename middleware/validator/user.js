@@ -1,4 +1,22 @@
 import vine from '@vinejs/vine';
+import * as yup from 'yup';
+
+const passwordSchema = yup
+  .string()
+  .required('Le mot de passe est requis')
+  .min(8, 'Le mot de passe doit comporter au moins 8 caractères')
+  .matches(/[A-Z]/, 'Le mot de passe doit contenir au moins une lettre majuscule')
+  .matches(/\d/, 'Le mot de passe doit contenir au moins un chiffre')
+  .matches(/[@$!%*?&]/, 'Le mot de passe doit contenir au moins un caractère spécial');
+
+export const validatePassword = async (req, res, next) => {
+  try {
+    await passwordSchema.validate(req.body.password);
+    next();
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 const userIDSchema = vine.object({
     id: vine.number()

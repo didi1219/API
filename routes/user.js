@@ -19,10 +19,11 @@ import {getAllUsersTitle} from "../controler/admin.js";
 import { pagingValidatorMiddleWare as PagingVM } from '../middleware/validation.js';
 import { admin } from '../middleware/authorization/mustBeAdmin.js';
 import { tabValidatorMiddleware as TabVM } from '../middleware/validation.js';
+import {validatePassword as PasswordVM} from '../middleware/validator/user.js'
 
 const router = Router();
 
-router.post('/registration', UVM.user, registration);
+router.post('/registration', UVM.user,PasswordVM, registration);
 router.post('/login',UVM.login,login);
 router.get('/me',checkJWT,getUserInfo);
 router.patch('/me',checkJWT,UVM.update,updateUser);

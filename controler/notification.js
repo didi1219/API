@@ -81,7 +81,7 @@ export const getNotificationByCurrentUser = async (req, res) => {
         req.val.user_id = req.session.id;
         const response = await notificationModel.getNotificationByUser(pool,req.val)
         if(response){
-            res.status(201).json({response});
+            res.status(201).json(response);
         }else{
             res.sendStatus(404);
         }

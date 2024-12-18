@@ -14,7 +14,10 @@ import {
     getEventSeachByOwner,
     countRowsEventGenericByFollow,
     countRowsEventGenericByOwner,
-    countNbRowPublicEvent
+    countNbRowPublicEvent,
+    getCombineSearchPublic,
+    countRowsGetCombineSearchPublic,
+    getSearchCombineCategoriesAndLocalities
 } from "../controler/search.js";
 import {checkJWT} from "../middleware/identification/JWT.js";
 import { pagingValidatorMiddleWare as PagingVM} from "../middleware/validation.js";
@@ -28,9 +31,9 @@ const router = new Router();
 
 router.get('/eventName/name',checkJWT,PagingVM.pagingSearchByName,searchEventByName);
 router.get('/events/search',checkJWT,PagingVM.pagingSearchGeneral,searchEvent);
-router.get('/events/count',checkJWT,decodeQuery,PagingVM.pagingSearchGeneral,getTotalRowEventGenericSearched);
+router.get('/events/count',checkJWT,decodeQuery,SM.searchField,getTotalRowEventGenericSearched);
 router.get('/events/type/public',checkJWT,PagingVM.paging,getPublicEvents);
-router.get('/event/byCategory/',checkJWT,tabTransformCat,PagingVM.pagingSearchByCategories,getEventCategories);
+router.get('/event/byCategory',tabTransformCat,PagingVM.pagingSearchByCategories,getEventCategories);
 router.get('/event/byLocality',checkJWT,tabTransformLoc,PagingVM.pagingSearchByLoc,getEventByLoc);
 
 router.get('/nbRows/byOwner/',checkJWT,getNbEventByOwner);;
@@ -42,7 +45,10 @@ router.get('/events/searchByOwner',checkJWT,PagingVM.pagingSearchGeneral,getEven
 router.get('/events/searchByFollow',checkJWT,PagingVM.pagingSearchGeneral,getEventSearchFollowByCurrentUser);
 router.get('/nbRows/searchByOwner', checkJWT,PagingVM.pagingSearchGeneral,countRowsEventGenericByOwner);
 router.get('/nbRows/searchByFollow', checkJWT,PagingVM.pagingSearchGeneral,countRowsEventGenericByFollow);
-router.get('/nbRows/type/public/',checkJWT,countNbRowPublicEvent)
+router.get('/nbRows/type/public/',checkJWT,countNbRowPublicEvent);
+router.get('/nbRows/publicAndSearch', checkJWT, SM.searchField,countRowsGetCombineSearchPublic);
+router.get('/events/publicAndSearch', checkJWT,PagingVM.pagingSearchGeneral,getCombineSearchPublic);
+router.get('/events/searchAllFilter',tabTransformCat,PagingVM.pagingWithAllFilters,getSearchCombineCategoriesAndLocalities);
 
 export default router;
 

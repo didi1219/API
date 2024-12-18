@@ -479,6 +479,14 @@ export const searchValidatorMiddleWare = {
         } catch (error) {
             res.status(400).send(error.messages);
         }
+    },
+    searchField : async (req, res, next) =>{
+        try{
+            req.val = await searchValidator.searchValidation.validate(req.query);
+            next();
+        }catch(errror){
+            res.status(400).send(error.messages);
+        }
     }
 };
 
@@ -488,6 +496,7 @@ export const pagingValidatorMiddleWare={
             req.val = await pagingValidator.paging.validate(req.query);
             next();
         }catch(error){
+            console.log(error)
             res.status(400).send(error.messages)
         }
     },
@@ -510,7 +519,7 @@ export const pagingValidatorMiddleWare={
     },
     pagingSearchByCategories : async (req,res, next) => {
         try{
-            req.val = await pagingValidator.pagingSearchByCategories.validate(req.body);
+            req.val = await pagingValidator.pagingSearchByCategories.validate(req.query);
             next();
         }catch(error){
             res.status(400).send(error.messages);
@@ -527,6 +536,14 @@ export const pagingValidatorMiddleWare={
     pagingWithId : async (req,res,next) =>{
         try{
             req.val = await pagingValidator.pagingWithId.validate(req.query);
+            next();
+        }catch(error){
+            res.status(400).send(error.messages);
+        }
+    },
+    pagingWithAllFilters : async (req, res, next) =>{
+        try{
+            req.val = await pagingValidator.pagingWithAllFilters.validate(req.query);
             next();
         }catch(error){
             res.status(400).send(error.messages);

@@ -47,7 +47,7 @@ router.patch('/',checkJWT,admin,EMVM.eventToUpdate,updateEvent);
 
 router.get('/get/allTitle',getAllEventTitle);
 
-router.get('/nbEvents/search',checkJWT,PagingVM.paging,getNbEvents);
+router.get('/nbEvents/search',PagingVM.paging,getNbEvents);
 router.get('/nbEvents/count/',checkJWT,getTotalRowEvent);
 
 router.delete('/many/deleteEvent/',checkJWT,admin,TabVM.ids,deleteEvents);

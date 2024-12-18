@@ -91,7 +91,7 @@ export const getNotificationByUser = async (SQLClient,{user_id,perPage,page}) =>
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        "SELECT n.title, n.content, e.title FROM notification n inner join event e on n.event_id = e.id inner join linkuserevent l on l.event_id = e.id where l.user_id = $1 AND l.is_accepted LIMIT $2 OFFSET $3",[user_id, size,offset]
+        "SELECT * FROM notification n inner join event e on n.event_id = e.id inner join linkuserevent l on l.event_id = e.id where l.user_id = $1 AND l.is_accepted LIMIT $2 OFFSET $3",[user_id, size,offset]
     )
     return rows;
 };

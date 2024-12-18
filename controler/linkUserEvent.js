@@ -80,15 +80,16 @@ export const deleteLinkUserEvents = async (req,res) => {
 
 export const getInvitationNotAcceptedByCurrentId = async (req, res) =>{
     try{
-        req.val={};
         req.val.user_id = req.session.id;
-        const response = await linkUserEventModel.readInvitationNotAcceptedByCurrentId(pool,req.val);
-        if(!response){
+        const invitation = await linkUserEventModel.readInvitationNotAcceptedByCurrentId(pool,req.val);
+        const nbRows = await linkUserEventModel.nbRowsInvitationNotAcceptedByCurrentId(pool,req.val);
+        if(!invitation){
             res.sendStatus(404);
         }else{
-            res.status(200).send(response);
+            res.status(200).send({invitation, nbRows});
         }
     }catch(error){
+        console.log(error)
         res.sendStatus(500);
     }
 }

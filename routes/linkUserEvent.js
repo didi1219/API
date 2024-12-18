@@ -30,7 +30,7 @@ router.delete('/:id',checkJWT,admin,LUEVM.linkUserEventToDelete, deleteLinkUserE
 
 router.get('/nbLinkUserEvents/search',checkJWT,PagingVM.paging,getNbLinkUserEvents);
 router.get('/nbLinkUserEvents/count/',checkJWT,countRows);
-router.get('/get/Invitation/',checkJWT,getInvitationNotAcceptedByCurrentId);
+router.get('/get/invitation',checkJWT,PagingVM.paging,getInvitationNotAcceptedByCurrentId);
 router.get('/favorite/event', checkJWT,PagingVM.paging,getFavoriteEvent);
 
 router.post('/follow/event/',checkJWT,LUEVM.linkUserEventToFollow,followAEvent);

@@ -30,16 +30,12 @@ export const readEventGeneric = async (SQLClient, { page, perPage, search }) => 
     return rows;
 };
 
-export const readTotalRowEventGenericSearched = async (SQLClient, { page, perPage, search })=>{
+export const readTotalRowEventGenericSearched = async (SQLClient, { search })=>{
     const searchConcat = `%${search}%`;
-    const size = verifyValueOfPerPage(perPage);
-    const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        "SELECT COUNT(*) as count_rows FROM event e INNER JOIN location l ON e.location_id = l.id INNER JOIN category c ON e.category_id = c.id INNER JOIN users u on u.id = e.user_id WHERE e.title ILIKE $1 OR l.label ILIKE $1 OR c.title ILIKE $1 LIMIT $2 OFFSET $3",
+        "SELECT COUNT(*) as count_rows FROM event e INNER JOIN location l ON e.location_id = l.id INNER JOIN category c ON e.category_id = c.id INNER JOIN users u on u.id = e.user_id WHERE e.title ILIKE $1 OR l.label ILIKE $1 OR c.title ILIKE $1",
         [
-            searchConcat,
-            size,
-            offset
+            searchConcat
         ]
     );
     return rows[0]?.count_rows;
@@ -191,6 +187,120 @@ export const nbRowsEventGenericByFollow = async (SQLClient, {search, user_id }) 
     return rows[0].rows_count;
 };
 
-export const searchCombinePublicEvent = async(SQClient,{search,}) =>{
-    
+export const searchCombinePublicEvent = async(SQLClient,{search,page, perPage}) =>{
+    const searchConcat = `%${search}%`;
+    const size = verifyValueOfPerPage(perPage);
+    const offset = calculOffset({size, page});
+    const { rows } = await SQLClient.query(
+        'SELECT e.id, e.title,e.description,e.event_start,e.event_end,e.street_number,e.picture_path,e.is_private,u.user_name,l.label AS locality, c.title as category FROM event e INNER JOIN location l ON e.location_id = l.id INNER JOIN category c ON e.category_id = c.id INNER JOIN users u on u.id = e.user_id WHERE (e.title ILIKE $1 OR l.label ILIKE $1 OR c.title ILIKE $1) AND NOT e.is_private ORDER BY e.id ASC LIMIT $2 OFFSET $3',
+        [
+            searchConcat,
+            size,
+            offset
+        ]
+    );
+    return rows;
 }
+export const nbRowsSearchCombinePublicEvent = async(SQLClient, {search}) => {
+    const searchConcat = `%${search}%`;
+    const { rows } = await SQLClient.query(
+        'SELECT COUNT(*) as rows_count FROM event e INNER JOIN location l ON e.location_id = l.id INNER JOIN category c ON e.category_id = c.id INNER JOIN users u on u.id = e.user_id WHERE (e.title ILIKE $1 OR l.label ILIKE $1 OR c.title ILIKE $1) AND NOT e.is_private',
+        [
+            searchConcat,
+ 
+        ]
+    );
+    return rows[0].rows_count;
+}
+export const searchCombineCategoriesAndLocalities = async (SQLClient, { locality, categories, search, page, perPage }) => {
+    const size = verifyValueOfPerPage(perPage);
+    const offset = calculOffset({ size, page });
+
+    const filters = [];
+    const values = [];
+
+
+    if (locality) {
+        const localityPlaceholder = `$${values.length + 1}`;
+        filters.push(`l.label ILIKE ${localityPlaceholder}`);
+        values.push(`%${locality}%`);
+    }
+
+
+    if (categories && categories.length > 0) {
+        const categoriesPlaceholders = categories.map((_, index) => `$${values.length + index + 1}`).join(', ');
+        filters.push(`e.category_id IN (${categoriesPlaceholders})`);
+        values.push(...categories);
+    }
+
+
+    if (search) {
+        const searchPlaceholder = `$${values.length + 1}`;
+        filters.push(`(e.title ILIKE ${searchPlaceholder} OR l.label ILIKE ${searchPlaceholder} OR c.title ILIKE ${searchPlaceholder})`);
+        values.push(`%${search}%`);
+    }
+
+    const limitPlaceholder = `$${values.length + 1}`;
+    const offsetPlaceholder = `$${values.length + 2}`;
+    values.push(size, offset);
+
+
+    const whereClause = filters.length > 0 ? `WHERE ${filters.join(' AND ')}` : '';
+    
+    const query = `
+        SELECT 
+            e.id, e.title, e.description, e.event_start, e.event_end, e.street_number, 
+            e.picture_path, e.is_private, u.user_name, l.label AS locality, c.title AS category
+        FROM event e
+        INNER JOIN location l ON e.location_id = l.id
+        INNER JOIN category c ON e.category_id = c.id
+        INNER JOIN users u ON e.user_id = u.id
+        ${whereClause}
+        ORDER BY e.id ASC
+        LIMIT ${limitPlaceholder} OFFSET ${offsetPlaceholder};
+    `;
+    const { rows } = await SQLClient.query(query, values);
+
+    return rows;
+};
+
+export const nbRowsSearchCombineCategoriesAndLocalities = async (SQLClient, { locality, categories, search}) => {
+
+    const filters = [];
+    const values = [];
+
+
+    if (locality) {
+        const localityPlaceholder = `$${values.length + 1}`;
+        filters.push(`l.label ILIKE ${localityPlaceholder}`);
+        values.push(`%${locality}%`);
+    }
+
+
+    if (categories && categories.length > 0) {
+        const categoriesPlaceholders = categories.map((_, index) => `$${values.length + index + 1}`).join(', ');
+        filters.push(`e.category_id IN (${categoriesPlaceholders})`);
+        values.push(...categories);
+    }
+
+
+    if (search) {
+        const searchPlaceholder = `$${values.length + 1}`;
+        filters.push(`(e.title ILIKE ${searchPlaceholder} OR l.label ILIKE ${searchPlaceholder} OR c.title ILIKE ${searchPlaceholder})`);
+        values.push(`%${search}%`);
+    }
+
+    const whereClause = filters.length > 0 ? `WHERE ${filters.join(' AND ')}` : '';
+    
+    const query = `
+        SELECT 
+            COUNT(*) as rows_count
+        FROM event e
+        INNER JOIN location l ON e.location_id = l.id
+        INNER JOIN category c ON e.category_id = c.id
+        INNER JOIN users u ON e.user_id = u.id
+        ${whereClause};`;
+    const { rows } = await SQLClient.query(query, values);
+
+    return rows[0].rows_count;
+};

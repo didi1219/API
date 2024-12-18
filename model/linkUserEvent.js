@@ -101,13 +101,20 @@ export const readTotalRowLinkUserEvents = async (SQLClient)=>{
     return rows[0]?.count_rows;
 }
 
-export const readInvitationNotAcceptedByCurrentId = async (SQLClient,{user_id}) =>{
+export const readInvitationNotAcceptedByCurrentId = async (SQLClient,{user_id, page, perPage}) =>{
+    const size = verifyValueOfPerPage(perPage);
+    const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        "SELECT * FROM linkuserevent l INNER JOIN event e on l.event_id = e.id WHERE l.user_id = $1 AND is_waiting",[user_id]
+        "SELECT * FROM linkuserevent l INNER JOIN event e on l.event_id = e.id WHERE l.user_id = $1 AND is_waiting LIMIT $2 OFFSET $3",[user_id, size, offset]
     )
     return rows;
 }
-
+export const nbRowsInvitationNotAcceptedByCurrentId = async (SQLClient,{user_id}) => {
+    const {rows} = await SQLClient.query(
+        "SELECT COUNT(*) as rows_count FROM linkuserevent l INNER JOIN event e on l.event_id = e.id WHERE l.user_id = $1 AND is_waiting",[user_id]
+    )
+    return rows[0].rows_count;
+}
 export const isFavoritePatch = async (SQLClient,{user_id,event_id}) => {
     const {rows} = await SQLClient.query(
         "UPDATE linkuserevent SET is_favorite = NOT is_favorite WHERE user_id = $1 AND event_id = $2",[user_id,event_id]

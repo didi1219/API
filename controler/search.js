@@ -53,12 +53,9 @@ export const countNbRowPublicEvent = async (req,res) =>{
 export const getTotalRowEventGenericSearched = async (req, res) => {
     try {
         const response = await searchModel.readTotalRowEventGenericSearched(pool, req.val);
-        if(response){
-            res.json({response});
-        } else {
-            res.sendStatus(404);
-        }
+        res.json({response});
     } catch (error) {
+        console.log(error)
         res.sendStatus(500);
     }
 };
@@ -184,9 +181,42 @@ export const countRowsEventGenericByOwner = async (req,res) =>{
 export const countRowsEventGenericByFollow = async (req, res) =>{
     try{
         req.val.user_id = req.session.id;
-        const nbRows = await searchModel.nbRowsEventGenericByFollow(pool, req.val)
-        res.status(200).send({nbRows});
+        const nbRows = await searchModel.nbRowsEventGenericByFollow(pool, req.val);
+        res.status(200).send(nbRows);
     }catch(error){
+        res.sendStatus(500);
+    }
+}
+
+export const getCombineSearchPublic = async (req, res)=>{
+    try{
+        const response = await searchModel.searchCombinePublicEvent(pool, req.val);
+        if(response){
+            res.status(200).json(response);
+        }else{
+            res.sendStatus(404);
+        }
+    }catch(error){
+        console.log(error);
+        res.sendStatus(500);
+    }
+}
+export const countRowsGetCombineSearchPublic = async (req, res)=>{
+    try{
+        const response = await searchModel.nbRowsSearchCombinePublicEvent(pool,req.val);
+        res.status(200).json(response);
+    }catch(error){
+        console.log(error)
+        res.sendStatus(500);
+    }
+}
+export const getSearchCombineCategoriesAndLocalities = async (req, res)=>{
+    try{
+        const events = await searchModel.searchCombineCategoriesAndLocalities(pool, req.val);
+        const nbRows = await searchModel. nbRowsSearchCombineCategoriesAndLocalities(pool,req.val);
+        res.status(200).json({events, nbRows});
+    }catch(error){
+        console.log(error);
         res.sendStatus(500);
     }
 }
