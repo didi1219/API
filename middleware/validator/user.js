@@ -7,7 +7,7 @@ const passwordSchema = yup
   .min(8, 'Le mot de passe doit comporter au moins 8 caractères')
   .matches(/[A-Z]/, 'Le mot de passe doit contenir au moins une lettre majuscule')
   .matches(/\d/, 'Le mot de passe doit contenir au moins un chiffre')
-  .matches(/[@$!%*?&]/, 'Le mot de passe doit contenir au moins un caractère spécial');
+  .matches(/[#@$!%*?&]/, 'Le mot de passe doit contenir au moins un caractère spécial');
 
 export const validatePassword = async (req, res, next) => {
   try {
