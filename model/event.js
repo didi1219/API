@@ -38,11 +38,11 @@ export const createEvent = async (SQLClient, {title,description,event_start,even
             'INSERT INTO discussionEvent (title,is_writable, event_id) VALUES ($1,$2,$3)',
             ["Information",false,eventId]
         );
-        await SQLClient.query('COMMIT');
+        await SQLClient.query('COMMIT;');
 
         return eventId;
     } catch (error) {
-        await SQLClient.query('ROLLBACK');
+        await SQLClient.query('ROLLBACK;');
         throw error;
     }
 };

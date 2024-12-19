@@ -169,7 +169,9 @@ INSERT INTO discussionEvent (title, is_writable, event_id) VALUES
                                                               ('Discussion Soirée Disco', true, 5),
                                                               ('Forum Marathon', true, 4),
                                                               ('Discussion Soirée de fin d’année', true, 8),
-                                                              ('Espace Échanges Conférence Tech', true, 6);
+                                                              ('Espace Échanges Conférence Tech', true, 6),
+                                                              ('Annonce',false,1);
+
 
 
 -- Fill `message` table
