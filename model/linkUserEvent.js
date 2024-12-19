@@ -66,7 +66,6 @@ export const updateLinkUserEvent = async (SQLClient, {id, user_id, event_id, is_
     if (querySet.length > 0) {
         queryValues.push(id);
         query += `${querySet.join(', ')} WHERE id = $${queryValues.length}`;
-        
         return await SQLClient.query(query, queryValues);
     } else {
         throw new Error('No fields to update provided.');
@@ -119,7 +118,7 @@ export const readInvitationNotAcceptedByCurrentId = async (SQLClient,{user_id, p
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        "SELECT * FROM linkuserevent l INNER JOIN event e on l.event_id = e.id WHERE l.user_id = $1 AND is_waiting LIMIT $2 OFFSET $3",[user_id, size, offset]
+        "SELECT l.id, l.user_id, event_id, is_accepted,is_waiting, is_favorite, title, description, event_end,event_start, street_number,is_private, picture_path, e.user_id as owner, location_id, category_id FROM linkuserevent l INNER JOIN event e on l.event_id = e.id WHERE l.user_id = $1 AND is_waiting LIMIT $2 OFFSET $3",[user_id, size, offset]
     )
     return rows;
 }

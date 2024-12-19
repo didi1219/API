@@ -46,11 +46,11 @@ export const updateCategory = async (SQLClient, {id,title,icon_component_name,ic
         querySet.push(`title = $${queryValues.length}`);
     }
     if (icon_component_name){
-        queryValues.push(title);
+        queryValues.push(icon_component_name);
         querySet.push(`icon_component_name = $${queryValues.length}`);
     }
     if (icon_name){
-        queryValues.push(title);
+        queryValues.push(icon_name);
         querySet.push(`icon_name = $${queryValues.length}`);
     }
     if(queryValues.length > 0){
@@ -80,7 +80,7 @@ export const readNbCategories = async (SQLClient, {page, perPage}) => {
 
 export const readTotalRowCategories = async (SQLClient)=>{
     const {rows} = await SQLClient.query(
-        "SELECT COUNT(*) as count_rows FROM event"
+        "SELECT COUNT(*) as count_rows FROM category"
     );
     return rows[0]?.count_rows;
 };

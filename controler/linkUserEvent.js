@@ -96,8 +96,7 @@ export const getInvitationNotAcceptedByCurrentId = async (req, res) =>{
 
 export const acceptInvitation = async (req, res) => {
     try{
-        req.val.user_id = req.session.id;
-        await linkUserEventModel.updateLinkUserEvent(pool,{user_id:req.val.user_id, event_id:req.val.event_id, isWaiting : false, isAccepted : true});
+        await linkUserEventModel.updateLinkUserEvent(pool,{id: req.val.id, is_waiting : false, is_accepted : true});
         res.sendStatus(204);
     }catch(error){
 
@@ -107,8 +106,7 @@ export const acceptInvitation = async (req, res) => {
 
 export const declineInvitation = async (req, res) => {
     try{
-        req.val.user_id = req.session.id;
-        await linkUserEventModel.updateLinkUserEvent(pool,{user_id:req.val.user_id, event_id:req.val.event_id, isWaiting : false, isAccepted : false});
+        await linkUserEventModel.updateLinkUserEvent(pool,{id: req.val.id, is_waiting : false, is_accepted : false});
         res.sendStatus(204);
     }catch(error){
         res.sendStatus(500)

@@ -209,6 +209,7 @@ export const eventManagementValidatorMiddleware = {
             req.val = await eventManagementValidator.eventToAdd.validate(req.body);
             next();
         } catch (error){
+            console.log(error);
             res.status(400).send(error.messages);
         }
     },
@@ -307,7 +308,7 @@ export const linkUserEventValidatorMiddleware = {
     },
     linkUserEventInvitationPatch : async (req,res,next) => {
         try{
-            req.val = await linkUserEventValidator.linkUserEventInvitationPatch.validate(req.params);
+            req.val = await linkUserEventValidator.linkUserEventInvitationPatch.validate(req.body);
             next();
         }catch(error){
             res.status(400).send(error.messages);

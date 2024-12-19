@@ -42,8 +42,8 @@ router.get('/follow/accepted/:event_id',checkJWT,LUEVM.linkUserEventIsAccepted,l
 
 router.delete('/many/deleteLinkUserEvent/',checkJWT,admin,TabVM.ids,deleteLinkUserEvents);
 
-router.patch('/invitation/accept/:event_id', checkJWT,LUEVM.linkUserEventInvitationPatch,acceptInvitation);
-router.patch('/invitation/decline/:event_id', checkJWT,LUEVM.linkUserEventInvitationPatch,declineInvitation);
+router.patch('/invitation/accept/', checkJWT,LUEVM.linkUserEventInvitationPatch,acceptInvitation);
+router.patch('/invitation/decline/', checkJWT,LUEVM.linkUserEventInvitationPatch,declineInvitation);
 router.patch('/setFavorite/:event_id',checkJWT,LUEVM.linkUserEventInvitationPatch,isFavorite);
 
 export default router;

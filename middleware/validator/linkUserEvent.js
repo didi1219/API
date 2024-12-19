@@ -24,7 +24,7 @@ const linkUserEventToUpdateSchema = vine.object({
 });
 
 const linUserEventInvitationPatchSchema = vine.object({
-    event_id: vine.number()
+    id:vine.number(),
 });
 
 export const

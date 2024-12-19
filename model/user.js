@@ -87,15 +87,11 @@ export const deleteManyUsers = async (SQLClient, {ids}) => {
     }
 }
 
-export const updateUser = async(SQLClient,id, {email, password, last_name, first_name, user_name, bio}) => {
+export const updateUser = async(SQLClient,id, { password, last_name, first_name, user_name, bio}) => {
     let query = 'UPDATE users SET ';
     const querySet = [];
     const queryValues = [];
 
-    if(email){
-        queryValues.push(email);
-        querySet.push(`email = $${queryValues.length}`);
-    }
     if(password){
         queryValues.push(await hash(password));
         querySet.push(`password = $${queryValues.length}`);
@@ -121,8 +117,6 @@ export const updateUser = async(SQLClient,id, {email, password, last_name, first
         query += `${querySet.join(', ')} WHERE id = $${queryValues.length}`;
         return await SQLClient.query(query, queryValues);
     } else {
-        console.log(query);
-        console.log(querySet);
         throw new Error('No field given');
     }
 };

@@ -44,6 +44,7 @@ export const updateUser = async (req, res) => {
         await userModel.updateUser(pool,req.session.id, req.val);
         res.sendStatus(204);
     } catch (err) {
+        console.log(error)
         res.sendStatus(500);
     }
 };

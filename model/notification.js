@@ -95,3 +95,10 @@ export const getNotificationByUser = async (SQLClient,{user_id,perPage,page}) =>
     )
     return rows;
 };
+
+export const nbRowsNotificationByUser = async (SQLClient, {user_id}) =>{
+    const {rows} = await SQLClient.query(
+        "SELECT COUNT(*) FROM notification n inner join event e on n.event_id = e.id inner join linkuserevent l on l.event_id = e.id where l.user_id = $1 AND l.is_accepted",[user_id]
+    )
+    return rows;
+};
