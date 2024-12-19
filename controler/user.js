@@ -32,7 +32,8 @@ export const deleteUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
     try {
-        await userModel.updateUser(pool,req.session.id, req.val);
+        req.val.id = req.session.id;
+        await userModel.updateUser(pool,req.val);
         res.sendStatus(204);
     } catch (err) {
         res.sendStatus(500);
