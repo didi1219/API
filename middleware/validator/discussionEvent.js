@@ -1,6 +1,5 @@
 import vine from '@vinejs/vine';
 
-
 const discussionEventIDSchema = vine.object({
     id: vine.number()
 });

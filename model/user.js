@@ -5,7 +5,7 @@ export const userExists = async (SQLClient, {email}) => {
     const {rows} = await SQLClient.query(
         'SELECT COUNT(*) as rows_count FROM users WHERE email = $1', [email]
     );
-    return rows[0].rows_count > 0;;
+    return rows[0].rows_count > 0;
 };
 
 export const checkPseudoExist = async(SQLClient,{user_name})=>{
@@ -13,7 +13,7 @@ export const checkPseudoExist = async(SQLClient,{user_name})=>{
         'SELECT COUNT(*) as rows_count FROM users WHERE user_name = $1', [user_name]
     )
     return rows[0].rows_count > 0;
-}
+};
 
 export const readUserByEmail = async (SQLClient, {email}) => {
     const {rows} = await SQLClient.query(
@@ -43,9 +43,9 @@ export const readUser = async (SQLClient, {id}) => {
     return rows[0];
 };
 
-export const createUser = async (SQLClient, {email, password, last_name, first_name, user_name, bio}) => {
+export const createUser = async (SQLClient, {email, password, last_name, first_name, user_name, bio,picture_path}) => {
     const {rows} = await SQLClient.query(
-        'INSERT INTO users (email, password, last_name, first_name, user_name, bio,isAdmin) VALUES ($1, $2, $3, $4, $5, $6,$7) RETURNING id',
+        'INSERT INTO users (email, password, last_name, first_name, user_name, bio,picture_path,isAdmin) VALUES ($1, $2, $3, $4, $5, $6,$7,$8) RETURNING id',
         [
             email,
             await hash(password),
@@ -53,6 +53,7 @@ export const createUser = async (SQLClient, {email, password, last_name, first_n
             first_name,
             user_name,
             bio,
+            picture_path,
             false
         ]);
     return rows[0]?.id;
@@ -85,9 +86,9 @@ export const deleteManyUsers = async (SQLClient, {ids}) => {
         await SQLClient.query('ROLLBACK');
         throw error;
     }
-}
+};
 
-export const updateUser = async(SQLClient,id, { password, last_name, first_name, user_name, bio}) => {
+export const updateUser = async(SQLClient, {id, password, last_name, first_name, user_name, bio,picture_path}) => {
     let query = 'UPDATE users SET ';
     const querySet = [];
     const queryValues = [];
@@ -112,6 +113,10 @@ export const updateUser = async(SQLClient,id, { password, last_name, first_name,
         queryValues.push(bio);
         querySet.push(`bio = $${queryValues.length}`);
     }
+    if(picture_path){
+        queryValues.push(picture_path);
+        querySet.push(`picture_path = $${queryValues.length}`);
+    }
     if(queryValues.length > 0){
         queryValues.push(id);
         query += `${querySet.join(', ')} WHERE id = $${queryValues.length}`;
@@ -133,7 +138,7 @@ export const readNbUsers = async (SQLClient,{page,perPage}) => {
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        'SELECT id , email, last_name, first_name, user_name, bio FROM users ORDER BY id LIMIT $1 OFFSET $2',[perPage, offset]
+        'SELECT id , email, last_name, first_name, user_name, bio,picture_path FROM users ORDER BY id LIMIT $1 OFFSET $2',[perPage, offset]
     );
     return rows;
 };

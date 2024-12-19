@@ -1,6 +1,4 @@
-import { user } from "../middleware/validator/user.js";
 import {calculOffset, verifyValueOfPerPage} from "../util/paging.js";
-import User from "../routes/user.js";
 
 export const readLinkUserEvent = async (SQLClient, {id}) => {
 
@@ -39,7 +37,7 @@ export const deleteManyLinkUserEvents = async (SQLClient, {ids}) => {
         await SQLClient.query('ROLLBACK');
         throw error;
     }
-}
+};
 
 export const updateLinkUserEvent = async (SQLClient, {id, user_id, event_id, is_waiting, is_accepted}) => {
     let query = 'UPDATE linkUserEvent SET ';
@@ -121,25 +119,27 @@ export const readInvitationNotAcceptedByCurrentId = async (SQLClient,{user_id, p
         "SELECT l.id, l.user_id, event_id, is_accepted,is_waiting, is_favorite, title, description, event_end,event_start, street_number,is_private, picture_path, e.user_id as owner, location_id, category_id FROM linkuserevent l INNER JOIN event e on l.event_id = e.id WHERE l.user_id = $1 AND is_waiting LIMIT $2 OFFSET $3",[user_id, size, offset]
     )
     return rows;
-}
+};
+
 export const nbRowsInvitationNotAcceptedByCurrentId = async (SQLClient,{user_id}) => {
     const {rows} = await SQLClient.query(
         "SELECT COUNT(*) as rows_count FROM linkuserevent l INNER JOIN event e on l.event_id = e.id WHERE l.user_id = $1 AND is_waiting",[user_id]
     )
     return rows[0].rows_count;
-}
+};
+
 export const isFavoritePatch = async (SQLClient,{user_id,event_id}) => {
     const {rows} = await SQLClient.query(
         "UPDATE linkuserevent SET is_favorite = NOT is_favorite WHERE user_id = $1 AND event_id = $2",[user_id,event_id]
     )
     return rows;
-}
+};
 
 export const readFavoriteEvent = async (SQLClient, {user_id, page, perPage}) => {
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        "SELECT * FROM linkuserevent l INNER JOIN event e on l.event_id = e.id where l.user_id = $1 LIMIT $2 OFFSET $3 ", [user_id, size,offset]
+        "SELECT * FROM linkuserevent l INNER JOIN event e on l.event_id = e.id where l.user_id = $1 AND is_favorite = true LIMIT $2 OFFSET $3 ", [user_id, size,offset]
     )
     return rows;
 };
@@ -149,4 +149,24 @@ export const getNbLinkUserEventByUser = async (SQLClient,{user_id}) =>{
         "SELECT COUNT(*) as rows_count FROM linkuserevent WHERE user_id = $1 AND is_accepted",[user_id]
     )
     return rows[0].rows_count;
-}
+};
+
+export const linkUserEventExists = async (SQLClient, {user_id,event_id}) => {
+    const {rows} = await SQLClient.query(
+        'SELECT COUNT(*) as rows_count FROM linkuserevent WHERE user_id = $1 AND event_id = $2', [user_id,event_id]
+    );
+    return rows[0].rows_count > 0;
+};
+
+export const ratioFavorite = async (SQLClient, {event_id}) => {
+    const favorite = await SQLClient.query(
+        'SELECT count(*) as rows_count_favorite from linkuserevent where is_favorite = true and event_id = $1;',[event_id]
+    );
+    const count = await SQLClient.query(
+        'SELECT count(*) as rows_count_total from linkuserevent where event_id = $1;',[event_id]
+    );
+    const nbFavorite = favorite.rows[0].rows_count_favorite
+    const total = count.rows[0].rows_count_total
+
+    return nbFavorite / total;
+};

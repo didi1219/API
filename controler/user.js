@@ -21,15 +21,6 @@ export const getUser = async (req, res) => {
     }
 };
 
-export const addUser = async (req, res) => {
-    try {
-        const id = await userModel.createUser(pool, req.val);
-        res.status(201).json({id});
-    } catch (err) {
-        res.sendStatus(500);
-    }
-};
-
 export const deleteUser = async (req, res) => {
     try {
         await userModel.deleteUser(pool, req.val);
@@ -41,7 +32,8 @@ export const deleteUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
     try {
-        await userModel.updateUser(pool,req.session.id, req.val);
+        req.val.id = req.session.id;
+        await userModel.updateUser(pool,req.val);
         res.sendStatus(204);
     } catch (err) {
         console.log(error)

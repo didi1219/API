@@ -5,7 +5,6 @@ import {
     getTotalRowEventGenericSearched,
     getEventCategories,
     getEventByLoc,
-    getAllEventOfOwner,
     getNbEventByOwner,
     getNbRowsSearchByCategories,
     getNbRowsSearchByLocalities,

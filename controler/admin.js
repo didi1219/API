@@ -22,7 +22,7 @@ export const getUser = async (req, res) => {
 
 export const updateUser = async (req,res) => {
     try {
-        await updateU(pool,req.val.id,req.val);
+        await updateU(pool,req.val);
         res.sendStatus(204);
     } catch (error){
         res.sendStatus(500);

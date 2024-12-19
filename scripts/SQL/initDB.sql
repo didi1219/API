@@ -25,6 +25,7 @@ CREATE TABLE users (
                        first_name varchar(250) NOT NULL,
                        user_name varchar(250) UNIQUE NOT NULL,
                        bio varchar(500),
+                       picture_path varchar(500) NOT NULL,
                        isAdmin BOOLEAN NOT NULL
 );
 
@@ -119,33 +120,20 @@ INSERT INTO location (label, postal_code) VALUES
 
 
 -- Fill `users` table
-INSERT INTO users (email, password, last_name, first_name, user_name, bio, isAdmin) VALUES
-                                                                                        ('johndoe@example.com', '$argon2id$v=19$m=65536,t=3,p=4$oeWGTzbMpqd3J7IT1CHv1w$eOBf53KoHNm4V6OOH+uFtc+0HuBNlDqGdmGj1FuXtVs', 'Doe', 'John', 'johndoe', 'Passionné d événements culturels', true),
-                                                                                        ('janedoe@example.com', 'password456', 'Doe', 'Jane', 'janedoe', 'Amatrice de sport et de plein air', false),
-                                                                                        ('johnsmith123@example.com', 'password1', 'Smith', 'John', 'johnsmith', 'Loves coding and coffee.', FALSE),
-                                                                                        ('charliebrown@example.com', 'password3', 'Brown', 'Charlie', 'charlieb', 'Avid reader and traveler.', FALSE),
-                                                                                        ('emilywilson@example.com', 'password4', 'Wilson', 'Emily', 'emilyw', 'Fitness enthusiast.', FALSE),
-                                                                                        ('miketaylor88@example.com', 'password5', 'Taylor', 'Michael', 'miketaylor', 'Tech geek.', FALSE),
-                                                                                        ('sarahjohnson22@example.com', 'password6', 'Johnson', 'Sarah', 'sarahj', 'Musician and foodie.', FALSE),
-                                                                                        ('davidlee1987@example.com', 'password7', 'Lee', 'David', 'davidlee', 'History buff.', FALSE),
-                                                                                        ('lauramartinez@example.com', 'password8', 'Martinez', 'Laura', 'lauram', 'Nature lover.', FALSE),
-                                                                                        ('sophiagarcia@example.com', 'password9', 'Garcia', 'Sophia', 'sophiag', 'Fashion designer.', FALSE),
-                                                                                        ('jamesanderson@example.com', 'password10', 'Anderson', 'James', 'jamesa', 'Film fanatic.', FALSE),
-                                                                                        ('olivianthomas@example.com', 'password11', 'Thomas', 'Olivia', 'oliviat', 'Yoga practitioner.', FALSE),
-                                                                                        ('ethanjackson@example.com', 'password12', 'Jackson', 'Ethan', 'ethanj', 'Cycling adventurer.', FALSE),
-                                                                                        ('avawhite@example.com', 'password13', 'White', 'Ava', 'avawhite', 'Gamer and streamer.', FALSE),
-                                                                                        ('miavharris@example.com', 'password14', 'Harris', 'Mia', 'miah', 'Writer and poet.', FALSE),
-                                                                                        ('lucasclark@example.com', 'password15', 'Clark', 'Lucas', 'lucasc', 'Photographer.', FALSE),
-                                                                                        ('ellarodriguez@example.com', 'password16', 'Rodriguez', 'Ella', 'ellar', 'Social media manager.', FALSE),
-                                                                                        ('masonlewis@example.com', 'password17', 'Lewis', 'Mason', 'masonl', 'Football player.', FALSE),
-                                                                                        ('isabellawalker@example.com', 'password18', 'Walker', 'Isabella', 'isabellaw', 'Chef.', FALSE),
-                                                                                        ('alexhallentrepreneur@example.com', 'password19', 'Hall', 'Alexander', 'alexhall', 'Entrepreneur.', FALSE),
-                                                                                        ('chloeallen@example.com', 'password20', 'Allen', 'Chloe', 'chloeallen', 'Animal rights activist.', FALSE),
-                                                                                        ('liamyoungart@example.com', 'password21', 'Young', 'Liam', 'liamyoung', 'Art curator.', FALSE),
-                                                                                        ('emmakingking@example.com', 'password22', 'King', 'Emma', 'emmaking', 'Aspiring astronaut.', FALSE),
-                                                                                        ('benwrightstocks@example.com', 'password23', 'Wright', 'Benjamin', 'benwright', 'Stock market analyst.', FALSE),
-                                                                                        ('emilylopezbio@example.com', 'password24', 'Lopez', 'Emily', 'emilylopez', 'Biologist.', FALSE),
-                                                                                        ('noahhillguitar@example.com', 'password25', 'Hill', 'Noah', 'noahhill', 'Guitarist.', FALSE);
+INSERT INTO users (email, password, last_name, first_name, user_name, bio,picture_path, isAdmin) VALUES
+                                                                                        ('johndoe@example.com', '$argon2id$v=19$m=65536,t=3,p=4$isk72/8tURlM9EyCAc5jmg$DqeYVFmQaw/6LWmzoSjzV/P7/JXE5CVdMzROeTqnmOM', 'Doe', 'John', 'johndoe', 'Passionné d événements culturels','event1.jpeg', true),
+                                                                                        ('janedoe@example.com', '$argon2id$v=19$m=65536,t=3,p=4$UtvC3J3psqfNJ3SnZAfndA$ILwMECPq8d3GpxpguFeSZoY8oD79pClJ+/+niEqYpHc', 'Doe', 'Jane', 'janedoe', 'Amatrice de sport et de plein air','event1.jpeg',false),
+                                                                                        ('johnsmith123@example.com', '$argon2id$v=19$m=65536,t=3,p=4$W1xY0Z8gRMeTzW/r2e5Myg$jgRcBVBZBnxxD+teyWan68QC/Kg4/Z0Gd6hWsGYJKnE', 'Smith', 'John', 'johnsmith', 'Loves coding and coffee.','event1.jpeg', FALSE),
+                                                                                        ('charliebrown@example.com', '$argon2id$v=19$m=65536,t=3,p=4$jdRARVRU/qVdfDGvRaJBeQ$6JNoqUvQ6uYUw49jCgmbXIO/UD84vGQreW+3HXS7Jcc', 'Brown', 'Charlie', 'charlieb', 'Avid reader and traveler.','event1.jpeg', FALSE),
+                                                                                        ('emilywilson@example.com', '$argon2id$v=19$m=65536,t=3,p=4$jZFSPZg0nuTg8T3mHnSHMg$OrdyC0w3olDL+nB7aPkxZ6oJJHAhDftR9QZqa0Is/F4', 'Wilson', 'Emily', 'emilyw', 'Fitness enthusiast.','event1.jpeg', FALSE),
+                                                                                        ('miketaylor88@example.com', '$argon2id$v=19$m=65536,t=3,p=4$qAXG700O7qJ5HVxnwUNupw$NGFBRnXMvyAhesU+x74iEci9jZNDjSROkcLoQyXyVF0', 'Taylor', 'Michael', 'miketaylor', 'Tech geek.','event1.jpeg', FALSE),
+                                                                                        ('sarahjohnson22@example.com', '$argon2id$v=19$m=65536,t=3,p=4$yByvz2RbvBOqFPkmH45/sQ$m6aKAWOXA8PF8bHxQjh/A64kaYJuyhCIJaqYO7Aa7ks', 'Johnson', 'Sarah', 'sarahj', 'Musician and foodie.','event1.jpeg', FALSE),
+                                                                                        ('davidlee1987@example.com', '$argon2id$v=19$m=65536,t=3,p=4$Et5H9Guicphvzl4It3b9tQ$tJsCtoObsTrGBxMNN+wEyyBCjyTj5Q/ejBZQP4lSM30', 'Lee', 'David', 'davidlee', 'History buff.','event1.jpeg', FALSE),
+                                                                                        ('lauramartinez@example.com', '$argon2id$v=19$m=65536,t=3,p=4$HUgngl0AIDif0SqE/09Jsg$SsP81VY1BlbzQLobZpdFZb7Tv/PZz7KEGrZwfjNhEYw', 'Martinez', 'Laura', 'lauram', 'Nature lover.','event1.jpeg', FALSE),
+                                                                                        ('sophiagarcia@example.com', '$argon2id$v=19$m=65536,t=3,p=4$HCK/wheTmnoI468PHs8yyg$XhAl4skCLslmShhJ/cgqTAXvJM5zie7+/OT0DJs171k', 'Garcia', 'Sophia', 'sophiag', 'Fashion designer.','event1.jpeg', FALSE),
+                                                                                        ('jamesanderson@example.com', '$argon2id$v=19$m=65536,t=3,p=4$N51HbVycyy351WnIysNdMw$rtEfTZcAGJcAJmhMJPPbaYvd9h0+kzUqFLI91ruiAjM', 'Anderson', 'James', 'jamesa', 'Film fanatic.','event1.jpeg', FALSE),
+                                                                                        ('olivianthomas@example.com', '$argon2id$v=19$m=65536,t=3,p=4$vK+HrNNSYJzQ4G3ljXObdg$LNdNpltmaqrudScUj1qJa9dZY7DcnTHvirRCMzfPpFI', 'Thomas', 'Olivia', 'oliviat', 'Yoga practitioner.','event1.jpeg', FALSE),
+                                                                                        ('ethanjackson@example.com', '$argon2id$v=19$m=65536,t=3,p=4$lKegO2nWiRbGw6FDDhINaA$LL7aYUXhkiGLyThTdzWww+kWmO+71oxe17mkorL2uyA', 'Jackson', 'Ethan', 'ethanj', 'Cycling adventurer.','event1.jpeg', FALSE);
 
 
 INSERT INTO event (title, description, event_start, event_end, street_number, is_private, picture_path, user_id, location_id, category_id)
@@ -203,7 +191,7 @@ INSERT INTO message (content, type, sending_date, user_id, discussion_event_id) 
 
 -- Fill `linkUserEvent` table
 INSERT INTO linkUserEvent (user_id, event_id, is_waiting, is_accepted,is_favorite) VALUES
-                                                                         (1, 1, false, true,false),
+                                                                         (1, 1, false, true,true),
                                                                          (2, 2, false, true,false),
                                                                          (1, 3, true, false,false),
                                                                          (2, 3, true, false,false), -- Jane Doe attend une confirmation pour le Festival Electro

@@ -11,7 +11,6 @@ import * as userValidator from './validator/user.js';
 import * as pagingValidator from './validator/paging.js'
 import * as tabValidator from './validator/tabValidator.js'
 import * as searchValidator from './validator/search.js';
-import {linkUserEventToFollow} from "./validator/linkUserEvent.js";
 
 export const adminValidatorMiddleware = {
     searchedUser : async (req, res, next) => {
@@ -218,7 +217,6 @@ export const eventManagementValidatorMiddleware = {
             req.val = await eventManagementValidator.eventToUpdate.validate(req.body);
             next();
         } catch (error) {
-            console.log(error)
             res.status(400).send(error.messages);
         }
     },
@@ -333,6 +331,14 @@ export const linkUserEventValidatorMiddleware = {
     linkUserEventIsAccepted : async (req, res, next) => {
         try {
             req.val = await linkUserEventValidator.linkUserEventIsAccepted.validate(req.params);
+            next();
+        } catch (error) {
+            res.status(400).send(error.messages);
+        }
+    },
+    linkUserEventRatioFavorite : async (req, res, next) => {
+        try {
+            req.val = await linkUserEventValidator.linkUserEventRatioFavorite.validate(req.params);
             next();
         } catch (error) {
             res.status(400).send(error.messages);

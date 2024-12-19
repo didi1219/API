@@ -15,7 +15,8 @@ import {
     getNbLinkUserEventByCurrentUser,
     followAEvent,
     unFollowAnEvent,
-    linkUserEventAccepted
+    linkUserEventAccepted,
+    getRatioFavoriteEvent
 } from "../controler/linkUserEvent.js";
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {admin} from "../middleware/authorization/mustBeAdmin.js";
@@ -31,19 +32,20 @@ router.delete('/:id',checkJWT,admin,LUEVM.linkUserEventToDelete, deleteLinkUserE
 
 router.get('/nbLinkUserEvents/search',checkJWT,PagingVM.paging,getNbLinkUserEvents);
 router.get('/nbLinkUserEvents/count/',checkJWT,countRows);
-router.get('/get/invitation',checkJWT,PagingVM.paging,getInvitationNotAcceptedByCurrentId);
-router.get('/favorite/event', checkJWT,PagingVM.paging,getFavoriteEvent);
+router.get('/nbLinkUserEvent/byUser/', checkJWT,getNbLinkUserEventByCurrentUser);
+
+router.patch('/setFavorite/:event_id',checkJWT,LUEVM.linkUserEventInvitationPatch,isFavorite);
+router.get('/favorite/event/', checkJWT,PagingVM.paging,getFavoriteEvent);
+router.get('/ratio/favorite/:event_id',checkJWT,LUEVM.linkUserEventRatioFavorite,getRatioFavoriteEvent);
 
 router.post('/follow/event/',checkJWT,LUEVM.linkUserEventToFollow,followAEvent);
-
-router.get('/nbLinkUserEvent/byUser/', checkJWT,getNbLinkUserEventByCurrentUser);
 router.delete('/unfollow/event/:event_id',checkJWT,LUEVM.linkUserEventToUnFollow,unFollowAnEvent);
-router.get('/follow/accepted/:event_id',checkJWT,LUEVM.linkUserEventIsAccepted,linkUserEventAccepted)
+router.get('/follow/accepted/:event_id',checkJWT,LUEVM.linkUserEventIsAccepted,linkUserEventAccepted);
 
 router.delete('/many/deleteLinkUserEvent/',checkJWT,admin,TabVM.ids,deleteLinkUserEvents);
 
+router.get('/get/invitation/',checkJWT,PagingVM.paging,getInvitationNotAcceptedByCurrentId);
 router.patch('/invitation/accept/', checkJWT,LUEVM.linkUserEventInvitationPatch,acceptInvitation);
 router.patch('/invitation/decline/', checkJWT,LUEVM.linkUserEventInvitationPatch,declineInvitation);
-router.patch('/setFavorite/:event_id',checkJWT,LUEVM.linkUserEventInvitationPatch,isFavorite);
 
 export default router;

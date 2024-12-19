@@ -7,7 +7,7 @@ const passwordSchema = yup
   .min(8, 'Le mot de passe doit comporter au moins 8 caractères')
   .matches(/[A-Z]/, 'Le mot de passe doit contenir au moins une lettre majuscule')
   .matches(/\d/, 'Le mot de passe doit contenir au moins un chiffre')
-  .matches(/[@$!%*?&]/, 'Le mot de passe doit contenir au moins un caractère spécial');
+  .matches(/[#@$!%*?&]/, 'Le mot de passe doit contenir au moins un caractère spécial');
 
 export const validatePassword = async (req, res, next) => {
   try {
@@ -28,7 +28,8 @@ const userSchema = vine.object({
     last_name: vine.string().trim().maxLength(250),
     first_name: vine.string().trim().maxLength(250),
     user_name: vine.string().trim().maxLength(250),
-    bio: vine.string().maxLength(500)
+    bio: vine.string().maxLength(500),
+    picture_path: vine.string().maxLength(250)
 });
 
 const loginSchema = vine.object({
@@ -42,7 +43,8 @@ const updateSchema = vine.object({
     last_name: vine.string().trim().maxLength(250).optional(),
     first_name: vine.string().trim().maxLength(250).optional(),
     user_name: vine.string().trim().maxLength(250).optional(),
-    bio: vine.string().maxLength(500).optional()
+    bio: vine.string().maxLength(500).optional(),
+    picture_path: vine.string().maxLength(250).optional()
 });
 
 

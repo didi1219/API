@@ -35,8 +35,6 @@ export const deleteCategories = async (SQLClient, {ids}) => {
     }
 };
 
-
-
 export const updateCategory = async (SQLClient, {id,title,icon_component_name,icon_name}) => {
     let query = 'UPDATE category SET ';
     const querySet = [];
@@ -82,5 +80,6 @@ export const readTotalRowCategories = async (SQLClient)=>{
     const {rows} = await SQLClient.query(
         "SELECT COUNT(*) as count_rows FROM category"
     );
+    console.log(rows[0]?.count_rows)
     return rows[0]?.count_rows;
 };

@@ -55,23 +55,23 @@ export const getNbNotifications = async (req, res) => {
 };
 
 export const countRows = async (req, res) => {
-    try{
+    try {
         const response = await notificationModel.readTotalRowNotifications(pool);
         if (response) {
             res.json(response);
         } else {
             res.sendStatus(404);
         }
-    }catch(error){
+    } catch(error) {
         res.sendStatus(500);
     }
 };
 
 export const deleteNotifications = async (req,res) => {
-    try{
+    try {
         await notificationModel.deleteManyNotifications(pool, req.val);
         res.sendStatus(204);
-    }catch(error){
+    } catch(error) {
         res.sendStatus(500);
     }
 };
@@ -85,4 +85,4 @@ export const getNotificationByCurrentUser = async (req, res) => {
     }catch(error){
         res.sendStatus(500);
     }
-}
+};

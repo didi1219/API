@@ -1,6 +1,5 @@
 import * as messageModel from '../model/message.js';
 import {pool} from "../database/database.js";
-import * as notificationModel from "../model/notification.js";
 
 export const getMessage = async (req, res) => {
     try {
@@ -33,7 +32,7 @@ export const deleteMessage = async (req, res) => {
     }
 };
 
-export const deletemessages = async (req,res) => {
+export const deleteMessages = async (req,res) => {
     try{
         await messageModel.deleteManyMessages(pool, req.val);
         res.sendStatus(204);
@@ -73,18 +72,6 @@ export const countRows = async (req, res) => {
             res.sendStatus(404);
         }
     } catch(error) {
-        res.sendStatus(500);
-    }
-};
-
-
-export const deleteMessages = async (req,res) => {
-    try{
-        for (const id of req.val.ids) {
-            await messageModel.deleteMessage(pool, {id});
-        }
-        res.sendStatus(204);
-    }catch(error){
         res.sendStatus(500);
     }
 };

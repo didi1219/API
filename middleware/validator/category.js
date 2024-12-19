@@ -15,7 +15,7 @@ const categoryToUpdateSchema = vine.object({
     title: vine.string().trim().maxLength(250).optional(),
     icon_component_name: vine.string().trim().maxLength(250).optional(),
     icon_name: vine.string().trim().maxLength(250).optional(),
-})
+});
 
 export const
     searchedCategory = vine.compile(categoryIDSchema),
