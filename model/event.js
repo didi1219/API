@@ -232,40 +232,13 @@ export const readTotalRowEvent = async (SQLClient)=>{
         "SELECT COUNT(*) as count_rows FROM event"
     )
     return rows[0]?.count_rows;
-}
+};
 
 export const countSubscribers = async (SQLClient, {id: event_id}) => {
     const {rows} = await SQLClient.query(
         'SELECT COUNT(*) as count FROM linkuserevent WHERE event_id = $1 AND is_accepted = true', [event_id]
     );
     return rows[0].count;
-}
-export const createEventWithInvitations = async (SQLClient, {
-    title, description, event_start,event_end, street_number, picture_path, user_id, location_id, category_id, users_id
-}) => {
-    const failedInsertions = [];
-    const successfulInsertions = [];
-
-    try {
-        const eventId = await createEvent(SQLClient, {
-            title, description, event_start,event_end, street_number,
-            picture_path, user_id, location_id, category_id,
-            is_private: true
-        });
-        for (const user_id of users_id) {
-            try {
-                await createLinkUserEvent(SQLClient, { user_id, event_id: eventId, is_waiting: true, is_accepted: false });
-                successfulInsertions.push(user_id);
-            } catch (error) {
-                failedInsertions.push({ user_id, error });
-            }
-        }
-
-        return { eventId, successfulInsertions, failedInsertions };
-    } catch (error) {
-        throw error;
-    }
 };
-
 
 
