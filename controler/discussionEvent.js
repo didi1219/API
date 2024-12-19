@@ -85,6 +85,7 @@ export const getAllDiscussionTitle = async(req, res) => {
     try {
         const discussion = await discussionEventModel.readAllDiscussionTitle(pool);
         if(discussion){
+            console.log(discussion);
             res.json(discussion);
         } else {
             res.sendStatus(404);

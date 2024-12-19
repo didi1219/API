@@ -109,7 +109,7 @@ export const readOlderMessagesInDiscussion = async (SQLClient, { id: discussion_
 
 export const readAllDiscussionTitle = async (SQLClient) => {
     const {rows} = await SQLClient.query(
-        'select id, title from discussionevent order by id',
+        'select de.id, de.title as "discussionTitle", e.title from discussionevent de inner join event e on e.id = de.event_id order by id',
     );
     return rows;
 };
