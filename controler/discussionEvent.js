@@ -63,7 +63,6 @@ export const getNewerMessagesInDiscussion = async (req, res) => {
             res.sendStatus(404);
         }
     } catch(err) {
-        console.log(err)
         res.sendStatus(500);
     }
 };
@@ -85,7 +84,6 @@ export const getAllDiscussionTitle = async(req, res) => {
     try {
         const discussion = await discussionEventModel.readAllDiscussionTitle(pool);
         if(discussion){
-            console.log(discussion);
             res.json(discussion);
         } else {
             res.sendStatus(404);
