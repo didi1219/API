@@ -75,6 +75,24 @@ export const deleteUser = async (SQLClient, {id}) => {
     }
 };
 
+export const deleteUsersByIds = async (SQLClient, {ids}) => {
+    try {
+        await client.query('BEGIN');
+
+        for (const id of ids) {
+            await client.query('DELETE FROM users WHERE id = $1', [id]);
+            console.log(`User with ID ${id} deleted.`);
+        }
+
+        await client.query('COMMIT');
+        console.log('All users deleted successfully.');
+    } catch (error) {
+        await client.query('ROLLBACK');
+        console.error('Error deleting users:', error.message);
+        throw error;
+    }
+};
+
 export const deleteManyUsers = async (SQLClient, {ids}) => {
     try {
         await SQLClient.query('BEGIN');
@@ -88,10 +106,15 @@ export const deleteManyUsers = async (SQLClient, {ids}) => {
     }
 };
 
-export const updateUser = async(SQLClient, {id, password, last_name, first_name, user_name, bio,picture_path}) => {
+export const updateUser = async(SQLClient, {id, email, password, last_name, first_name, user_name, bio,picture_path}) => {
     let query = 'UPDATE users SET ';
     const querySet = [];
     const queryValues = [];
+
+    if(email){
+        queryValues.push(email);
+        querySet.push(`email = $${queryValues.length}`);
+    }
 
     if(password){
         queryValues.push(await hash(password));
@@ -109,8 +132,8 @@ export const updateUser = async(SQLClient, {id, password, last_name, first_name,
         queryValues.push(user_name);
         querySet.push(`user_name = $${queryValues.length}`);
     }
-    if(bio){
-        queryValues.push(bio);
+    if(typeof bio !== 'undefined'){
+        queryValues.push(bio || "");
         querySet.push(`bio = $${queryValues.length}`);
     }
     if(picture_path){

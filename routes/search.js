@@ -26,7 +26,14 @@ import {admin} from "../middleware/authorization/mustBeAdmin.js";
 import {tabTransformLoc, tabTransformCat} from '../middleware/validator/paging.js';
 import { decodeQuery } from '../middleware/decodeURI/decode.js';
 
+import {logger} from '../middleware/logger.js';
+
 const router = new Router();
+
+router.use((req, res, next) => {
+    logger.info(`Accessing search route: ${req.method} ${req.url}`);
+    next();
+  });
 
 router.get('/eventName/name',checkJWT,PagingVM.pagingSearchByName,searchEventByName);
 router.get('/events/search',checkJWT,PagingVM.pagingSearchGeneral,searchEvent);

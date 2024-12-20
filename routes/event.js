@@ -26,7 +26,14 @@ import {checkJWT} from "../middleware/identification/JWT.js";
 import {inEvent} from "../middleware/authorization/mustBeInEvent.js";
 import {admin} from "../middleware/authorization/mustBeAdmin.js";
 
+import {logger} from '../middleware/logger.js';
+
 const router = new Router();
+
+router.use((req, res, next) => {
+    logger.info(`Accessing event route: ${req.method} ${req.url}`);
+    next();
+  });
 
 router.get('/created',checkJWT,PagingVM.paging,getNbEventsOfUserCreated);
 router.get('/subscribed',checkJWT,PagingVM.paging,getAllEventsOfUserSubscribed);
@@ -35,14 +42,131 @@ router.post('/oneself/',checkJWT,EVM.eventToAdd,addEventOneSelf);
 router.patch('/oneself/',checkJWT,EVM.eventToUpdate,updateEventOneSelf);
 router.delete('/:id',checkJWT,EVM.eventToDelete,deleteEventOneSelf);
 
-//Diff ?
 router.get('/:id/discussions', checkJWT,admin, EVM.eventToListDiscussions, inEvent, getDiscussionEvents);
 router.get('/discussion/event',checkJWT,admin, PagingVM.pagingWithId,getDiscussionEvents);
 
-// admin
+/**
+ * @swagger
+ * /event/id/{id}:
+ *   get:
+ *     tags:
+ *       - Event
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           $ref: '#/components/schemas/EventID'
+ *         required: true
+ *         description: The unique identifier of the event to retrieve.
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the event with the given ID.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Event'
+ *       400:
+ *         description: Invalid event ID format.
+ *       404:
+ *         description: Event not found for the given ID.
+ *       500:
+ *         description: Internal server error.
+ */
 router.get('/id/:id',EMVM.searchedEvent,getEvent);
-router.post('/',checkJWT,admin,EMVM.eventToAdd, addEvent);
+/**
+ * @swagger
+ * /event/delete/{id}:
+ *   delete:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Event
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           $ref: '#/components/schemas/EventID'
+ *         required: true
+ *         description: The unique identifier of the event to retrieve.
+ *     responses:
+ *       204:
+ *         description: Event successfully deleted
+ *       400:
+ *         description: Bad request - Validation failed or invalid input
+ *       401:
+ *         $ref: '#/components/responses/UnauthorizedError'
+ *       403:
+ *         $ref: '#/components/responses/mustBeAdmin'
+ *       500:
+ *         description: Internal server error
+ */
 router.delete('/delete/:id',checkJWT, admin, EMVM.eventToDelete, deleteEvent);
+/**
+ * @swagger
+ * /event/:
+ *   post:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Event
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/EventToAddSchema'
+ *     responses:
+ *       201:
+ *         description: Event successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   description: ID of the newly created category
+ *       400:
+ *         description: Bad request - Validation failed or invalid input
+ *       401:
+ *         $ref: '#/components/responses/UnauthorizedError'
+ *       403:
+ *         $ref: '#/components/responses/mustBeAdmin'
+ *       500:
+ *         description: Internal server error
+ */
+router.post('/',checkJWT,admin,EMVM.eventToAdd, addEvent);
+/**
+ * @swagger
+ * /event/:
+ *   patch:
+ *     summary: Update an existing Event
+ *     description: This route updates an existing event. The user must have admin privileges to perform this action.
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Event
+ *     requestBody:
+ *       required: true
+ *       description: The data required to update an existing Event. You must provide a valid ID
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/EventToUpDateSchema'
+ *     responses:
+ *       204:
+ *         description: Event successfully deleted
+ *       400:
+ *         description: Bad request - Validation failed or invalid input
+ *       401:
+ *         $ref: '#/components/responses/UnauthorizedError'
+ *       403:
+ *         $ref: '#/components/responses/mustBeAdmin'
+ *       404:
+ *         description: Event not found
+ *       500:
+ *         description: Internal server error
+ */
 router.patch('/',checkJWT,admin,EMVM.eventToUpdate,updateEvent);
 
 router.get('/get/allTitle',getAllEventTitle);

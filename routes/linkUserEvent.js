@@ -23,7 +23,14 @@ import {admin} from "../middleware/authorization/mustBeAdmin.js";
 import {linkUserEventValidatorMiddleware as LUEVM, tabValidatorMiddleware as TabVM} from "../middleware/validation.js";
 import {pagingValidatorMiddleWare as PagingVM} from "../middleware/validation.js";
 
+import {logger} from '../middleware/logger.js';
+
 const router = Router();
+
+router.use((req, res, next) => {
+    logger.info(`Accessing linkuserevent route: ${req.method} ${req.url}`);
+    next();
+  });
 
 router.post('/',checkJWT,admin,LUEVM.linkUserEventToAdd, addLinkUserEvent);
 router.patch('/',checkJWT,admin,LUEVM.linkUserEventToUpdate, updateLinkUserEvent);

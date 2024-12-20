@@ -1,0 +1,245 @@
+[2024-12-20 09:01:22] INFO: Accessing location route: POST /login 
+[2024-12-20 09:01:22] INFO: Entering login with params: {"email":"johndoe@example.com","password":"test"} 
+[2024-12-20 09:01:22] INFO: User logged in, JWT generated 
+[2024-12-20 09:01:22] INFO: 172.1.0.71 - - [20/Dec/2024:08:01:22 +0000] "POST /user/login HTTP/1.1" 201 160 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 09:01:51] INFO: Accessing location route: POST /login 
+[2024-12-20 09:01:51] INFO: Entering login with params: {"email":"johndoe@eample.com","password":"test"} 
+[2024-12-20 09:01:51] WARN: User not found 
+[2024-12-20 09:01:51] WARN: User not found 
+[2024-12-20 09:01:51] INFO: 172.1.0.71 - - [20/Dec/2024:08:01:51 +0000] "POST /user/login HTTP/1.1" 404 9 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 09:03:19] INFO: Accessing location route: POST /login 
+[2024-12-20 09:03:19] INFO: Entering login with params: "johndoe@eample.com" 
+[2024-12-20 09:03:19] WARN: User not found 
+[2024-12-20 09:03:19] WARN: User not found 
+[2024-12-20 09:03:19] INFO: 172.1.0.71 - - [20/Dec/2024:08:03:19 +0000] "POST /user/login HTTP/1.1" 404 9 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 09:03:52] INFO: Accessing location route: POST /login 
+[2024-12-20 09:03:52] INFO: 172.1.0.71 - - [20/Dec/2024:08:03:52 +0000] "POST /user/login HTTP/1.1" 400 87 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 11:27:31] INFO: Accessing location route: POST /login 
+[2024-12-20 11:27:31] INFO: 172.1.0.71 - - [20/Dec/2024:10:27:31 +0000] "POST /user/login HTTP/1.1" 400 87 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 11:53:15] INFO: Accessing location route: POST /login 
+[2024-12-20 11:53:15] WARN: Validation error: [object Object] 
+[2024-12-20 11:53:15] INFO: Validation Data 
+[2024-12-20 11:53:15] WARN: Validation error: [object Object] 
+[2024-12-20 11:53:15] INFO: 172.1.0.71 - - [20/Dec/2024:10:53:15 +0000] "POST /user/login HTTP/1.1" 400 87 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 12:11:46] INFO: Accessing location route: POST /login 
+[2024-12-20 12:11:46] WARN: Validation error: [object Object] 
+[2024-12-20 12:11:46] INFO: Validation Data 
+[2024-12-20 12:11:46] WARN: Validation error: [object Object] 
+[2024-12-20 12:11:46] INFO: 172.1.0.71 - - [20/Dec/2024:11:11:46 +0000] "POST /user/login HTTP/1.1" 400 87 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 12:14:32] INFO: Accessing User route: POST /login 
+[2024-12-20 12:14:32] WARN: Validation error: [object Object] 
+[2024-12-20 12:14:32] INFO: Validation Data 
+[2024-12-20 12:14:32] WARN: Validation error: [object Object] 
+[2024-12-20 12:14:32] INFO: 172.1.0.71 - - [20/Dec/2024:11:14:32 +0000] "POST /user/login HTTP/1.1" 400 87 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 12:16:19] INFO: Accessing User route: POST /login 
+[2024-12-20 12:16:19] WARN: Validation error: [
+  {
+    "message": "The password field must be defined",
+    "rule": "required",
+    "field": "password"
+  }
+] 
+[2024-12-20 12:16:19] INFO: Validation Data 
+[2024-12-20 12:16:19] WARN: Validation error: [
+  {
+    "message": "The password field must be defined",
+    "rule": "required",
+    "field": "password"
+  }
+] 
+[2024-12-20 12:16:19] INFO: 172.1.0.71 - - [20/Dec/2024:11:16:19 +0000] "POST /user/login HTTP/1.1" 400 87 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 12:37:19] INFO: Accessing User route: POST /login 
+[2024-12-20 12:37:19] WARN: Validation error: [
+  {
+    "message": "The password field must be defined",
+    "rule": "required",
+    "field": "password"
+  }
+] 
+[2024-12-20 12:37:19] INFO: Validation Data 
+[2024-12-20 12:37:19] WARN: Validation error: [
+  {
+    "message": "The password field must be defined",
+    "rule": "required",
+    "field": "password"
+  }
+] 
+[2024-12-20 12:37:19] INFO: 192.168.0.74 - - [20/Dec/2024:11:37:19 +0000] "POST /user/login HTTP/1.1" 400 87 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 12:38:24] INFO: Validation Data 
+[2024-12-20 12:38:24] WARN: Validation error: [
+  {
+    "message": "The password field must be defined",
+    "rule": "required",
+    "field": "password"
+  }
+] 
+[2024-12-20 12:38:24] WARN: Validation error: [
+  {
+    "message": "The password field must be defined",
+    "rule": "required",
+    "field": "password"
+  }
+] 
+[2024-12-20 12:38:24] INFO: 192.168.0.74 - - [20/Dec/2024:11:38:24 +0000] "POST /user/login HTTP/1.1" 400 87 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 12:39:24] INFO: Validation Data 
+[2024-12-20 12:39:24] WARN: Validation error: [
+  {
+    "message": "The password field must be defined",
+    "rule": "required",
+    "field": "password"
+  }
+] 
+[2024-12-20 12:39:24] WARN: Validation error: [
+  {
+    "message": "The password field must be defined",
+    "rule": "required",
+    "field": "password"
+  }
+] 
+[2024-12-20 12:39:24] INFO: 192.168.0.74 - - [20/Dec/2024:11:39:24 +0000] "POST /user/login HTTP/1.1" 400 87 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 12:40:27] WARN: Validation error: [
+  {
+    "message": "The password field must be defined",
+    "rule": "required",
+    "field": "password"
+  }
+] 
+[2024-12-20 12:40:50] INFO: Validation Data 
+[2024-12-20 12:40:50] WARN: Validation error: [
+  {
+    "message": "The password field must be defined",
+    "rule": "required",
+    "field": "password"
+  }
+] 
+[2024-12-20 12:40:50] INFO: 192.168.0.74 - - [20/Dec/2024:11:40:50 +0000] "POST /user/login HTTP/1.1" 400 87 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 12:41:15] INFO: Validation Data 
+[2024-12-20 12:41:15] WARN: Validation error: [
+  {
+    "message": "The password field must be defined",
+    "rule": "required",
+    "field": "password"
+  }
+] 
+[2024-12-20 12:41:15] INFO: 192.168.0.74 - - [20/Dec/2024:11:41:15 +0000] "POST /user/login HTTP/1.1" 400 87 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 12:41:28] INFO: Validation Data 
+[2024-12-20 12:41:28] WARN: Validation error: [
+  {
+    "message": "The password field must be defined",
+    "rule": "required",
+    "field": "password"
+  }
+] 
+[2024-12-20 12:41:28] INFO: 192.168.0.74 - - [20/Dec/2024:11:41:28 +0000] "POST /user/login HTTP/1.1" 400 87 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 12:58:19] INFO: Accessing category route: GET /125 
+[2024-12-20 12:58:19] INFO: Validation Data 
+[2024-12-20 12:58:19] INFO: Successfully validation 
+[2024-12-20 12:58:19] INFO: Fetching Category with id: 125 
+[2024-12-20 12:58:19] WARN: Category not found 
+[2024-12-20 12:58:19] INFO: 192.168.0.74 - - [20/Dec/2024:11:58:19 +0000] "GET /category/125 HTTP/1.1" 404 9 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 13:05:11] INFO: Accessing event route: GET /125 
+[2024-12-20 13:05:11] INFO: 192.168.0.74 - - [20/Dec/2024:12:05:11 +0000] "GET /event/125 HTTP/1.1" 404 60 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 13:07:30] INFO: Accessing event route: GET /125 
+[2024-12-20 13:07:30] INFO: 192.168.0.74 - - [20/Dec/2024:12:07:30 +0000] "GET /event/125 HTTP/1.1" 500 1493 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 13:08:02] INFO: Accessing event route: GET /125 
+[2024-12-20 13:08:02] WARN: Bad URL: /event/125 
+[2024-12-20 13:08:02] INFO: 192.168.0.74 - - [20/Dec/2024:12:08:02 +0000] "GET /event/125 HTTP/1.1" 404 60 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 13:08:43] INFO: Accessing event route: GET /id/125 
+[2024-12-20 13:08:43] INFO: Validation Data 
+[2024-12-20 13:08:43] INFO: Successfully validation 
+[2024-12-20 13:08:43] INFO: 192.168.0.74 - - [20/Dec/2024:12:08:43 +0000] "GET /event/id/125 HTTP/1.1" 500 1410 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 13:09:15] INFO: Accessing event route: GET /id/125 
+[2024-12-20 13:09:15] INFO: Validation Data 
+[2024-12-20 13:09:15] INFO: Successfully validation 
+[2024-12-20 13:09:15] INFO: Fetching event for user with ID: undefined 
+[2024-12-20 13:09:15] ERROR: Error fetching event for user with ID: undefined: undefined 
+[2024-12-20 13:09:15] INFO: 192.168.0.74 - - [20/Dec/2024:12:09:15 +0000] "GET /event/id/125 HTTP/1.1" 500 21 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 13:11:11] INFO: Accessing event route: GET /id/125 
+[2024-12-20 13:11:11] INFO: Validation Data 
+[2024-12-20 13:11:11] INFO: Successfully validation 
+[2024-12-20 13:11:11] INFO: Fetching event for user with ID: 125 
+[2024-12-20 13:11:11] ERROR: Error fetching event for user with ID: 125: undefined 
+[2024-12-20 13:11:11] INFO: 192.168.0.74 - - [20/Dec/2024:12:11:11 +0000] "GET /event/id/125 HTTP/1.1" 500 21 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 13:12:03] INFO: Accessing event route: GET /id/125 
+[2024-12-20 13:12:03] INFO: Validation Data 
+[2024-12-20 13:12:03] INFO: Successfully validation 
+[2024-12-20 13:12:03] INFO: Fetching event for user with ID: 125 
+[2024-12-20 13:12:03] ERROR: Error fetching event for user with ID: 125: undefined 
+[2024-12-20 13:12:03] INFO: 192.168.0.74 - - [20/Dec/2024:12:12:03 +0000] "GET /event/id/125 HTTP/1.1" 500 21 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 13:12:40] INFO: Accessing event route: GET /id/125 
+[2024-12-20 13:12:40] INFO: Validation Data 
+[2024-12-20 13:12:40] INFO: Successfully validation 
+[2024-12-20 13:12:40] INFO: Fetching event for user with ID: 125 
+[2024-12-20 13:12:40] ERROR: Error fetching event for user with ID: 125, error: Cannot read properties of undefined (reading 'event_start') 
+[2024-12-20 13:12:40] INFO: 192.168.0.74 - - [20/Dec/2024:12:12:40 +0000] "GET /event/id/125 HTTP/1.1" 500 21 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 13:15:46] INFO: Accessing event route: GET /id/125 
+[2024-12-20 13:15:46] INFO: Validation Data 
+[2024-12-20 13:15:46] INFO: Successfully validation 
+[2024-12-20 13:15:46] INFO: Fetching event for user with ID: 125 
+[2024-12-20 13:15:46] ERROR: Error fetching event for user with ID: 125, error: Cannot read properties of undefined (reading 'event_start') 
+[2024-12-20 13:15:46] INFO: 192.168.0.74 - - [20/Dec/2024:12:15:46 +0000] "GET /event/id/125 HTTP/1.1" 500 21 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 13:18:21] INFO: Accessing event route: GET /id/125 
+[2024-12-20 13:18:21] INFO: Validation Data 
+[2024-12-20 13:18:21] INFO: Successfully validation 
+[2024-12-20 13:18:21] INFO: Fetching event for user with ID: 125 
+[2024-12-20 13:18:21] ERROR: Error fetching event for user with ID: 125, error: Cannot read properties of undefined (reading 'event_start') 
+[2024-12-20 13:18:21] INFO: 192.168.0.74 - - [20/Dec/2024:12:18:21 +0000] "GET /event/id/125 HTTP/1.1" 500 21 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 13:19:10] INFO: Accessing event route: GET /id/125 
+[2024-12-20 13:19:10] INFO: Validation Data 
+[2024-12-20 13:19:10] INFO: Successfully validation 
+[2024-12-20 13:19:10] INFO: Fetching event for user with ID: 125 
+[2024-12-20 13:19:10] WARN: No event found for user with ID: undefined 
+[2024-12-20 13:19:10] INFO: 192.168.0.74 - - [20/Dec/2024:12:19:10 +0000] "GET /event/id/125 HTTP/1.1" 404 9 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 13:35:42] INFO: Accessing event route: GET /id/125 
+[2024-12-20 13:35:42] INFO: Validation Data 
+[2024-12-20 13:35:42] INFO: Successfully validation 
+[2024-12-20 13:35:42] INFO: Fetching event for user with ID: 125 
+[2024-12-20 13:35:42] WARN: No event found for user with ID: undefined 
+[2024-12-20 13:41:03] INFO: Accessing event route: GET /nbEvents/search?page=1&perPage5 
+[2024-12-20 13:41:03] INFO: Validation Data 
+[2024-12-20 13:41:03] WARN: Validation error: [
+  {
+    "message": "The perPage field must be defined",
+    "rule": "required",
+    "field": "perPage"
+  }
+] 
+[2024-12-20 13:41:09] INFO: Accessing event route: GET /nbEvents/search?page=1&perPage=5 
+[2024-12-20 13:41:09] INFO: Validation Data 
+[2024-12-20 13:41:09] INFO: Successfully validation 
+[2024-12-20 13:41:09] INFO: Fetching number of events 
+[2024-12-20 13:41:09] INFO: Successfully fetched number of events 
+[2024-12-20 13:44:48] INFO: Accessing event route: GET /nbEvents/search?page=1&perPage=5 
+[2024-12-20 13:44:48] INFO: Validation Data 
+[2024-12-20 13:44:48] INFO: Successfully validation 
+[2024-12-20 13:44:48] INFO: Fetching number of events 
+[2024-12-20 13:44:48] INFO: Successfully fetched number of events 
+[2024-12-20 13:44:48] INFO: 172.1.1.7 - - [20/Dec/2024:12:44:48 +0000] "GET /api/v1/event/nbEvents/search?page=1&perPage=5 HTTP/1.1" 200 2173 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 13:45:46] INFO: Accessing event route: GET /nbEvents/search?page=1&perPage=5 
+[2024-12-20 13:45:46] INFO: Validation Data 
+[2024-12-20 13:45:46] INFO: Successfully validation 
+[2024-12-20 13:45:46] INFO: Fetching number of events 
+[2024-12-20 13:45:46] INFO: Successfully fetched number of events 
+[2024-12-20 13:45:46] INFO: 172.1.1.7 - - [20/Dec/2024:12:45:46 +0000] "GET /api/v1/event/nbEvents/search?page=1&perPage=5 HTTP/1.1" 200 2173 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 13:45:48] INFO: Accessing event route: GET /nbEvents/search?page=1&perPage=5 
+[2024-12-20 13:45:48] INFO: Validation Data 
+[2024-12-20 13:45:48] INFO: Successfully validation 
+[2024-12-20 13:45:48] INFO: Fetching number of events 
+[2024-12-20 13:45:48] INFO: Successfully fetched number of events 
+[2024-12-20 13:45:48] INFO: 172.1.1.7 - - [20/Dec/2024:12:45:48 +0000] "GET /api/v1/event/nbEvents/search?page=1&perPage=5 HTTP/1.1" 200 2173 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 13:45:49] INFO: Accessing event route: GET /nbEvents/search?page=1&perPage=5 
+[2024-12-20 13:45:49] INFO: Validation Data 
+[2024-12-20 13:45:49] INFO: Successfully validation 
+[2024-12-20 13:45:49] INFO: Fetching number of events 
+[2024-12-20 13:45:49] INFO: Successfully fetched number of events 
+[2024-12-20 13:45:49] INFO: 172.1.1.7 - - [20/Dec/2024:12:45:49 +0000] "GET /api/v1/event/nbEvents/search?page=1&perPage=5 HTTP/1.1" 200 2173 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 13:46:37] INFO: Accessing event route: GET /nbEvents/search?page=1 
+[2024-12-20 13:46:37] INFO: Validation Data 
+[2024-12-20 13:46:37] WARN: Validation error: [
+  {
+    "message": "The perPage field must be defined",
+    "rule": "required",
+    "field": "perPage"
+  }
+] 
+[2024-12-20 13:46:37] INFO: 172.1.1.7 - - [20/Dec/2024:12:46:37 +0000] "GET /api/v1/event/nbEvents/search?page=1 HTTP/1.1" 400 85 "-" "PostmanRuntime/7.43.0" 

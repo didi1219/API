@@ -19,8 +19,14 @@ import {discussionEventValidatorMiddleware as DVM, tabValidatorMiddleware as Tab
 import {pagingValidatorMiddleWare as PagingVM} from "../middleware/validation.js";
 import {tabIds} from "../middleware/validator/tabValidator.js";
 import {inDiscussion} from "../middleware/authorization/mustBeInDiscussion.js";
+import {logger} from '../middleware/logger.js';
 
 const router = Router();
+
+router.use((req, res, next) => {
+    logger.info(`Accessing discussion event route: ${req.method} ${req.url}`);
+    next();
+  });
 
 router.get('/:id', checkJWT, admin, DVM.searchedDiscussionEvent, getDiscussionEvent);
 router.post('/',checkJWT,admin,DVM.discussionEventToAdd, addDiscussionEvent);

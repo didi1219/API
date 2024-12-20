@@ -16,9 +16,14 @@ import {locationValidatorMiddleware as LVM} from "../middleware/validation.js";
 import {pagingValidatorMiddleWare as PagingVM} from "../middleware/validation.js";
 import {tabValidatorMiddleware as TabVM} from "../middleware/validation.js";
 
-
+import {logger} from '../middleware/logger.js';
 
 const router = new Router();
+
+router.use((req, res, next) => {
+    logger.info(`Accessing location route: ${req.method} ${req.url}`);
+    next();
+  });
 
 router.get('/:id',LVM.searchedLocation,getLocation);
 router.post('/',checkJWT,admin,LVM.locationToAdd,addLocation);
