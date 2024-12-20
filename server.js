@@ -28,13 +28,11 @@ app.use(express.static('./uploads/events'));
 
 app.use(morgan('combined', { stream: { write: (message) => logger.info(message.trim()) } }));
 
-app.use('/api/v1', Router);
-
-app.post('/uploadImage', upload.fields([
+app.post('/api/v1/uploadImage', upload.fields([
   { name: 'image', maxCount: 1 }
 ]), image);
 
-app.use(Router);
+app.use('/api/v1', Router);
 
 const internalIP = internalIp.v4.sync();
 

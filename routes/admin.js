@@ -30,7 +30,7 @@ router.use((req, res, next) => {
 
 router.get('/:id',checkJWT,admin,AVM.searchedUser,getUser);
 router.post('/',checkJWT,admin,AVM.addUser,PasswordVM,registration);
-router.patch('/',checkJWT,admin,AVM.updateUser,PasswordVM,updateUser);
+router.patch('/',checkJWT,admin,AVM.updateUser,updateUser);
 router.delete('/:id',checkJWT,admin,AVM.userToDelete,deleteUser);
 
 router.get('/get/allTitle',checkJWT,getAllUsersTitle);

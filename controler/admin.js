@@ -39,21 +39,21 @@ export const updateUser = async (req,res) => {
             existUserName = await userModel.checkPseudoExist(pool,req.val);
         }
         if(!existEmail && !existUserName){
-            res.info(`Successfully update of user with ID: ${req.val.id}`)
+            logger.info(`Successfully update of user with ID: ${req.val.id}`)
             await userModel.updateUser(pool,req.val);
             res.sendStatus(204);
         } else if(existEmail && existUserName){
-            logging.warn(`Pseudo & Email already used => email: ${req.val.email} pseudo: ${req.val.user_name} `)
+            logger.warn(`Pseudo & Email already used => email: ${req.val.email} pseudo: ${req.val.user_name} `)
             res.status(409).send('Email & Pseudo already used');
         }else if(existUserName){
-            logging.warn(`Pseudo already used => peudo: ${req.val.user_name}`)
+            logger.warn(`Pseudo already used => peudo: ${req.val.user_name}`)
             res.status(409).send('Pseudo already used');
         }else{
-            logging.warn(`Email already exist => ${req.val.email}`)
+            logger.warn(`Email already exist => ${req.val.email}`)
             res.status(409).send('Email already used');
         }
     } catch (err) {
-        logging.error(`Internal Server Error: trying to update user with ID: ${req.val.id} error : ${JSON.stringify(err.message, null, 2)}`)
+        logger.error(`Internal Server Error: trying to update user with ID: ${req.val.id} error : ${JSON.stringify(err.message, null, 2)}`)
         res.sendStatus(500);
     }
 };
@@ -103,7 +103,7 @@ export const getAllUsersTitle = async(req, res) => {
         logger.info(`Fetching list of users`);
         const users = await userModel.readAllUsers(pool);
         if(users){
-            logger.info(`Successfully retrieved users: ${JSON.stringify(locations)}`);
+            logger.info(`Successfully retrieved users: ${JSON.stringify(users)}`);
             res.json(users);
         } else {
             logger.warn(`Users not found`);
@@ -121,13 +121,13 @@ export const getNbUsers = async (req,res) => {
         logger.info(`Fetching users with paging=> page:${req.val.page} perPage:${req.val.perPage}`);
         const response = await userModel.readNbUsers(pool, req.val);
         if(response) {
-            logger.info(`Successfully retrieved users: ${JSON.stringify(locations)}`);
+            logger.info(`Successfully retrieved users: ${JSON.stringify(response)}`);
             res.json(response);
         } else {
             logger.warn(`Users not found`);
             res.sendStatus(404);
         }
-    } catch {
+    } catch (error) {
         logger.error(`Error fetching users: ${JSON.stringify(error.message, null, 2)}`);
         res.sendStatus(500);
     }
@@ -152,6 +152,7 @@ export const deleteUsers = async (req,res) => {
         logger.info(`Successfully deleted Users`);
         res.sendStatus(204);
     } catch(error) {
+        console.log(error)
         logger.error(`Error deleting Users with ID ${req.val.id}: ${JSON.stringify(error.message, null, 2)}`);
         res.sendStatus(500);
     }

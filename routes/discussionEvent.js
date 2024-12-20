@@ -17,7 +17,6 @@ import {checkJWT} from "../middleware/identification/JWT.js";
 import {admin} from "../middleware/authorization/mustBeAdmin.js";
 import {discussionEventValidatorMiddleware as DVM, tabValidatorMiddleware as TabVM} from "../middleware/validation.js";
 import {pagingValidatorMiddleWare as PagingVM} from "../middleware/validation.js";
-import {tabIds} from "../middleware/validator/tabValidator.js";
 import {inDiscussion} from "../middleware/authorization/mustBeInDiscussion.js";
 import {logger} from '../middleware/logger.js';
 

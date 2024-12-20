@@ -80,6 +80,5 @@ export const readTotalRowCategories = async (SQLClient)=>{
     const {rows} = await SQLClient.query(
         "SELECT COUNT(*) as count_rows FROM category"
     );
-    console.log(rows[0]?.count_rows)
     return rows[0]?.count_rows;
 };
