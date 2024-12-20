@@ -19,15 +19,15 @@ import {admin} from "../middleware/authorization/mustBeAdmin.js";
 
 const router = Router();
 
-router.get('/:id',PVM.searchedCategory, getCategory);
+router.get('/:id',checkJWT,PVM.searchedCategory, getCategory);
 router.post('/',checkJWT,admin,PVM.categoryToAdd, addCategory);
 router.delete('/:id',checkJWT,admin,PVM.categoryToDelete,deleteCategory);
 router.patch('/',checkJWT,admin,PVM.categoryToUpdate,updateCategory);
 
-router.get('/get/allTitle',getAllCategories);
+router.get('/get/allTitle',checkJWT,getAllCategories);
 
-router.get('/nbCategories/search',checkJWT,PagingVM.paging,getNbCategories);
-router.get('/nbCategories/count/',checkJWT,getTotalRowCategories);
+router.get('/nbCategories/search',PagingVM.paging,getNbCategories);
+router.get('/nbCategories/count/',getTotalRowCategories);
 
 router.delete('/many/deleteCategory/',checkJWT,admin,TabVM.ids,deleteCategories);
 

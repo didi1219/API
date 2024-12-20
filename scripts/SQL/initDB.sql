@@ -39,7 +39,7 @@ CREATE TABLE event (
                        event_end TIMESTAMP NOT NULL,
                        street_number varchar(250) NOT NULL,
                        is_private BOOLEAN NOT NULL,
-                       picture_path varchar(250),
+                       picture_path varchar(250) NOT NULL,
                        user_id integer REFERENCES users(id) DEFERRABLE INITIALLY IMMEDIATE,
                        location_id integer REFERENCES location(id) DEFERRABLE INITIALLY IMMEDIATE,
                        category_id integer REFERENCES category(id) DEFERRABLE INITIALLY IMMEDIATE
@@ -53,7 +53,7 @@ CREATE TABLE notification (
                               content varchar(250) NOT NULL,
                               event_id integer REFERENCES event(id) DEFERRABLE INITIALLY IMMEDIATE NOT NULL,
                               creation_date DATE NOT NULL,
-                              type varchar(250)
+                              type varchar(250) NOT NULL
 );
 
 DROP TABLE IF EXISTS discussionEvent CASCADE;
@@ -70,7 +70,7 @@ DROP TABLE IF EXISTS message CASCADE;
 CREATE TABLE message(
                         id integer primary key GENERATED ALWAYS AS IDENTITY,
                         content varchar(250) NOT NULL,
-                        type integer,
+                        type integer NOT NULL,
                         sending_date TIMESTAMP NOT NULL,
                         user_id integer REFERENCES users(id) DEFERRABLE INITIALLY IMMEDIATE,
                         discussion_event_id INTEGER REFERENCES discussionEvent(id) DEFERRABLE INITIALLY IMMEDIATE

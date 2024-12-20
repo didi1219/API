@@ -1,10 +1,16 @@
 import {calculOffset, verifyValueOfPerPage} from "../util/paging.js";
+import {formatDate} from "../util/formatDate.js";
 
 export const readNotification = async (SQLClient,{id}) => {
     const {rows} = await SQLClient.query(
         'SELECT * FROM notification WHERE id = $1',[id]
-    )
-    return rows[0];
+    );
+
+    const notification = rows[0];
+
+    notification.creation_date = formatDate(notification.creation_date);
+
+    return notification;
 };
 
 export const createNotification = async (SQLClient, {title, content, event_id, creation_date, type}) => {
@@ -77,6 +83,11 @@ export const readNbNotifications = async (SQLClient,{page,perPage}) => {
     const {rows} = await SQLClient.query(
         `select n.id, n.title, n.content, n.event_id,  n.creation_date, n.type, n.creation_date, e.title as "event" from notification n inner join event e on e.id = n.event_id ORDER BY id LIMIT $1 OFFSET $2;`, [size, offset]
     );
+
+    rows.map((item) => {
+        item.creation_date = formatDate(item.creation_date);
+    });
+
     return rows;
 };
 

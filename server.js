@@ -18,15 +18,17 @@ const upload = multer({
 
 app.use(cors());
 
+
 app.use(express.json());
 app.use(express.static('./uploads/events'));
+
+
+app.use('/api/v1', Router);
 
 app.post('/uploadImage',upload.fields([
     { name: 'image', maxCount: 1}
 ]), image);
 
-
-app.use(Router);
 
 const internalIP = internalIp.v4.sync();
 

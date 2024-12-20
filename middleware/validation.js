@@ -433,10 +433,12 @@ export const notificationValidatorMiddleware = {
         }
     },
     notificationToAdd : async (req, res, next) => {
+        console.log(req.body)
         try {
             req.val = await notificationValidator.notificationToAdd.validate(req.body);
             next();
         } catch (error) {
+            console.log(error);
             res.status(400).send(error.messages);
         }
     },
@@ -472,6 +474,7 @@ export const userValidatorMiddleware = {
             req.val = await userValidator.login.validate(req.body);
             next();
         } catch (error){
+            console.log(error)
             res.status(400).send(error.messages);
         }
     },

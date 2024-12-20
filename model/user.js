@@ -88,11 +88,15 @@ export const deleteManyUsers = async (SQLClient, {ids}) => {
     }
 };
 
-export const updateUser = async(SQLClient, {id, password, last_name, first_name, user_name, bio,picture_path}) => {
+export const updateUser = async(SQLClient, {id,email, password, last_name, first_name, user_name, bio,picture_path}) => {
     let query = 'UPDATE users SET ';
     const querySet = [];
     const queryValues = [];
 
+    if(email){
+        queryValues.push(email);
+        querySet.push(`email = $${queryValues.length}`);
+    }
     if(password){
         queryValues.push(await hash(password));
         querySet.push(`password = $${queryValues.length}`);
@@ -109,8 +113,8 @@ export const updateUser = async(SQLClient, {id, password, last_name, first_name,
         queryValues.push(user_name);
         querySet.push(`user_name = $${queryValues.length}`);
     }
-    if(bio){
-        queryValues.push(bio);
+    if(typeof bio !== 'undefined'){
+        queryValues.push(bio || "");
         querySet.push(`bio = $${queryValues.length}`);
     }
     if(picture_path){

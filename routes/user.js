@@ -25,7 +25,7 @@ const router = Router();
 router.post('/registration', UVM.user,PasswordVM, registration);
 router.post('/login',UVM.login,login);
 router.get('/me',checkJWT,getUserInfo);
-router.patch('/me',checkJWT,UVM.update,updateUser);
+router.patch('/me',checkJWT,UVM.update,PasswordVM,updateUser);
 
 router.get('/getAll/users',checkJWT,PagingVM.paging,getAllUsers);
 router.get('/nbUser/count/', checkJWT,countRows);

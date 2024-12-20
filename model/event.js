@@ -93,7 +93,7 @@ export const updateEvent = async (SQLClient, {id, title, description, event_star
         queryValues.push(title);
         querySet.push(`title = $${queryValues.length}`);
     }
-    if (description){
+    if (typeof description !== 'undefined'){
         queryValues.push(description);
         querySet.push(`description = $${queryValues.length}`);
     }

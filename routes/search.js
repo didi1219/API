@@ -47,7 +47,7 @@ router.get('/nbRows/searchByFollow', checkJWT,PagingVM.pagingSearchGeneral,count
 router.get('/nbRows/type/public/',checkJWT,countNbRowPublicEvent);
 router.get('/nbRows/publicAndSearch', checkJWT, SM.searchField,countRowsGetCombineSearchPublic);
 router.get('/events/publicAndSearch', checkJWT,PagingVM.pagingSearchGeneral,getCombineSearchPublic);
-router.get('/events/searchAllFilter',tabTransformCat,PagingVM.pagingWithAllFilters,getSearchCombineCategoriesAndLocalities);
+router.get('/events/searchAllFilter',checkJWT,tabTransformCat,PagingVM.pagingWithAllFilters,getSearchCombineCategoriesAndLocalities);
 
 export default router;
 

@@ -20,15 +20,15 @@ import {tabValidatorMiddleware as TabVM} from "../middleware/validation.js";
 
 const router = new Router();
 
-router.get('/:id',LVM.searchedLocation,getLocation);
+router.get('/:id',checkJWT,LVM.searchedLocation,getLocation);
 router.post('/',checkJWT,admin,LVM.locationToAdd,addLocation);
 router.delete('/:id',checkJWT,admin,LVM.locationToDelete,deleteLocation);
 router.patch('/',checkJWT,admin,LVM.locationToUpdate,updateLocation);
 
 router.get('/get/allTitle',checkJWT,getAllLocations);
 
-router.get('/nbLocations/search', checkJWT,PagingVM.paging,getNbLocations);
-router.get('/nbLocations/count/',checkJWT,countRows);
+router.get('/nbLocations/search', PagingVM.paging,getNbLocations);
+router.get('/nbLocations/count/', countRows);
 
 router.delete('/many/deleteLocation/',checkJWT,admin,TabVM.ids,deleteLocations);
 

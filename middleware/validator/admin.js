@@ -16,6 +16,7 @@ const userToAddSchema = vine.object({
 
 const userToUpdateSchema = vine.object({
     id: vine.number(),
+    email: vine.string().maxLength(250).optional(),
     password: vine.string().maxLength(250).optional(),
     last_name: vine.string().trim().maxLength(250).optional(),
     first_name: vine.string().trim().maxLength(250).optional(),

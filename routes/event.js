@@ -40,15 +40,15 @@ router.get('/:id/discussions', checkJWT,admin, EVM.eventToListDiscussions, inEve
 router.get('/discussion/event',checkJWT,admin, PagingVM.pagingWithId,getDiscussionEvents);
 
 // admin
-router.get('/id/:id',EMVM.searchedEvent,getEvent);
+router.get('/id/:id',checkJWT,EMVM.searchedEvent,getEvent);
 router.post('/',checkJWT,admin,EMVM.eventToAdd, addEvent);
 router.delete('/delete/:id',checkJWT, admin, EMVM.eventToDelete, deleteEvent);
 router.patch('/',checkJWT,admin,EMVM.eventToUpdate,updateEvent);
 
-router.get('/get/allTitle',getAllEventTitle);
+router.get('/get/allTitle',checkJWT,getAllEventTitle);
 
 router.get('/nbEvents/search',PagingVM.paging,getNbEvents);
-router.get('/nbEvents/count/',checkJWT,getTotalRowEvent);
+router.get('/nbEvents/count/',getTotalRowEvent);
 
 router.delete('/many/deleteEvent/',checkJWT,admin,TabVM.ids,deleteEvents);
 
