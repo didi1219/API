@@ -62,7 +62,7 @@ export const updateCategory = async (SQLClient, {id,title,icon_component_name,ic
 
 export const readAllCategories = async (SQLClient) => {
     const {rows} = await SQLClient.query(
-        'SELECT * FROM category ORDER BY id'
+        'SELECT id, title, icon_component_name, icon_name FROM category ORDER BY id'
     );
     return rows;
 };

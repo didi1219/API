@@ -79,6 +79,7 @@ export const getNbMessages = async (req, res) => {
             res.sendStatus(404);
         }
     } catch (error) {
+        console.log(error)
         logger.error(`Error fetching number of messages: ${JSON.stringify(error.messages, null, 2)}`);
         res.sendStatus(500);
     }

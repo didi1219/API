@@ -22,3 +22,9 @@
 [2024-12-20 15:22:16] ERROR: Error updating message: value "1234509876546" is out of range for type integer 
 [2024-12-20 15:22:17] ERROR: Error updating message: value "1234509876546" is out of range for type integer 
 [2024-12-20 15:22:20] ERROR: Error updating message: value "1234509876546" is out of range for type integer 
+[2024-12-20 16:14:42] ERROR: Error fetching number of messages: undefined 
+[2024-12-20 16:14:42] ERROR: Error fetching number of messages: undefined 
+[2024-12-20 16:14:55] ERROR: Error fetching number of messages: undefined 
+[2024-12-20 16:14:55] ERROR: Error fetching number of messages: undefined 
+[2024-12-20 16:15:33] ERROR: Error fetching number of messages: undefined 
+[2024-12-20 16:15:33] ERROR: Error fetching number of messages: undefined 

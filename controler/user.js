@@ -25,15 +25,6 @@ export const getUser = async (req, res) => {
     }
 };
 
-export const deleteUser = async (req, res) => {
-    try {
-        await userModel.deleteUser(pool, req.val);
-        res.sendStatus(204);
-    } catch (err) {
-        res.sendStatus(500);
-    }
-};
-
 export const updateUser = async (req, res) => {
     logger.info(`Entering updateUser with params: ${JSON.stringify(req.val)}`);
     try {
