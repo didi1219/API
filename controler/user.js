@@ -27,14 +27,29 @@ export const getUser = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-    logger.info(`Entering updateUser with params: ${JSON.stringify(req.val)}`);
     try {
         req.val.id = req.session.id;
-        await userModel.updateUser(pool, req.val);
-        logger.info(`User updated successfully`);
-        res.sendStatus(204);
+        let existEmail = false;
+        let existUserName = false;
+
+        if(req.val.email){
+            existEmail = await userModel.userExists(pool,req.val);
+        }
+        if(req.val.user_name){
+            existUserName = await userModel.checkPseudoExist(pool,req.val);
+        }
+
+        if(!existEmail && !existUserName){
+            await userModel.updateUser(pool,req.val);
+            res.sendStatus(204);
+        } else if(existEmail && existUserName){
+            res.status(409).send('Email & Pseudo already used');
+        }else if(existUserName){
+            res.status(409).send('Pseudo already used');
+        }else{
+            res.status(409).send('Email already used');
+        }
     } catch (err) {
-        logger.error(`Error updating user: ${JSON.stringify(err.message, null, 2)}`);
         res.sendStatus(500);
     }
 };

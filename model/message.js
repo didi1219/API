@@ -13,18 +13,44 @@ export const readMessage = async (SQLClient, {id}) => {
 };
 
 export const createMessage = async (SQLClient, {content, type, user_id, discussion_event_id}) => {
-    const sending_date = new Date();
-    const {rows} = await SQLClient.query(
-        "INSERT INTO message(content, type, sending_date, user_id, discussion_event_id) VALUES ($1,$2,$3,$4,$5) RETURNING id",
-        [
-            content,
-            type,
-            sending_date,
-            user_id,
-            discussion_event_id,
-        ]
-    );
-    return rows[0]?.id;
+    try {
+        const sending_date = new Date();
+        await SQLClient.query('BEGIN');
+
+        const test = await SQLClient.query(
+            "select de.is_writable, e.id from discussionevent de inner join event e on e.id = de.event_id where de.id = $1", [discussion_event_id],
+        );
+
+        if(!test.rows[0].is_writable){
+            await SQLClient.query(
+                'INSERT INTO notification (title,content,event_id,creation_date,type) VALUES ($1,$2,$3,$4,$5)',
+                [
+                    "Alert",
+                    content,
+                    test.rows[0].id,
+                    sending_date,
+                    1
+                ]
+            );
+        }
+        const {rows} = await SQLClient.query(
+            "INSERT INTO message(content, type, sending_date, user_id, discussion_event_id) VALUES ($1,$2,$3,$4,$5) RETURNING id",
+            [
+                content,
+                type,
+                sending_date,
+                user_id,
+                discussion_event_id,
+            ]
+        );
+
+        await SQLClient.query('COMMIT;');
+
+        return rows[0]?.id;
+    } catch (error) {
+        await SQLClient.query('ROLLBACK');
+        throw error;
+    }
 };
 
 export const deleteMessage = async (SQLClient, {id}) => {

@@ -7212,3 +7212,493 @@
 [2024-12-20 15:36:08] WARN: Bad URL: /discussionEvent/ 
 [2024-12-20 15:36:08] INFO: 172.1.0.178 - - [20/Dec/2024:14:36:08 +0000] "GET /api/v1/discussionEvent/ HTTP/1.1" 404 60 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0" 
 [2024-12-20 15:36:08] INFO: 172.1.0.178 - - [20/Dec/2024:14:36:08 +0000] "GET /favicon.ico HTTP/1.1" 404 150 "http://172.1.0.178:3001/api/v1/discussionEvent/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0" 
+[2024-12-20 17:08:47] INFO: 192.168.62.200 - - [20/Dec/2024:16:08:47 +0000] "POST /user/login HTTP/1.1" 404 150 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:20:42] INFO: Accessing category route: GET /1 
+[2024-12-20 17:20:42] INFO: Validation Data 
+[2024-12-20 17:20:42] INFO: Successfully validation 
+[2024-12-20 17:20:42] INFO: Fetching Category with id: 1 
+[2024-12-20 17:20:42] INFO: Successfully fetch category 
+[2024-12-20 17:20:42] INFO: 192.168.62.200 - - [20/Dec/2024:16:20:42 +0000] "GET /api/v1/category/1 HTTP/1.1" 200 75 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:20:54] INFO: Accessing User route: POST /login 
+[2024-12-20 17:20:54] INFO: Validation Data 
+[2024-12-20 17:20:54] INFO: Successfully validation 
+[2024-12-20 17:20:54] INFO: Entering login with params: "johndoe@eample.com" 
+[2024-12-20 17:20:54] WARN: User not found 
+[2024-12-20 17:20:54] INFO: 192.168.62.200 - - [20/Dec/2024:16:20:54 +0000] "POST /api/v1/user/login HTTP/1.1" 404 9 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:21:08] INFO: Accessing User route: POST /login 
+[2024-12-20 17:21:08] INFO: Validation Data 
+[2024-12-20 17:21:08] INFO: Successfully validation 
+[2024-12-20 17:21:08] INFO: Entering login with params: "johndoe@example.com" 
+[2024-12-20 17:21:08] INFO: User logged in, JWT generated 
+[2024-12-20 17:21:08] INFO: 192.168.62.200 - - [20/Dec/2024:16:21:08 +0000] "POST /api/v1/user/login HTTP/1.1" 201 160 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:21:25] INFO: Accessing User route: POST /login 
+[2024-12-20 17:21:25] INFO: Validation Data 
+[2024-12-20 17:21:25] INFO: Successfully validation 
+[2024-12-20 17:21:25] INFO: Entering login with params: "johndoe@eample.com" 
+[2024-12-20 17:21:25] WARN: User not found 
+[2024-12-20 17:21:25] INFO: 192.168.62.200 - - [20/Dec/2024:16:21:25 +0000] "POST /api/v1/user/login HTTP/1.1" 404 9 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:21:25] INFO: Accessing category route: GET /1 
+[2024-12-20 17:21:25] INFO: Validation Data 
+[2024-12-20 17:21:25] INFO: Successfully validation 
+[2024-12-20 17:21:25] INFO: Fetching Category with id: 1 
+[2024-12-20 17:21:25] INFO: Successfully fetch category 
+[2024-12-20 17:21:25] INFO: 192.168.62.200 - - [20/Dec/2024:16:21:25 +0000] "GET /api/v1/category/1 HTTP/1.1" 200 75 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:21:26] INFO: Accessing category route: GET /52 
+[2024-12-20 17:21:26] INFO: Validation Data 
+[2024-12-20 17:21:26] INFO: Successfully validation 
+[2024-12-20 17:21:26] INFO: Fetching Category with id: 52 
+[2024-12-20 17:21:26] WARN: Category not found 
+[2024-12-20 17:21:26] INFO: 192.168.62.200 - - [20/Dec/2024:16:21:26 +0000] "GET /api/v1/category/52 HTTP/1.1" 404 9 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:21:26] INFO: Accessing category route: GET /qsdfg 
+[2024-12-20 17:21:26] INFO: Validation Data 
+[2024-12-20 17:21:26] WARN: Validation error: [
+  {
+    "message": "The id field must be a number",
+    "rule": "number",
+    "field": "id"
+  }
+] 
+[2024-12-20 17:21:26] INFO: 192.168.62.200 - - [20/Dec/2024:16:21:26 +0000] "GET /api/v1/category/qsdfg HTTP/1.1" 400 74 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:21:26] INFO: Accessing category route: GET / 
+[2024-12-20 17:21:26] WARN: Bad URL: /category/ 
+[2024-12-20 17:21:26] INFO: 192.168.62.200 - - [20/Dec/2024:16:21:26 +0000] "GET /api/v1/category/ HTTP/1.1" 404 60 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:21:26] INFO: Accessing category route: POST / 
+[2024-12-20 17:21:26] INFO: Checking JWT 
+[2024-12-20 17:21:26] WARN: Verify failed: undefined 
+[2024-12-20 17:21:26] INFO: 192.168.62.200 - - [20/Dec/2024:16:21:26 +0000] "POST /api/v1/category/ HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:21:26] INFO: Accessing category route: DELETE /17 
+[2024-12-20 17:21:26] INFO: Checking JWT 
+[2024-12-20 17:21:26] WARN: Verify failed: undefined 
+[2024-12-20 17:21:26] INFO: 192.168.62.200 - - [20/Dec/2024:16:21:26 +0000] "DELETE /api/v1/category/17 HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:21:26] INFO: Accessing category route: DELETE /many/deleteCategory/ 
+[2024-12-20 17:21:26] INFO: Checking JWT 
+[2024-12-20 17:21:26] WARN: Verify failed: undefined 
+[2024-12-20 17:21:26] INFO: 192.168.62.200 - - [20/Dec/2024:16:21:26 +0000] "DELETE /api/v1/category/many/deleteCategory/ HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:21:26] INFO: Accessing category route: DELETE /many/deleteCategory?ids=abcdje 
+[2024-12-20 17:21:26] INFO: Checking JWT 
+[2024-12-20 17:21:26] WARN: Verify failed: undefined 
+[2024-12-20 17:21:26] INFO: 192.168.62.200 - - [20/Dec/2024:16:21:26 +0000] "DELETE /api/v1/category/many/deleteCategory?ids=abcdje HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:21:26] INFO: Accessing category route: PATCH / 
+[2024-12-20 17:21:26] INFO: Checking JWT 
+[2024-12-20 17:21:26] WARN: Verify failed: undefined 
+[2024-12-20 17:21:26] INFO: 192.168.62.200 - - [20/Dec/2024:16:21:26 +0000] "PATCH /api/v1/category/ HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:21:26] INFO: Accessing category route: PATCH / 
+[2024-12-20 17:21:26] INFO: Checking JWT 
+[2024-12-20 17:21:26] WARN: Verify failed: undefined 
+[2024-12-20 17:21:26] INFO: 192.168.62.200 - - [20/Dec/2024:16:21:26 +0000] "PATCH /api/v1/category/ HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:21:26] INFO: Accessing category route: PATCH / 
+[2024-12-20 17:21:26] INFO: Checking JWT 
+[2024-12-20 17:21:26] WARN: Verify failed: undefined 
+[2024-12-20 17:21:26] INFO: 192.168.62.200 - - [20/Dec/2024:16:21:26 +0000] "PATCH /api/v1/category/ HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:21:26] INFO: Accessing category route: PATCH / 
+[2024-12-20 17:21:26] INFO: Checking JWT 
+[2024-12-20 17:21:26] WARN: No JWT 
+[2024-12-20 17:21:26] INFO: 192.168.62.200 - - [20/Dec/2024:16:21:26 +0000] "PATCH /api/v1/category/ HTTP/1.1" 401 6 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:21:26] INFO: Accessing category route: PATCH / 
+[2024-12-20 17:21:26] INFO: Checking JWT 
+[2024-12-20 17:21:26] WARN: Verify failed: undefined 
+[2024-12-20 17:21:26] INFO: 192.168.62.200 - - [20/Dec/2024:16:21:26 +0000] "PATCH /api/v1/category/ HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:21:53] INFO: Accessing category route: POST / 
+[2024-12-20 17:21:53] INFO: Checking JWT 
+[2024-12-20 17:21:53] WARN: Verify failed: undefined 
+[2024-12-20 17:21:53] INFO: 192.168.62.200 - - [20/Dec/2024:16:21:53 +0000] "POST /api/v1/category/ HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:22:57] INFO: Accessing category route: POST / 
+[2024-12-20 17:22:57] INFO: Checking JWT 
+[2024-12-20 17:22:57] WARN: Verify failed: undefined 
+[2024-12-20 17:22:57] INFO: 192.168.62.200 - - [20/Dec/2024:16:22:57 +0000] "POST /api/v1/category/ HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:22:58] INFO: Accessing category route: POST / 
+[2024-12-20 17:22:58] INFO: Checking JWT 
+[2024-12-20 17:22:58] WARN: Verify failed: undefined 
+[2024-12-20 17:22:58] INFO: 192.168.62.200 - - [20/Dec/2024:16:22:58 +0000] "POST /api/v1/category/ HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:23:07] INFO: Accessing User route: POST /login 
+[2024-12-20 17:23:07] INFO: Validation Data 
+[2024-12-20 17:23:07] INFO: Successfully validation 
+[2024-12-20 17:23:07] INFO: Entering login with params: "johndoe@example.com" 
+[2024-12-20 17:23:08] INFO: User logged in, JWT generated 
+[2024-12-20 17:23:08] INFO: 192.168.62.200 - - [20/Dec/2024:16:23:08 +0000] "POST /api/v1/user/login HTTP/1.1" 201 160 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:23:40] INFO: Accessing category route: GET /1 
+[2024-12-20 17:23:40] INFO: Validation Data 
+[2024-12-20 17:23:40] INFO: Successfully validation 
+[2024-12-20 17:23:40] INFO: Fetching Category with id: 1 
+[2024-12-20 17:23:40] INFO: Successfully fetch category 
+[2024-12-20 17:23:40] INFO: 192.168.62.200 - - [20/Dec/2024:16:23:40 +0000] "GET /api/v1/category/1 HTTP/1.1" 200 75 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:24:00] INFO: Accessing category route: GET /1 
+[2024-12-20 17:24:00] INFO: Validation Data 
+[2024-12-20 17:24:00] INFO: Successfully validation 
+[2024-12-20 17:24:00] INFO: Fetching Category with id: 1 
+[2024-12-20 17:24:00] INFO: Successfully fetch category 
+[2024-12-20 17:24:00] INFO: 192.168.62.200 - - [20/Dec/2024:16:24:00 +0000] "GET /api/v1/category/1 HTTP/1.1" 200 75 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:24:05] INFO: Accessing category route: GET /52 
+[2024-12-20 17:24:05] INFO: Validation Data 
+[2024-12-20 17:24:05] INFO: Successfully validation 
+[2024-12-20 17:24:05] INFO: Fetching Category with id: 52 
+[2024-12-20 17:24:05] WARN: Category not found 
+[2024-12-20 17:24:05] INFO: 192.168.62.200 - - [20/Dec/2024:16:24:05 +0000] "GET /api/v1/category/52 HTTP/1.1" 404 9 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:24:11] INFO: Accessing category route: GET /qsdfg 
+[2024-12-20 17:24:11] INFO: Validation Data 
+[2024-12-20 17:24:11] WARN: Validation error: [
+  {
+    "message": "The id field must be a number",
+    "rule": "number",
+    "field": "id"
+  }
+] 
+[2024-12-20 17:24:11] INFO: 192.168.62.200 - - [20/Dec/2024:16:24:11 +0000] "GET /api/v1/category/qsdfg HTTP/1.1" 400 74 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:24:31] INFO: Accessing category route: GET / 
+[2024-12-20 17:24:31] WARN: Bad URL: /category/ 
+[2024-12-20 17:24:31] INFO: 192.168.62.200 - - [20/Dec/2024:16:24:31 +0000] "GET /api/v1/category/ HTTP/1.1" 404 60 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:24:50] INFO: Accessing category route: POST / 
+[2024-12-20 17:24:50] INFO: Checking JWT 
+[2024-12-20 17:24:50] INFO: JWT accpeted 
+[2024-12-20 17:24:50] INFO: Check if current user is Admin 
+[2024-12-20 17:24:50] INFO: Successfully check admin => the user is an admin 
+[2024-12-20 17:24:50] INFO: Validation Data 
+[2024-12-20 17:24:50] WARN: Validation error: [
+  {
+    "message": "The icon_component_name field must be defined",
+    "rule": "required",
+    "field": "icon_component_name"
+  },
+  {
+    "message": "The icon_name field must be defined",
+    "rule": "required",
+    "field": "icon_name"
+  }
+] 
+[2024-12-20 17:24:50] INFO: 192.168.62.200 - - [20/Dec/2024:16:24:50 +0000] "POST /api/v1/category/ HTTP/1.1" 400 197 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:25:43] INFO: Accessing category route: POST / 
+[2024-12-20 17:25:43] INFO: Checking JWT 
+[2024-12-20 17:25:43] INFO: JWT accpeted 
+[2024-12-20 17:25:43] INFO: Check if current user is Admin 
+[2024-12-20 17:25:43] INFO: Successfully check admin => the user is an admin 
+[2024-12-20 17:25:43] INFO: Validation Data 
+[2024-12-20 17:25:43] WARN: Validation error: [
+  {
+    "message": "The icon_name field must be defined",
+    "rule": "required",
+    "field": "icon_name"
+  }
+] 
+[2024-12-20 17:25:43] INFO: 192.168.62.200 - - [20/Dec/2024:16:25:43 +0000] "POST /api/v1/category/ HTTP/1.1" 400 89 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:25:52] INFO: Accessing category route: POST / 
+[2024-12-20 17:25:52] INFO: Checking JWT 
+[2024-12-20 17:25:52] INFO: JWT accpeted 
+[2024-12-20 17:25:52] INFO: Check if current user is Admin 
+[2024-12-20 17:25:52] INFO: Successfully check admin => the user is an admin 
+[2024-12-20 17:25:52] INFO: Validation Data 
+[2024-12-20 17:25:52] INFO: Successfully validation 
+[2024-12-20 17:25:52] INFO: Adding a new category 
+[2024-12-20 17:25:52] INFO: Successfully added category with id: 14 
+[2024-12-20 17:25:52] INFO: 192.168.62.200 - - [20/Dec/2024:16:25:52 +0000] "POST /api/v1/category/ HTTP/1.1" 201 9 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:26:13] INFO: Accessing category route: DELETE /14 
+[2024-12-20 17:26:13] INFO: Checking JWT 
+[2024-12-20 17:26:13] INFO: JWT accpeted 
+[2024-12-20 17:26:13] INFO: Check if current user is Admin 
+[2024-12-20 17:26:13] INFO: Successfully check admin => the user is an admin 
+[2024-12-20 17:26:13] INFO: Validation Data 
+[2024-12-20 17:26:13] INFO: Successfully validation 
+[2024-12-20 17:26:13] INFO: Deleting category with id: 14 
+[2024-12-20 17:26:13] INFO: Successfully deleted category 
+[2024-12-20 17:26:13] INFO: 192.168.62.200 - - [20/Dec/2024:16:26:13 +0000] "DELETE /api/v1/category/14 HTTP/1.1" 204 - "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:26:27] INFO: Accessing category route: DELETE /many/deleteCategory/ 
+[2024-12-20 17:26:27] INFO: Checking JWT 
+[2024-12-20 17:26:27] INFO: JWT accpeted 
+[2024-12-20 17:26:27] INFO: Check if current user is Admin 
+[2024-12-20 17:26:27] INFO: Successfully check admin => the user is an admin 
+[2024-12-20 17:26:27] INFO: Validation Data 
+[2024-12-20 17:26:27] INFO: Successfully validation 
+[2024-12-20 17:26:27] INFO: Deleting multiple categories 
+[2024-12-20 17:26:27] INFO: Successfully deleted categories 
+[2024-12-20 17:26:27] INFO: 192.168.62.200 - - [20/Dec/2024:16:26:27 +0000] "DELETE /api/v1/category/many/deleteCategory/ HTTP/1.1" 204 - "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:26:53] INFO: Accessing category route: DELETE /many/deleteCategory?ids=abcdje 
+[2024-12-20 17:26:53] INFO: Checking JWT 
+[2024-12-20 17:26:53] INFO: JWT accpeted 
+[2024-12-20 17:26:53] INFO: Check if current user is Admin 
+[2024-12-20 17:26:53] INFO: Successfully check admin => the user is an admin 
+[2024-12-20 17:26:53] INFO: Validation Data 
+[2024-12-20 17:26:53] WARN: Validation error: [
+  {
+    "message": "The ids field must be defined",
+    "rule": "required",
+    "field": "ids"
+  }
+] 
+[2024-12-20 17:26:53] INFO: 192.168.62.200 - - [20/Dec/2024:16:26:53 +0000] "DELETE /api/v1/category/many/deleteCategory?ids=abcdje HTTP/1.1" 400 77 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:27:59] INFO: Accessing category route: DELETE /many/deleteCategory?ids=abcdje 
+[2024-12-20 17:27:59] INFO: Checking JWT 
+[2024-12-20 17:27:59] INFO: JWT accpeted 
+[2024-12-20 17:27:59] INFO: Check if current user is Admin 
+[2024-12-20 17:27:59] INFO: Successfully check admin => the user is an admin 
+[2024-12-20 17:27:59] INFO: Validation Data 
+[2024-12-20 17:27:59] WARN: Validation error: [
+  {
+    "message": "The ids field must be defined",
+    "rule": "required",
+    "field": "ids"
+  }
+] 
+[2024-12-20 17:27:59] INFO: 192.168.62.200 - - [20/Dec/2024:16:27:59 +0000] "DELETE /api/v1/category/many/deleteCategory?ids=abcdje HTTP/1.1" 400 77 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:28:15] INFO: Accessing category route: DELETE /many/deleteCategory/ 
+[2024-12-20 17:28:15] INFO: Checking JWT 
+[2024-12-20 17:28:15] INFO: JWT accpeted 
+[2024-12-20 17:28:15] INFO: Check if current user is Admin 
+[2024-12-20 17:28:15] INFO: Successfully check admin => the user is an admin 
+[2024-12-20 17:28:15] INFO: Validation Data 
+[2024-12-20 17:28:15] INFO: Successfully validation 
+[2024-12-20 17:28:15] INFO: Deleting multiple categories 
+[2024-12-20 17:28:15] INFO: Successfully deleted categories 
+[2024-12-20 17:28:15] INFO: 192.168.62.200 - - [20/Dec/2024:16:28:15 +0000] "DELETE /api/v1/category/many/deleteCategory/ HTTP/1.1" 204 - "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:31:00] INFO: Accessing category route: DELETE /many/deleteCategory/ 
+[2024-12-20 17:31:00] INFO: Checking JWT 
+[2024-12-20 17:31:00] INFO: JWT accpeted 
+[2024-12-20 17:31:00] INFO: Check if current user is Admin 
+[2024-12-20 17:31:00] INFO: Successfully check admin => the user is an admin 
+[2024-12-20 17:31:00] INFO: Validation Data 
+[2024-12-20 17:31:00] WARN: Validation error: [
+  {
+    "message": "The ids field must be defined",
+    "rule": "required",
+    "field": "ids"
+  }
+] 
+[2024-12-20 17:31:00] INFO: 192.168.62.200 - - [20/Dec/2024:16:31:00 +0000] "DELETE /api/v1/category/many/deleteCategory/ HTTP/1.1" 400 77 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:31:08] INFO: Accessing category route: DELETE /many/deleteCategory/ 
+[2024-12-20 17:31:08] INFO: Checking JWT 
+[2024-12-20 17:31:08] INFO: JWT accpeted 
+[2024-12-20 17:31:08] INFO: Check if current user is Admin 
+[2024-12-20 17:31:08] INFO: Successfully check admin => the user is an admin 
+[2024-12-20 17:31:08] INFO: Validation Data 
+[2024-12-20 17:31:08] INFO: Successfully validation 
+[2024-12-20 17:31:08] INFO: Deleting multiple categories 
+[2024-12-20 17:31:08] INFO: Successfully deleted categories 
+[2024-12-20 17:31:08] INFO: 192.168.62.200 - - [20/Dec/2024:16:31:08 +0000] "DELETE /api/v1/category/many/deleteCategory/ HTTP/1.1" 204 - "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:31:26] INFO: Accessing category route: PATCH / 
+[2024-12-20 17:31:26] INFO: Checking JWT 
+[2024-12-20 17:31:26] INFO: JWT accpeted 
+[2024-12-20 17:31:26] INFO: Check if current user is Admin 
+[2024-12-20 17:31:26] INFO: Successfully check admin => the user is an admin 
+[2024-12-20 17:31:26] INFO: Validation Data 
+[2024-12-20 17:31:26] INFO: Successfully validation 
+[2024-12-20 17:31:26] INFO: Updating category with id: 4 
+[2024-12-20 17:31:26] WARN: Category id not found 
+[2024-12-20 17:31:26] INFO: 192.168.62.200 - - [20/Dec/2024:16:31:26 +0000] "PATCH /api/v1/category/ HTTP/1.1" 404 12 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:31:43] INFO: Accessing category route: PATCH / 
+[2024-12-20 17:31:43] INFO: Checking JWT 
+[2024-12-20 17:31:43] INFO: JWT accpeted 
+[2024-12-20 17:31:43] INFO: Check if current user is Admin 
+[2024-12-20 17:31:43] INFO: Successfully check admin => the user is an admin 
+[2024-12-20 17:31:43] INFO: Validation Data 
+[2024-12-20 17:31:43] INFO: Successfully validation 
+[2024-12-20 17:31:43] INFO: Updating category with id: 1 
+[2024-12-20 17:31:44] WARN: Category id not found 
+[2024-12-20 17:31:44] INFO: 192.168.62.200 - - [20/Dec/2024:16:31:44 +0000] "PATCH /api/v1/category/ HTTP/1.1" 404 12 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:35:10] INFO: Accessing category route: PATCH / 
+[2024-12-20 17:35:10] INFO: Checking JWT 
+[2024-12-20 17:35:10] INFO: JWT accpeted 
+[2024-12-20 17:35:10] INFO: Check if current user is Admin 
+[2024-12-20 17:35:10] INFO: Successfully check admin => the user is an admin 
+[2024-12-20 17:35:10] INFO: Validation Data 
+[2024-12-20 17:35:10] INFO: Successfully validation 
+[2024-12-20 17:35:10] INFO: Updating category with id: 1 
+[2024-12-20 17:35:10] INFO: Successfully updated category 
+[2024-12-20 17:35:10] INFO: 192.168.62.200 - - [20/Dec/2024:16:35:10 +0000] "PATCH /api/v1/category/ HTTP/1.1" 204 - "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:35:13] INFO: Accessing category route: PATCH / 
+[2024-12-20 17:35:13] INFO: Checking JWT 
+[2024-12-20 17:35:13] INFO: JWT accpeted 
+[2024-12-20 17:35:13] INFO: Check if current user is Admin 
+[2024-12-20 17:35:13] INFO: Successfully check admin => the user is an admin 
+[2024-12-20 17:35:13] INFO: Validation Data 
+[2024-12-20 17:35:13] INFO: Successfully validation 
+[2024-12-20 17:35:13] INFO: Updating category with id: 1 
+[2024-12-20 17:35:13] INFO: Successfully updated category 
+[2024-12-20 17:35:13] INFO: 192.168.62.200 - - [20/Dec/2024:16:35:13 +0000] "PATCH /api/v1/category/ HTTP/1.1" 204 - "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:35:29] INFO: Accessing category route: PATCH / 
+[2024-12-20 17:35:29] INFO: Checking JWT 
+[2024-12-20 17:35:29] INFO: JWT accpeted 
+[2024-12-20 17:35:29] INFO: Check if current user is Admin 
+[2024-12-20 17:35:29] INFO: Successfully check admin => the user is an admin 
+[2024-12-20 17:35:29] INFO: Validation Data 
+[2024-12-20 17:35:29] WARN: Validation error: [
+  {
+    "message": "The id field must be defined",
+    "rule": "required",
+    "field": "id"
+  }
+] 
+[2024-12-20 17:35:29] INFO: 192.168.62.200 - - [20/Dec/2024:16:35:29 +0000] "PATCH /api/v1/category/ HTTP/1.1" 400 75 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:35:36] INFO: Accessing category route: PATCH / 
+[2024-12-20 17:35:36] INFO: Checking JWT 
+[2024-12-20 17:35:36] INFO: JWT accpeted 
+[2024-12-20 17:35:36] INFO: Check if current user is Admin 
+[2024-12-20 17:35:36] INFO: Successfully check admin => the user is an admin 
+[2024-12-20 17:35:36] INFO: Validation Data 
+[2024-12-20 17:35:36] WARN: Validation error: [
+  {
+    "message": "The id field must be a number",
+    "rule": "number",
+    "field": "id"
+  }
+] 
+[2024-12-20 17:35:36] INFO: 192.168.62.200 - - [20/Dec/2024:16:35:36 +0000] "PATCH /api/v1/category/ HTTP/1.1" 400 74 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:35:40] INFO: Accessing category route: PATCH / 
+[2024-12-20 17:35:40] INFO: Checking JWT 
+[2024-12-20 17:35:40] WARN: No JWT 
+[2024-12-20 17:35:40] INFO: 192.168.62.200 - - [20/Dec/2024:16:35:40 +0000] "PATCH /api/v1/category/ HTTP/1.1" 401 6 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:35:50] INFO: Accessing category route: PATCH / 
+[2024-12-20 17:35:50] INFO: Checking JWT 
+[2024-12-20 17:35:50] INFO: JWT accpeted 
+[2024-12-20 17:35:50] INFO: Check if current user is Admin 
+[2024-12-20 17:35:50] INFO: Successfully check admin => the user is an admin 
+[2024-12-20 17:35:50] INFO: Validation Data 
+[2024-12-20 17:35:50] WARN: Validation error: [
+  {
+    "message": "The id field must be defined",
+    "rule": "required",
+    "field": "id"
+  }
+] 
+[2024-12-20 17:35:50] INFO: 192.168.62.200 - - [20/Dec/2024:16:35:50 +0000] "PATCH /api/v1/category/ HTTP/1.1" 400 75 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:37:10] INFO: Accessing User route: POST /login 
+[2024-12-20 17:37:11] INFO: Validation Data 
+[2024-12-20 17:37:11] INFO: Successfully validation 
+[2024-12-20 17:37:11] INFO: Entering login with params: "johndoe@eample.com" 
+[2024-12-20 17:37:11] WARN: User not found 
+[2024-12-20 17:37:11] INFO: 192.168.62.200 - - [20/Dec/2024:16:37:11 +0000] "POST /api/v1/user/login HTTP/1.1" 404 9 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:37:11] INFO: Accessing category route: GET /1 
+[2024-12-20 17:37:11] INFO: Validation Data 
+[2024-12-20 17:37:11] INFO: Successfully validation 
+[2024-12-20 17:37:11] INFO: Fetching Category with id: 1 
+[2024-12-20 17:37:11] INFO: Successfully fetch category 
+[2024-12-20 17:37:11] INFO: 192.168.62.200 - - [20/Dec/2024:16:37:11 +0000] "GET /api/v1/category/1 HTTP/1.1" 200 82 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:37:11] INFO: Accessing category route: GET /52 
+[2024-12-20 17:37:11] INFO: Validation Data 
+[2024-12-20 17:37:11] INFO: Successfully validation 
+[2024-12-20 17:37:11] INFO: Fetching Category with id: 52 
+[2024-12-20 17:37:11] WARN: Category not found 
+[2024-12-20 17:37:11] INFO: 192.168.62.200 - - [20/Dec/2024:16:37:11 +0000] "GET /api/v1/category/52 HTTP/1.1" 404 9 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:37:11] INFO: Accessing category route: GET /qsdfg 
+[2024-12-20 17:37:11] INFO: Validation Data 
+[2024-12-20 17:37:11] WARN: Validation error: [
+  {
+    "message": "The id field must be a number",
+    "rule": "number",
+    "field": "id"
+  }
+] 
+[2024-12-20 17:37:11] INFO: 192.168.62.200 - - [20/Dec/2024:16:37:11 +0000] "GET /api/v1/category/qsdfg HTTP/1.1" 400 74 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:37:11] INFO: Accessing category route: POST / 
+[2024-12-20 17:37:11] INFO: Checking JWT 
+[2024-12-20 17:37:11] WARN: Verify failed: undefined 
+[2024-12-20 17:37:11] INFO: 192.168.62.200 - - [20/Dec/2024:16:37:11 +0000] "POST /api/v1/category/ HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:37:11] INFO: Accessing category route: DELETE /14 
+[2024-12-20 17:37:11] INFO: Checking JWT 
+[2024-12-20 17:37:11] WARN: Verify failed: undefined 
+[2024-12-20 17:37:11] INFO: 192.168.62.200 - - [20/Dec/2024:16:37:11 +0000] "DELETE /api/v1/category/14 HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:37:11] INFO: Accessing category route: DELETE /many/deleteCategory?ids=abcdje 
+[2024-12-20 17:37:11] INFO: Checking JWT 
+[2024-12-20 17:37:11] WARN: Verify failed: undefined 
+[2024-12-20 17:37:11] INFO: 192.168.62.200 - - [20/Dec/2024:16:37:11 +0000] "DELETE /api/v1/category/many/deleteCategory?ids=abcdje HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:37:11] INFO: Accessing category route: POST / 
+[2024-12-20 17:37:11] INFO: Checking JWT 
+[2024-12-20 17:37:11] WARN: Verify failed: undefined 
+[2024-12-20 17:37:11] INFO: 192.168.62.200 - - [20/Dec/2024:16:37:11 +0000] "POST /api/v1/category/ HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:37:11] INFO: Accessing category route: PATCH / 
+[2024-12-20 17:37:11] INFO: Checking JWT 
+[2024-12-20 17:37:11] WARN: Verify failed: undefined 
+[2024-12-20 17:37:11] INFO: 192.168.62.200 - - [20/Dec/2024:16:37:11 +0000] "PATCH /api/v1/category/ HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:37:11] INFO: Accessing category route: PATCH / 
+[2024-12-20 17:37:11] INFO: Checking JWT 
+[2024-12-20 17:37:11] WARN: Verify failed: undefined 
+[2024-12-20 17:37:11] INFO: 192.168.62.200 - - [20/Dec/2024:16:37:11 +0000] "PATCH /api/v1/category/ HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:37:11] INFO: Accessing category route: PATCH / 
+[2024-12-20 17:37:11] INFO: Checking JWT 
+[2024-12-20 17:37:11] WARN: Verify failed: undefined 
+[2024-12-20 17:37:11] INFO: 192.168.62.200 - - [20/Dec/2024:16:37:11 +0000] "PATCH /api/v1/category/ HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:37:12] INFO: Accessing category route: PATCH / 
+[2024-12-20 17:37:12] INFO: Checking JWT 
+[2024-12-20 17:37:12] WARN: No JWT 
+[2024-12-20 17:37:12] INFO: 192.168.62.200 - - [20/Dec/2024:16:37:12 +0000] "PATCH /api/v1/category/ HTTP/1.1" 401 6 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:37:12] INFO: Accessing category route: PATCH / 
+[2024-12-20 17:37:12] INFO: Checking JWT 
+[2024-12-20 17:37:12] WARN: Verify failed: undefined 
+[2024-12-20 17:37:12] INFO: 192.168.62.200 - - [20/Dec/2024:16:37:12 +0000] "PATCH /api/v1/category/ HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:37:28] INFO: Accessing category route: POST / 
+[2024-12-20 17:37:28] INFO: Checking JWT 
+[2024-12-20 17:37:28] WARN: Verify failed: undefined 
+[2024-12-20 17:37:28] INFO: 192.168.62.200 - - [20/Dec/2024:16:37:28 +0000] "POST /api/v1/category/ HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:37:38] INFO: Accessing User route: POST /login 
+[2024-12-20 17:37:38] INFO: Validation Data 
+[2024-12-20 17:37:38] INFO: Successfully validation 
+[2024-12-20 17:37:38] INFO: Entering login with params: "johndoe@example.com" 
+[2024-12-20 17:37:38] WARN: User not found 
+[2024-12-20 17:37:38] INFO: 192.168.62.200 - - [20/Dec/2024:16:37:38 +0000] "POST /api/v1/user/login HTTP/1.1" 404 9 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:38:14] INFO: Accessing User route: POST /login 
+[2024-12-20 17:38:14] INFO: Validation Data 
+[2024-12-20 17:38:14] INFO: Successfully validation 
+[2024-12-20 17:38:14] INFO: Entering login with params: "johndoe@example.com" 
+[2024-12-20 17:38:14] INFO: User logged in, JWT generated 
+[2024-12-20 17:38:14] INFO: 192.168.62.200 - - [20/Dec/2024:16:38:14 +0000] "POST /api/v1/user/login HTTP/1.1" 201 160 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:38:42] INFO: Accessing User route: POST /login 
+[2024-12-20 17:38:42] INFO: Validation Data 
+[2024-12-20 17:38:42] INFO: Successfully validation 
+[2024-12-20 17:38:42] INFO: Entering login with params: "johndoe@eample.com" 
+[2024-12-20 17:38:42] WARN: User not found 
+[2024-12-20 17:38:42] INFO: 192.168.62.200 - - [20/Dec/2024:16:38:42 +0000] "POST /api/v1/user/login HTTP/1.1" 404 9 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:38:42] INFO: Accessing category route: GET /1 
+[2024-12-20 17:38:42] INFO: Validation Data 
+[2024-12-20 17:38:42] INFO: Successfully validation 
+[2024-12-20 17:38:42] INFO: Fetching Category with id: 1 
+[2024-12-20 17:38:42] INFO: Successfully fetch category 
+[2024-12-20 17:38:42] INFO: 192.168.62.200 - - [20/Dec/2024:16:38:42 +0000] "GET /api/v1/category/1 HTTP/1.1" 200 82 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:38:42] INFO: Accessing category route: GET /52 
+[2024-12-20 17:38:42] INFO: Validation Data 
+[2024-12-20 17:38:42] INFO: Successfully validation 
+[2024-12-20 17:38:42] INFO: Fetching Category with id: 52 
+[2024-12-20 17:38:43] WARN: Category not found 
+[2024-12-20 17:38:43] INFO: 192.168.62.200 - - [20/Dec/2024:16:38:43 +0000] "GET /api/v1/category/52 HTTP/1.1" 404 9 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:38:43] INFO: Accessing category route: GET /qsdfg 
+[2024-12-20 17:38:43] INFO: Validation Data 
+[2024-12-20 17:38:43] WARN: Validation error: [
+  {
+    "message": "The id field must be a number",
+    "rule": "number",
+    "field": "id"
+  }
+] 
+[2024-12-20 17:38:43] INFO: 192.168.62.200 - - [20/Dec/2024:16:38:43 +0000] "GET /api/v1/category/qsdfg HTTP/1.1" 400 74 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:38:43] INFO: Accessing category route: POST / 
+[2024-12-20 17:38:43] INFO: Checking JWT 
+[2024-12-20 17:38:43] WARN: Verify failed: undefined 
+[2024-12-20 17:38:43] INFO: 192.168.62.200 - - [20/Dec/2024:16:38:43 +0000] "POST /api/v1/category/ HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:38:43] INFO: Accessing category route: DELETE /14 
+[2024-12-20 17:38:43] INFO: Checking JWT 
+[2024-12-20 17:38:43] WARN: Verify failed: undefined 
+[2024-12-20 17:38:43] INFO: 192.168.62.200 - - [20/Dec/2024:16:38:43 +0000] "DELETE /api/v1/category/14 HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:38:43] INFO: Accessing category route: DELETE /many/deleteCategory?ids=abcdje 
+[2024-12-20 17:38:43] INFO: Checking JWT 
+[2024-12-20 17:38:43] WARN: Verify failed: undefined 
+[2024-12-20 17:38:43] INFO: 192.168.62.200 - - [20/Dec/2024:16:38:43 +0000] "DELETE /api/v1/category/many/deleteCategory?ids=abcdje HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:38:43] INFO: Accessing category route: POST / 
+[2024-12-20 17:38:43] INFO: Checking JWT 
+[2024-12-20 17:38:43] WARN: Verify failed: undefined 
+[2024-12-20 17:38:43] INFO: 192.168.62.200 - - [20/Dec/2024:16:38:43 +0000] "POST /api/v1/category/ HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:38:43] INFO: Accessing category route: PATCH / 
+[2024-12-20 17:38:43] INFO: Checking JWT 
+[2024-12-20 17:38:43] WARN: Verify failed: undefined 
+[2024-12-20 17:38:43] INFO: 192.168.62.200 - - [20/Dec/2024:16:38:43 +0000] "PATCH /api/v1/category/ HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:38:43] INFO: Accessing category route: PATCH / 
+[2024-12-20 17:38:43] INFO: Checking JWT 
+[2024-12-20 17:38:43] WARN: Verify failed: undefined 
+[2024-12-20 17:38:43] INFO: 192.168.62.200 - - [20/Dec/2024:16:38:43 +0000] "PATCH /api/v1/category/ HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:38:43] INFO: Accessing category route: PATCH / 
+[2024-12-20 17:38:43] INFO: Checking JWT 
+[2024-12-20 17:38:43] WARN: Verify failed: undefined 
+[2024-12-20 17:38:43] INFO: 192.168.62.200 - - [20/Dec/2024:16:38:43 +0000] "PATCH /api/v1/category/ HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:38:43] INFO: Accessing category route: PATCH / 
+[2024-12-20 17:38:43] INFO: Checking JWT 
+[2024-12-20 17:38:43] WARN: No JWT 
+[2024-12-20 17:38:43] INFO: 192.168.62.200 - - [20/Dec/2024:16:38:43 +0000] "PATCH /api/v1/category/ HTTP/1.1" 401 6 "-" "PostmanRuntime/7.43.0" 
+[2024-12-20 17:38:43] INFO: Accessing category route: PATCH / 
+[2024-12-20 17:38:43] INFO: Checking JWT 
+[2024-12-20 17:38:43] WARN: Verify failed: undefined 
+[2024-12-20 17:38:43] INFO: 192.168.62.200 - - [20/Dec/2024:16:38:43 +0000] "PATCH /api/v1/category/ HTTP/1.1" 401 13 "-" "PostmanRuntime/7.43.0" 

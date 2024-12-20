@@ -21,6 +21,7 @@ const eventIDSchema = vine.object({
  *       properties:
  *         title:
  *           type: string
+ *           minLength: 1
  *           maxLength: 250
  *         description:
  *           type: string
@@ -35,6 +36,7 @@ const eventIDSchema = vine.object({
  *           description: 'Event end date and time in the format YYYY-MM-DDTHH:MM or YYYY-MM-DD HH:MM'
  *         street_number:
  *           type: string
+ *           minLength: 1
  *           maxLength: 250
  *         is_private:
  *           type: boolean
@@ -47,7 +49,6 @@ const eventIDSchema = vine.object({
  *           type: integer
  *       required:
  *         - title
- *         - description
  *         - event_start
  *         - event_end
  *         - street_number
@@ -61,7 +62,7 @@ const eventToAddSchema = vine.object({
     description: vine.string().maxLength(250).optional(),
     event_start: vine.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$|^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/),
     event_end: vine.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$|^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/),
-    street_number: vine.string().maxLength(250),
+    street_number: vine.string().minLength(1).maxLength(250),
     is_private: vine.boolean(),
     picture_path: vine.string().trim().maxLength(250),
     user_id: vine.number(),

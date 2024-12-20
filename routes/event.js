@@ -49,6 +49,8 @@ router.get('/discussion/event',checkJWT,admin, PagingVM.pagingWithId,getDiscussi
  * @swagger
  * /event/id/{id}:
  *   get:
+ *     summary: Fetch an existing event
+ *     description: This route fetch an existing event.
  *     tags:
  *       - Event
  *     parameters:
@@ -77,6 +79,8 @@ router.get('/id/:id',EMVM.searchedEvent,getEvent);
  * @swagger
  * /event/delete/{id}:
  *   delete:
+ *     summary: Delete an existing event
+ *     description: This route delete an existing event.
  *     security:
  *       - bearerAuth: []
  *     tags:
@@ -105,6 +109,8 @@ router.delete('/delete/:id',checkJWT, admin, EMVM.eventToDelete, deleteEvent);
  * @swagger
  * /event/:
  *   post:
+ *     summary: Crete a new event
+ *     description: This route create a new event.
  *     security:
  *       - bearerAuth: []
  *     tags:
