@@ -23,7 +23,14 @@ import {admin} from "../middleware/authorization/mustBeAdmin.js";
 import {linkUserEventValidatorMiddleware as LUEVM, tabValidatorMiddleware as TabVM} from "../middleware/validation.js";
 import {pagingValidatorMiddleWare as PagingVM} from "../middleware/validation.js";
 
+import {logger} from '../middleware/logger.js';
+
 const router = Router();
+
+router.use((req, res, next) => {
+    logger.info(`Accessing linkuserevent route: ${req.method} ${req.url}`);
+    next();
+  });
 
 router.post('/',checkJWT,admin,LUEVM.linkUserEventToAdd, addLinkUserEvent);
 router.patch('/',checkJWT,admin,LUEVM.linkUserEventToUpdate, updateLinkUserEvent);
@@ -45,7 +52,7 @@ router.get('/follow/accepted/:event_id',checkJWT,LUEVM.linkUserEventIsAccepted,l
 router.delete('/many/deleteLinkUserEvent/',checkJWT,admin,TabVM.ids,deleteLinkUserEvents);
 
 router.get('/get/invitation/',checkJWT,PagingVM.paging,getInvitationNotAcceptedByCurrentId);
-router.patch('/invitation/accept/:event_id', checkJWT,LUEVM.linkUserEventInvitationPatch,acceptInvitation);
-router.patch('/invitation/decline/:event_id', checkJWT,LUEVM.linkUserEventInvitationPatch,declineInvitation);
+router.patch('/invitation/accept/', checkJWT,LUEVM.linkUserEventInvitationPatch,acceptInvitation);
+router.patch('/invitation/decline/', checkJWT,LUEVM.linkUserEventInvitationPatch,declineInvitation);
 
 export default router;

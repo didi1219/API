@@ -1,9 +1,61 @@
 import vine from '@vinejs/vine'
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     EventID:
+ *       type: integer
+ *       description: ID of the event to be retrieved, updated, or deleted
+ */
 const eventIDSchema = vine.object({
     id: vine.number(),
 });
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     EventToAddSchema:
+ *       type: object
+ *       properties:
+ *         title:
+ *           type: string
+ *           maxLength: 250
+ *         description:
+ *           type: string
+ *           maxLength: 250
+ *         event_start:
+ *           type: string
+ *           pattern: '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$|^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$'
+ *           description: 'Event start date and time in the format YYYY-MM-DDTHH:MM or YYYY-MM-DD HH:MM'
+ *         event_end:
+ *           type: string
+ *           pattern: '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$|^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$'
+ *           description: 'Event end date and time in the format YYYY-MM-DDTHH:MM or YYYY-MM-DD HH:MM'
+ *         street_number:
+ *           type: string
+ *           maxLength: 250
+ *         is_private:
+ *           type: boolean
+ *         picture_path:
+ *           type: string
+ *           maxLength: 250
+ *         location_id:
+ *           type: integer
+ *         category_id:
+ *           type: integer
+ *       required:
+ *         - title
+ *         - description
+ *         - event_start
+ *         - event_end
+ *         - street_number
+ *         - is_private
+ *         - picture_path
+ *         - location_id
+ *         - category_id
+ */
 const eventToAddSchema = vine.object({
     title: vine.string().trim().minLength(1).maxLength(250),
     description: vine.string().maxLength(250).optional(),
@@ -28,6 +80,42 @@ const eventToAddWithInvitationsSchema = vine.object({
     category_id: vine.number(),
     users_id: vine.array(vine.number()),
 });
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     EventToUpDateSchema:
+ *       type: object
+ *       properties:
+ *         title:
+ *           type: string
+ *           maxLength: 250
+ *         description:
+ *           type: string
+ *           maxLength: 250
+ *         event_start:
+ *           type: string
+ *           pattern: '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$|^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$'
+ *           description: 'Event start date and time in the format YYYY-MM-DDTHH:MM or YYYY-MM-DD HH:MM'
+ *         event_end:
+ *           type: string
+ *           pattern: '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$|^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$'
+ *           description: 'Event end date and time in the format YYYY-MM-DDTHH:MM or YYYY-MM-DD HH:MM'
+ *         street_number:
+ *           type: string
+ *           maxLength: 250
+ *         is_private:
+ *           type: boolean
+ *         picture_path:
+ *           type: string
+ *           maxLength: 250
+ *         location_id:
+ *           type: integer
+ *         category_id:
+ *           type: integer
+ *       required:
+ *         - id
+ */
 const eventToUpdateSchema = vine.object({
     id: vine.number(),
     title: vine.string().trim().minLength(1).maxLength(250).optional(),

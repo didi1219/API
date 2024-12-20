@@ -10,6 +10,7 @@ import {default as adminRouter} from "./admin.js";
 import {default as searchRouter} from './search.js';
 
 import Router from 'express-promise-router';
+import { logger } from '../middleware/logger.js';
 
 const router = Router()
 
@@ -29,7 +30,7 @@ router.use('/admin',adminRouter);
 
 
 router.use((req,res) =>{
-    console.error(`Bad URL: ${req.path}`);
+    logger.warn(`Bad URL: ${req.path}`);
     return res.status(404).send("Il ne s'agit pas d'une URL prise en charge par l'application");
 })
 

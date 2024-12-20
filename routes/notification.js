@@ -15,9 +15,14 @@ import {notificationValidatorMiddleware as NVM} from "../middleware/validation.j
 import {pagingValidatorMiddleWare as PagingVM} from "../middleware/validation.js";
 import {tabValidatorMiddleware as TabVM} from "../middleware/validation.js";
 
-
+import {logger} from '../middleware/logger.js';
 
 const router = Router();
+
+router.use((req, res, next) => {
+    logger.info(`Accessing notification route: ${req.method} ${req.url}`);
+    next();
+  });
 
 router.get('/:id',checkJWT,admin,NVM.searchedNotification, getNotification);
 router.post('/',checkJWT,admin,NVM.notificationToAdd, addNotification);

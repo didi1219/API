@@ -1,5 +1,4 @@
 import {calculOffset, verifyValueOfPerPage} from "../util/paging.js";
-import {createLinkUserEvent} from "./linkUserEvent.js";
 import {formatDateTime} from "../util/formatDate.js";
 
 export const readEvent = async (SQLClient, {id}) =>{
@@ -7,10 +6,10 @@ export const readEvent = async (SQLClient, {id}) =>{
         'SELECT * FROM event WHERE id = $1',[id]
     );
     const event = rows[0];
-
-    event.event_start = formatDateTime(event.event_start);
-    event.event_end = formatDateTime(event.event_end);
-
+    if(event){
+        event.event_start = formatDateTime(event.event_start);
+        event.event_end = formatDateTime(event.event_end);
+    }
     return event;
 };
 

@@ -1,15 +1,10 @@
 import {calculOffset, verifyValueOfPerPage} from "../util/paging.js";
-import {formatDate} from "../util/formatDate.js";
 
 export const readMessage = async (SQLClient, {id}) => {
     const {rows} = await SQLClient.query(
         "SELECT * FROM message WHERE  id = $1", [id]
     );
-    const message = rows[0];
-
-    message.sending_date = formatDate(message.sending_date);
-
-    return message;
+    return rows[0];
 };
 
 export const createMessage = async (SQLClient, {content, type, user_id, discussion_event_id}) => {
@@ -112,11 +107,11 @@ export const readNbMessages = async (SQLClient, {page,perPage}) => {
     const {rows} = await SQLClient.query(
         "select m.id, m.content, m.type, m.sending_date, m.user_id, m.discussion_event_id, u.user_name, de.title as \"discussion_event\" from message m inner join users u on u.id = m.user_id inner join discussionevent de on de.id = m.discussion_event_id ORDER BY id LIMIT $1 OFFSET $2", [perPage, offset]
     );
-
-    rows.map((item) => {
-        item.sending_date = formatDate(item.sending_date);
-    });
-
+    if(rows.length){
+        rows.map((item) => {
+            item.sending_date = formatDate(item.sending_date);
+        });
+    }
     return rows;
 };
 

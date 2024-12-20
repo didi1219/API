@@ -1,0 +1,24 @@
+[2024-12-20 08:57:45] ERROR: Error during login:  
+[2024-12-20 13:09:15] ERROR: Error fetching event for user with ID: undefined: undefined 
+[2024-12-20 13:11:11] ERROR: Error fetching event for user with ID: 125: undefined 
+[2024-12-20 13:12:03] ERROR: Error fetching event for user with ID: 125: undefined 
+[2024-12-20 13:12:40] ERROR: Error fetching event for user with ID: 125, error: Cannot read properties of undefined (reading 'event_start') 
+[2024-12-20 13:15:46] ERROR: Error fetching event for user with ID: 125, error: Cannot read properties of undefined (reading 'event_start') 
+[2024-12-20 13:18:21] ERROR: Error fetching event for user with ID: 125, error: Cannot read properties of undefined (reading 'event_start') 
+[2024-12-20 14:27:01] ERROR: Error fetching users: "locations is not defined" 
+[2024-12-20 14:27:01] ERROR: Error fetching users: "locations is not defined" 
+[2024-12-20 15:00:32] ERROR: Internal Server Error: trying to update user with ID: 14 error : "res.info is not a function" 
+[2024-12-20 15:00:33] ERROR: Internal Server Error: trying to update user with ID: 14 error : "res.info is not a function" 
+[2024-12-20 15:00:35] ERROR: Internal Server Error: trying to update user with ID: 14 error : "res.info is not a function" 
+[2024-12-20 15:02:43] ERROR: Internal Server Error: trying to update user with ID: 14 error : "res.info is not a function" 
+[2024-12-20 15:02:45] ERROR: Internal Server Error: trying to update user with ID: 14 error : "res.info is not a function" 
+[2024-12-20 15:02:47] ERROR: Internal Server Error: trying to update user with ID: 14 error : "res.info is not a function" 
+[2024-12-20 15:06:10] ERROR: Error deleting Users with ID undefined: "client is not defined" 
+[2024-12-20 15:07:11] ERROR: Error deleting Users with ID undefined: "client is not defined" 
+[2024-12-20 15:07:30] ERROR: Error deleting Users with ID undefined: "client is not defined" 
+[2024-12-20 15:08:23] ERROR: Error deleting Users with ID undefined: "client is not defined" 
+[2024-12-20 15:08:44] ERROR: Error deleting Users with ID undefined: "update or delete on table \"users\" violates foreign key constraint \"event_user_id_fkey\" on table \"event\"" 
+[2024-12-20 15:10:35] ERROR: Error deleting Users with ID undefined: "update or delete on table \"users\" violates foreign key constraint \"event_user_id_fkey\" on table \"event\"" 
+[2024-12-20 15:22:16] ERROR: Error updating message: value "1234509876546" is out of range for type integer 
+[2024-12-20 15:22:17] ERROR: Error updating message: value "1234509876546" is out of range for type integer 
+[2024-12-20 15:22:20] ERROR: Error updating message: value "1234509876546" is out of range for type integer 

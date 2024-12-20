@@ -23,6 +23,10 @@ const linkUserEventToUpdateSchema = vine.object({
     is_accepted: vine.boolean().optional(),
 });
 
+const linUserEventInvitationPatchSchema = vine.object({
+    id:vine.number(),
+});
+
 export const
     searchedLinkUserEvent = vine.compile(linkUserEventIDSchema),
     linkUserEventToFollow = vine.compile(linkUserEventEventIDSchema),

@@ -75,6 +75,21 @@ export const deleteUser = async (SQLClient, {id}) => {
     }
 };
 
+export const deleteUsersByIds = async (SQLClient, {ids}) => {
+    try {
+        await SQLClient.query('BEGIN');
+
+        for (const id of ids) {
+            await deleteUser(SQLClient, { id });
+        }
+
+        await SQLClient.query('COMMIT');
+    } catch (error) {
+        await SQLClient.query('ROLLBACK');
+        throw error;
+    }
+};
+
 export const deleteManyUsers = async (SQLClient, {ids}) => {
     try {
         await SQLClient.query('BEGIN');
@@ -88,7 +103,7 @@ export const deleteManyUsers = async (SQLClient, {ids}) => {
     }
 };
 
-export const updateUser = async(SQLClient, {id,email, password, last_name, first_name, user_name, bio,picture_path}) => {
+export const updateUser = async(SQLClient, {id, email, password, last_name, first_name, user_name, bio,picture_path}) => {
     let query = 'UPDATE users SET ';
     const querySet = [];
     const queryValues = [];
@@ -97,6 +112,7 @@ export const updateUser = async(SQLClient, {id,email, password, last_name, first
         queryValues.push(email);
         querySet.push(`email = $${queryValues.length}`);
     }
+
     if(password){
         queryValues.push(await hash(password));
         querySet.push(`password = $${queryValues.length}`);

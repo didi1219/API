@@ -17,7 +17,14 @@ import {checkJWT} from "../middleware/identification/JWT.js";
 import {admin} from "../middleware/authorization/mustBeAdmin.js";
 import {hasWriteRights} from "../middleware/authorization/mustHaveWriteRights.js";
 
+import {logger} from '../middleware/logger.js';
+
 const router = Router();
+
+router.use((req, res, next) => {
+    logger.info(`Accessing message route: ${req.method} ${req.url}`);
+    next();
+  });
 
 router.get('/:id', checkJWT, admin, MVM.searchedMessage, getMessage);
 router.post('/', checkJWT, hasWriteRights, MVM.messageToAdd, addMessage);

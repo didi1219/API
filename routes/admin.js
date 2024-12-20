@@ -18,13 +18,19 @@ import {registration} from "../controler/user.js";
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {admin} from "../middleware/authorization/mustBeAdmin.js";
 import {tabIds} from "../middleware/validator/tabValidator.js";
+import {logger} from '../middleware/logger.js';
 import {validatePassword as PasswordVM} from "../middleware/validator/user.js";
 
 const router = Router();
 
+router.use((req, res, next) => {
+    logger.info(`Accessing admin route: ${req.method} ${req.url}`);
+    next();
+  });
+
 router.get('/:id',checkJWT,admin,AVM.searchedUser,getUser);
 router.post('/',checkJWT,admin,AVM.addUser,PasswordVM,registration);
-router.patch('/',checkJWT,admin,AVM.updateUser,PasswordVM,updateUser);
+router.patch('/',checkJWT,admin,AVM.updateUser,updateUser);
 router.delete('/:id',checkJWT,admin,AVM.userToDelete,deleteUser);
 
 router.get('/get/allTitle',checkJWT,getAllUsersTitle);

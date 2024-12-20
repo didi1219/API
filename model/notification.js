@@ -5,11 +5,10 @@ export const readNotification = async (SQLClient,{id}) => {
     const {rows} = await SQLClient.query(
         'SELECT * FROM notification WHERE id = $1',[id]
     );
-
     const notification = rows[0];
-
-    notification.creation_date = formatDate(notification.creation_date);
-
+    if(notification) {
+        notification.creation_date = formatDate(notification.creation_date);
+    }
     return notification;
 };
 
@@ -83,11 +82,11 @@ export const readNbNotifications = async (SQLClient,{page,perPage}) => {
     const {rows} = await SQLClient.query(
         `select n.id, n.title, n.content, n.event_id,  n.creation_date, n.type, n.creation_date, e.title as "event" from notification n inner join event e on e.id = n.event_id ORDER BY id LIMIT $1 OFFSET $2;`, [size, offset]
     );
-
-    rows.map((item) => {
-        item.creation_date = formatDate(item.creation_date);
-    });
-
+    if(rows.length > 0){
+        rows.map((item) => {
+            item.creation_date = formatDate(item.creation_date);
+        });
+    }
     return rows;
 };
 
@@ -103,6 +102,13 @@ export const getNotificationByUser = async (SQLClient,{user_id,perPage,page}) =>
     const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
         "SELECT * FROM notification n inner join event e on n.event_id = e.id inner join linkuserevent l on l.event_id = e.id where l.user_id = $1 AND l.is_accepted ORDER BY n.creation_date LIMIT $2 OFFSET $3",[user_id, size,offset]
+    )
+    return rows;
+};
+
+export const nbRowsNotificationByUser = async (SQLClient, {user_id}) =>{
+    const {rows} = await SQLClient.query(
+        "SELECT COUNT(*) FROM notification n inner join event e on n.event_id = e.id inner join linkuserevent l on l.event_id = e.id where l.user_id = $1 AND l.is_accepted",[user_id]
     )
     return rows;
 };
