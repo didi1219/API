@@ -77,18 +77,15 @@ export const deleteUser = async (SQLClient, {id}) => {
 
 export const deleteUsersByIds = async (SQLClient, {ids}) => {
     try {
-        await client.query('BEGIN');
+        await SQLClient.query('BEGIN');
 
         for (const id of ids) {
-            await client.query('DELETE FROM users WHERE id = $1', [id]);
-            console.log(`User with ID ${id} deleted.`);
+            await deleteUser(SQLClient, { id });
         }
 
-        await client.query('COMMIT');
-        console.log('All users deleted successfully.');
+        await SQLClient.query('COMMIT');
     } catch (error) {
-        await client.query('ROLLBACK');
-        console.error('Error deleting users:', error.message);
+        await SQLClient.query('ROLLBACK');
         throw error;
     }
 };

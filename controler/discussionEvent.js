@@ -48,7 +48,7 @@ export const deleteDiscussionEvent = async (req, res) => {
 export const updateDiscussionEvent = async (req, res) => {
     try {
         logger.info(`Updating ${table} with ID: ${req.val.id}`);
-        await discussionEventModel.updateDiscussionEvent(pool, req.val);
+        const response = await discussionEventModel.updateDiscussionEvent(pool, req.val);
          if(response.rowCount > 0){
             logger.info(`Successfully updated ${table}`);
             res.sendStatus(204);

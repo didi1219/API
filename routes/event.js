@@ -172,7 +172,7 @@ router.patch('/',checkJWT,admin,EMVM.eventToUpdate,updateEvent);
 router.get('/get/allTitle',getAllEventTitle);
 
 router.get('/nbEvents/search',PagingVM.paging,getNbEvents);
-router.get('/nbEvents/count/',checkJWT,getTotalRowEvent);
+router.get('/nbEvents/count/',getTotalRowEvent);
 
 router.delete('/many/deleteEvent/',checkJWT,admin,TabVM.ids,deleteEvents);
 

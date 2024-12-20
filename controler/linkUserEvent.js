@@ -1,4 +1,5 @@
 import {pool} from '../database/database.js';
+import {logger} from "../middleware/logger.js";
 import * as linkUserEventModel from '../model/linkUserEvent.js';
 
 export const getLinkUserEvent = async (req, res) => {

@@ -26,9 +26,9 @@ export const checkJWT = async (req, res, next) => {
             req.session = verify(jwtEncoded);
             logger.info(`JWT accpeted`);
             next();
-        } catch (e){
+        } catch (error){
             logger.warn(`Verify failed: ${JSON.stringify(error.messages, null, 2)}`);
-            res.status(401).send(e.message);
+            res.status(401).send(error.message);
         }
     } else {
         logger.warn(`No JWT`);
