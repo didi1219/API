@@ -30,6 +30,8 @@ router.use((req, res, next) => {
  * @swagger
  * /category/{id}:
  *   get:
+ *     summary: Fetching an existing category
+ *     description: This route fetches an existing category.
  *     tags:
  *       - Category
  *     parameters:
@@ -42,17 +44,22 @@ router.use((req, res, next) => {
  *     responses:
  *       200:
  *         description: Successfully retrieved the category.
- *         $ref: '#/components/responses/getCategory'  # Référence à la réponse déjà définie
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/getCategory'
  *       404:
  *         description: Category not found.
  *       500:
- *         description: Server error
+ *         description: Server error.
  */
 router.get('/:id',PVM.searchedCategory, getCategory);
 /**
  * @swagger
  * /category/:
  *   post:
+ *     summary: Create a new category
+ *     description: This route creates a new category. The user must have admin privileges to perform this action.
  *     security:
  *       - bearerAuth: []
  *     tags:
@@ -88,6 +95,8 @@ router.post('/',checkJWT,admin,PVM.categoryToAdd, addCategory);
  * @swagger
  * /category/{id}:
  *   delete:
+ *     summary: Delete an existing category
+ *     description: This route deletes an existing category. The user must have admin privileges to perform this action.
  *     security:
  *       - bearerAuth: []
  *     tags:

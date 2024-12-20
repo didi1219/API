@@ -21,6 +21,7 @@ const eventIDSchema = vine.object({
  *       properties:
  *         title:
  *           type: string
+ *           minLength: 1
  *           maxLength: 250
  *         description:
  *           type: string
@@ -35,6 +36,7 @@ const eventIDSchema = vine.object({
  *           description: 'Event end date and time in the format YYYY-MM-DDTHH:MM or YYYY-MM-DD HH:MM'
  *         street_number:
  *           type: string
+ *           minLength: 1
  *           maxLength: 250
  *         is_private:
  *           type: boolean
@@ -47,7 +49,6 @@ const eventIDSchema = vine.object({
  *           type: integer
  *       required:
  *         - title
- *         - description
  *         - event_start
  *         - event_end
  *         - street_number

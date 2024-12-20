@@ -21,6 +21,7 @@ export const getUser = async (req, res) => {
             res.sendStatus(404);
         }
     } catch (err) {
+        logger.error(`Error fetching user: ${JSON.stringify(err.message, null, 2)}`);
         res.sendStatus(500);
     }
 };
@@ -49,8 +50,6 @@ export const updateUser = async (req, res) => {
         }else{
             res.status(409).send('Email already used');
         }
-        await userModel.updateUser(pool, req.val);
-        res.sendStatus(204);
     } catch (err) {
         logger.error(`Error updating user: ${JSON.stringify(err.message, null, 2)}`);
         res.sendStatus(500);

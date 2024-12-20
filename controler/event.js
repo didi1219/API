@@ -10,6 +10,7 @@
  *           description: 'Unique identifier for the event'
  *         title:
  *           type: string
+ *           minLength: 1
  *           maxLength: 250
  *           description: 'Title of the event'
  *         description:
@@ -26,6 +27,7 @@
  *           description: 'End date and time of the event in the format YYYY-MM-DDTHH:MM or YYYY-MM-DD HH:MM'
  *         street_number:
  *           type: string
+ *           minLength: 1
  *           maxLength: 250
  *           description: 'Street number or address of the event location'
  *         is_private:
