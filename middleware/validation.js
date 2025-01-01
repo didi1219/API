@@ -776,5 +776,13 @@ export const tabValidatorMiddleware = {
             logger.warn(`Validation error: ${JSON.stringify(error.messages, null, 2)}`);
             res.status(400).send(error.messages);
         }
+    },
+    emails: async (req, res, next) => {
+        try {
+            req.val = await tabValidator.emails.validate(req.body);
+            next();
+        } catch (error) {
+            res.status(400).send(error.messages);
+        }
     }
 };

@@ -7,7 +7,6 @@ import {
     getAllUsers,
     countRows,
     deleteUsers,
-    getUser,
     checkEmailExist,
     deleteCurrentUser
 } from "../controler/user.js";
@@ -40,9 +39,7 @@ router.get('/getAll/users',checkJWT,PagingVM.paging,getAllUsers);
 router.get('/nbUser/count/', checkJWT,countRows);
 router.delete('/many/deleteUser/',checkJWT,admin,TabVM.ids,deleteUsers);
 
-router.get('/:id',checkJWT,admin, UVM.searchedUser, getUser);
-
-router.get('/checkEmail/',checkJWT,checkEmailExist);
+router.post('/checkEmail/',checkJWT,TabVM.emails,checkEmailExist);
 
 router.get('/get/allTitle', checkJWT,admin, getAllUsersTitle);
 

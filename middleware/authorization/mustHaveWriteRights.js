@@ -16,7 +16,7 @@ export const hasWriteRights = (req, res, next) => {
                 if(hasAccess){
                     logger.info('Successfully check => has permissions')
                     next();
-                } else {
+                } else{
                     logger.warn('Has no permissions')
                     res.sendStatus(403);
                 }

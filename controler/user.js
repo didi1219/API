@@ -120,7 +120,7 @@ export const getUserInfo = async (req, res) => {
 export const getAllUsers = async (req, res) => {
     logger.info(`Entering getAllUsers`);
     try {
-        const response = await userModel.readAllUser(pool, req.val);
+        const response = await userModel.readAllUsers(pool, req.val);
         logger.info(`All users fetched: ${JSON.stringify(response)}`);
         res.json(response);
     } catch (err) {
@@ -154,9 +154,9 @@ export const deleteUsers = async (req, res) => {
 };
 
 export const checkEmailExist = async (req, res) => {
-    logger.info(`Entering checkEmailExist with params: ${JSON.stringify(req.body)}`);
+    logger.info(`Entering checkEmailExist with params: ${JSON.stringify(req.val)}`);
     try {
-        const { idEmailExist, emailDoesntExist } = await userModel.checkIfEmailExists(pool, req.body);
+        const { idEmailExist, emailDoesntExist } = await userModel.checkIfEmailExists(pool, req.val);
         logger.info(`Email check result: idEmailExist = ${idEmailExist}, emailDoesntExist = ${emailDoesntExist}`);
         res.json({ idEmailExist, emailDoesntExist });
     } catch (error) {

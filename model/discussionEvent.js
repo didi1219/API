@@ -73,7 +73,7 @@ export const updateDiscussionEvent = async (SQLClient, {id, title,is_writable, e
 export const readMessagesInDiscussion = async (SQLClient, { id: discussion_event_id, offset }) => {
     const { rows } = await SQLClient.query(
         `SELECT 
-            m.id AS messageId,m.content AS messageContent,m.type AS messageType,m.sending_date AS sendingDate,u.id AS userId,u.user_name AS userName
+            m.id AS messageId,m.content AS messageContent,m.type AS messageType,m.sending_date AS sendingDate,u.id AS userId,u.user_name AS userName, u.picture_path
         FROM message m LEFT JOIN users u ON m.user_id = u.id
         WHERE m.discussion_event_id = $1
         ORDER BY m.sending_date DESC 

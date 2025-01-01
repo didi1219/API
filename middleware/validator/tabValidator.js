@@ -11,5 +11,10 @@ const tabIdsQuerySchema = vine.object({
     ids: vine.array(vine.number()),
 });
 
-export const ids = vine.compile(tabIdsQuerySchema);
+const tabEmailsSchema = vine.object({
+    emails: vine.array(vine.string().email().trim().maxLength(250)),
+})
 
+export const
+    ids = vine.compile(tabIdsQuerySchema),
+    emails = vine.compile(tabEmailsSchema);

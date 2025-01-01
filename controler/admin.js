@@ -152,7 +152,6 @@ export const deleteUsers = async (req,res) => {
         logger.info(`Successfully deleted Users`);
         res.sendStatus(204);
     } catch(error) {
-        console.log(error)
         logger.error(`Error deleting Users with ID ${req.val.id}: ${JSON.stringify(error.message, null, 2)}`);
         res.sendStatus(500);
     }

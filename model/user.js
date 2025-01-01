@@ -24,7 +24,7 @@ export const readUserByEmail = async (SQLClient, {email}) => {
 
 export const getUserByID = async (SQLClient, id) => {
     const {rows} = await SQLClient.query(
-        'SELECT id,email,last_name,first_name,user_name,bio FROM users WHERE id = $1', [id]
+        'SELECT id,email,last_name,first_name,user_name,bio, picture_path FROM users WHERE id = $1', [id]
     );
     return rows[0];
 };

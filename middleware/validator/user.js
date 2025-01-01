@@ -65,13 +65,15 @@ const passwordSchema = yup
   .max(255, 'The password must be no longer than 255 characters')
   .matches(/[A-Z]/, 'The password must contain at least one uppercase letter')
   .matches(/\d/, 'The password must contain at least one number')
-  .matches(/[#@$!%*?&]/, 'The password must contain at least one special character')
+  .matches(/[.#@$!%*?&]/, 'The password must contain at least one special character')
   .notOneOf(commonPasswords, 'This password is too common');
 
 export const validatePassword = async (req, res, next) => {
-  try {
-    await passwordSchema.validate(req.body.password);
-    next();
+    try {
+        if(req.val.password !== undefined) {
+            req.val.password = await passwordSchema.validate(req.body.password);
+        }
+        next();
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

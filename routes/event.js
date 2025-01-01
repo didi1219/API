@@ -14,7 +14,8 @@ import {
     getTotalRowEvent,
     getAllEventTitle,
     deleteEvents,
-    getNbSubscribers
+    getNbSubscribers,
+    getOwnerEvent
 } from '../controler/event.js'
 import {
     eventManagementValidatorMiddleware as EMVM,
@@ -42,7 +43,9 @@ router.post('/oneself/',checkJWT,EVM.eventToAdd,addEventOneSelf);
 router.patch('/oneself/',checkJWT,EVM.eventToUpdate,updateEventOneSelf);
 router.delete('/:id',checkJWT,EVM.eventToDelete,deleteEventOneSelf);
 
-router.get('/:id/discussions', checkJWT,admin, EVM.eventToListDiscussions, inEvent, getDiscussionEvents);
+router.get('/owner/username/:id',checkJWT,EVM.searchedEvent,getOwnerEvent);
+
+router.get('/:id/discussions', checkJWT, EVM.eventToListDiscussions, inEvent, getDiscussionEvents);
 router.get('/discussion/event',checkJWT,admin, PagingVM.pagingWithId,getDiscussionEvents);
 
 /**

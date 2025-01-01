@@ -70,6 +70,14 @@ export const updateLinkUserEvent = async (SQLClient, {id, user_id, event_id, is_
     }
 };
 
+export const searchIdLinkUserEvents = async (SQLClient,{user_id, event_id}) => {
+    const {rows} = await SQLClient.query(
+        'select id from linkuserevent where user_id = $1 and event_id = $2',
+        [user_id,event_id]
+    )
+    return rows[0];
+}
+
 export const readNbLinkUserEvents = async (SQLClient, {page, perPage}) => {
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
@@ -102,7 +110,9 @@ export const linkUserEventAccepted = async (SQLClient, {user_id,event_id}) => {
     const {rows} = await SQLClient.query(
         'select is_accepted from linkuserevent where user_id = $1 and event_id = $2',[user_id,event_id],
     );
-    return rows[0];
+    let is_accepted = false;
+
+    return rows[0] ? rows[0] : {is_accepted};
 };
 
 export const readTotalRowLinkUserEvents = async (SQLClient)=>{
@@ -163,10 +173,36 @@ export const ratioFavorite = async (SQLClient, {event_id}) => {
         'SELECT count(*) as rows_count_favorite from linkuserevent where is_favorite = true and event_id = $1;',[event_id]
     );
     const count = await SQLClient.query(
-        'SELECT count(*) as rows_count_total from linkuserevent where event_id = $1;',[event_id]
+        'SELECT count(*) as rows_count_total from linkuserevent where event_id = $1 and is_accepted = true;',[event_id]
     );
+
     const nbFavorite = favorite.rows[0].rows_count_favorite
     const total = count.rows[0].rows_count_total
 
+    if (Number(total) === 0) {
+        return 0;
+    }
+
     return nbFavorite / total;
+};
+
+
+export const createInvitation = async (SQLClient, {ids, event_id}) => {
+    try {
+        await SQLClient.query('BEGIN');
+        for (const id of ids) {
+            await createLinkUserEvent(SQLClient, {user_id: id, event_id: event_id, is_waiting: true, is_accepted: false});
+        }
+        await SQLClient.query('COMMIT');
+    } catch (error) {
+        await SQLClient.query('ROLLBACK');
+        throw error;
+    }
+}
+
+export const checkIfLinkUserEventExists = async (SQLClient, {email,event_id}) => {
+    const {rows} = await SQLClient.query(
+        'SELECT l.id from linkuserevent l inner join users u on u.id = l.user_id where u.email = $1 AND event_id = $2', [email,event_id]
+    );
+    return rows[0];
 };

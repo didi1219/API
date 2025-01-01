@@ -16,7 +16,7 @@ import {
     followAEvent,
     unFollowAnEvent,
     linkUserEventAccepted,
-    getRatioFavoriteEvent
+    getRatioFavoriteEvent, createInvitations, checkLinkUserEvent
 } from "../controler/linkUserEvent.js";
 import {checkJWT} from "../middleware/identification/JWT.js";
 import {admin} from "../middleware/authorization/mustBeAdmin.js";
@@ -54,5 +54,8 @@ router.delete('/many/deleteLinkUserEvent/',checkJWT,admin,TabVM.ids,deleteLinkUs
 router.get('/get/invitation/',checkJWT,PagingVM.paging,getInvitationNotAcceptedByCurrentId);
 router.patch('/invitation/accept/', checkJWT,LUEVM.linkUserEventInvitationPatch,acceptInvitation);
 router.patch('/invitation/decline/', checkJWT,LUEVM.linkUserEventInvitationPatch,declineInvitation);
+
+router.post('/create/invitation/',checkJWT,createInvitations);
+router.post('/check/Invitation/exist/',checkJWT,checkLinkUserEvent);
 
 export default router;

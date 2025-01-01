@@ -130,8 +130,9 @@ export const updateEvent = async (SQLClient, {id, title, description, event_star
     }
     if(queryValues.length > 0){
         queryValues.push(id);
-        query += `${querySet.join(', ')} WHERE id = $${queryValues.length}`;
-        return await SQLClient.query(query,queryValues);
+        query += `${querySet.join(', ')} WHERE id = $${queryValues.length} RETURNING id`;
+        const result = await SQLClient.query(query,queryValues);
+        return result.rows[0]?.id;
     } else {
         throw new Error('No field given');
     }
@@ -179,27 +180,34 @@ export const listDiscussionEvent = async (SQLClient, { id }) => {
         `SELECT
             d.id AS discussionId,
             d.title AS conversationTitle,
-            e.description AS eventDescription,
+            e.description AS eventDescription, 
+            d.is_writable,
+            u_creator.user_name as eventCreatorUserName,
+            ARRAY_AGG(DISTINCT jsonb_build_object('user_name', u.user_name, 'picture_path', u.picture_path)) as usePicturePaths,
             COUNT(DISTINCT m.user_id) AS usersCount,
             MAX(m.sending_date) AS lastMessageSendingDate,
             (
                 SELECT m2.content
-                FROM message m2
+                FROM message m2 
                 WHERE m2.discussion_event_id = d.id
                 ORDER BY m2.sending_date DESC
                 LIMIT 1
-            ) AS lastMessageContent
-        FROM
-            discussionEvent d
-        LEFT JOIN
-            event e ON d.event_id = e.id
-        LEFT JOIN
-            message m ON d.id = m.discussion_event_id
-        WHERE
-            d.event_id = $1
-        GROUP BY
-            d.id, e.description`,
-        [id]
+            ) AS lastMessageContent,
+            (
+                SELECT jsonb_build_object('user_name', u2.user_name, 'picture_path', u2.picture_path)
+                FROM message m2
+                JOIN users u2 ON m2.user_id = u2.id
+                WHERE m2.discussion_event_id = d.id
+                ORDER BY m2.sending_date DESC
+                LIMIT 1
+            ) AS lastMessageUserInfo
+        FROM discussionEvent d
+        LEFT JOIN event e ON d.event_id = e.id
+        LEFT JOIN message m ON d.id = m.discussion_event_id
+        LEFT JOIN users u on u.id = m.user_id
+        LEFT JOIN users u_creator on u_creator.id = e.user_id
+        WHERE d.event_id = $1
+        GROUP BY d.id, e.description,u_creator.user_name`, [id]
     );
     return rows;
 };
@@ -215,7 +223,7 @@ export const readNbEvents = async (SQLClient, {page, perPage}) => {
     const size = verifyValueOfPerPage(perPage);
     const offset = calculOffset({size, page});
     const {rows} = await SQLClient.query(
-        `select e.id, e.title, e.description, e.event_start,e.event_end, e.street_number,e.picture_path, e.is_private as "is_private", e.user_id, u.user_name as "user_name", l.label as "locality", l.id as "location_id", c.title as "category", c.id as "category_id", c.icon_component_name, c.icon_name FROM event e inner join location l on e.location_id = l.id inner join category c on e.category_id = c.id inner join users u on u.id = e.user_id ORDER BY id LIMIT $1 OFFSET $2`,[perPage,offset]
+        `select e.id, e.title, e.description, e.event_start,e.event_end, e.street_number,e.picture_path, e.is_private as "is_private", e.user_id, u.user_name as "user_name", l.label as "locality", l.id as "location_id", c.title as "category", c.id as "category_id", c.icon_component_name, c.icon_name FROM event e inner join location l on e.location_id = l.id inner join category c on e.category_id = c.id inner join users u on u.id = e.user_id where is_private = false ORDER BY id LIMIT $1 OFFSET $2`,[perPage,offset]
     );
 
     rows.map((item) => {
@@ -240,4 +248,9 @@ export const countSubscribers = async (SQLClient, {id: event_id}) => {
     return rows[0].count;
 };
 
-
+export const searchOwnerEvent = async (SQLClient, {id}) => {
+    const {rows} = await SQLClient.query(
+        'select user_name, u.picture_path from users u inner join event e on e.user_id = u.id where e.id = $1', [id]
+    );
+    return rows[0];
+};

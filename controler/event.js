@@ -134,9 +134,9 @@ export const updateEventOneSelf = async (req, res) => {
         const event = await eventModel.searchEvent(pool, req.val);
         if (event.length > 0) {
             req.val.id = event[req.val.id - 1].id;
-            await eventModel.updateEvent(pool, req.val);
+            const id = await eventModel.updateEvent(pool, req.val);
             logger.info(`Successfully updated event with ID: ${req.val.id}`);
-            res.sendStatus(204);
+            res.status(201).json({ id });
         } else {
             logger.warn(`No event found to update for user with ID: ${req.val.user_id}`);
             res.sendStatus(404);
@@ -203,7 +203,6 @@ export const deleteEvent = async (req, res) => {
 export const updateEvent = async (req, res) => {
     try {
         logger.info(`Attempting to update event with ID: ${req.val.id}`);
-        await eventModel.updateEvent(pool, req.val);
         logger.info(`Successfully updated event with ID: ${req.val.id}`);
         res.sendStatus(204);
     } catch (error) {
@@ -300,6 +299,19 @@ export const getNbSubscribers = async (req, res) => {
         res.status(200).send({ count: nbSubscribers });
     } catch (error) {
         logger.error(`Error fetching number of subscribers for event with ID: ${req.val.id}: ${JSON.stringify(error.message, null, 2)}`);
+        res.sendStatus(500);
+    }
+};
+
+export const getOwnerEvent = async (req, res) => {
+    try {
+        const response = await eventModel.searchOwnerEvent(pool, req.val);
+        if(response){
+            res.json(response);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (error) {
         res.sendStatus(500);
     }
 };

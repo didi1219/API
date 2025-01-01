@@ -1,6 +1,7 @@
 import {pool} from '../database/database.js';
 import {logger} from "../middleware/logger.js";
 import * as linkUserEventModel from '../model/linkUserEvent.js';
+import {createInvitation} from "../model/linkUserEvent.js";
 
 export const getLinkUserEvent = async (req, res) => {
     logger.info(`Entering getLinkUserEvent with params: ${JSON.stringify(req.val)}`);
@@ -129,7 +130,8 @@ export const getInvitationNotAcceptedByCurrentId = async (req, res) => {
 export const acceptInvitation = async (req, res) => {
     logger.info(`Entering acceptInvitation with params: ${JSON.stringify(req.val)}`);
     try {
-        await linkUserEventModel.updateLinkUserEvent(pool, { id: req.val.id, is_waiting: false, is_accepted: true });
+        const response = await linkUserEventModel.searchIdLinkUserEvents(pool, {user_id: req.session.id, event_id: req.val.event_id});
+        await linkUserEventModel.updateLinkUserEvent(pool, { id: response.id, is_waiting: false, is_accepted: true });
         logger.info(`Invitation accepted for user ${req.val.user_id}`);
         res.sendStatus(204);
     } catch (error) {
@@ -141,7 +143,8 @@ export const acceptInvitation = async (req, res) => {
 export const declineInvitation = async (req, res) => {
     logger.info(`Entering declineInvitation with params: ${JSON.stringify(req.val)}`);
     try {
-        await linkUserEventModel.updateLinkUserEvent(pool, { id: req.val.id, is_waiting: false, is_accepted: false });
+        const response = await linkUserEventModel.searchIdLinkUserEvents(pool, {user_id: req.session.id, event_id: req.val.event_id});
+        await linkUserEventModel.updateLinkUserEvent(pool, { id: response.id, is_waiting: false, is_accepted: false });
         logger.info(`Invitation declined for user ${req.val.user_id}`);
         res.sendStatus(204);
     } catch (error) {
@@ -253,7 +256,7 @@ export const getRatioFavoriteEvent = async (req, res) => {
     try {
         logger.info(`Fetching favorite event ratio for user with ID: ${req.val.user_id}`);
         const response = await linkUserEventModel.ratioFavorite(pool, req.val);
-        if (response) {
+        if (typeof response !== 'undefined') {
             logger.info(`Successfully fetched favorite event ratio for user with ID: ${req.val.user_id}`);
             res.status(200).json({ response });
         } else {
@@ -265,3 +268,26 @@ export const getRatioFavoriteEvent = async (req, res) => {
         res.sendStatus(500);
     }
 };
+
+
+export const createInvitations = async (req, res) => {
+    try {
+        await linkUserEventModel.createInvitation(pool,{ids:req.body.ids, event_id:req.body.event_id});
+        res.sendStatus(201);
+    } catch(error) {
+        res.sendStatus(500);
+    }
+}
+
+export const checkLinkUserEvent = async (req, res) => {
+    try {
+        const response = await linkUserEventModel.checkIfLinkUserEventExists(pool, req.body);
+        if(response){
+            res.status(200).json({ response });
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (error) {
+        res.sendStatus(500);
+    }
+}
