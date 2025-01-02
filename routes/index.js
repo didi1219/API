@@ -12,7 +12,11 @@ import {default as searchRouter} from './search.js';
 import Router from 'express-promise-router';
 import { logger } from '../middleware/logger.js';
 
-const router = Router()
+const router = Router();
+
+router.get('/health', (req, res) => {
+    res.status(200).json({ status: 'OK' });
+});
 
 router.use('/notification', notificationRouter);
 router.use('/message', messageRouter);

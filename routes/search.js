@@ -16,7 +16,9 @@ import {
     countNbRowPublicEvent,
     getCombineSearchPublic,
     countRowsGetCombineSearchPublic,
-    getSearchCombineCategoriesAndLocalities
+    getSearchCombineCategoriesAndLocalities,
+    getSearchCombineCategoriesAndLocalitiesOwnEvent,
+    getSearchCombineCategoriesAndLocalitiesByFollow
 } from "../controler/search.js";
 import {checkJWT} from "../middleware/identification/JWT.js";
 import { pagingValidatorMiddleWare as PagingVM} from "../middleware/validation.js";
@@ -55,6 +57,10 @@ router.get('/nbRows/type/public/',checkJWT,countNbRowPublicEvent);
 router.get('/nbRows/publicAndSearch', checkJWT, SM.searchField,countRowsGetCombineSearchPublic);
 router.get('/events/publicAndSearch', checkJWT,PagingVM.pagingSearchGeneral,getCombineSearchPublic);
 router.get('/events/searchAllFilter',checkJWT,tabTransformCat,PagingVM.pagingWithAllFilters,getSearchCombineCategoriesAndLocalities);
+
+router.get('/events/searchAllFilter/ownEvent',checkJWT,PagingVM.pagingSearchGeneral,getSearchCombineCategoriesAndLocalitiesOwnEvent);
+router.get('/events/searchAllFilter/followEvent',checkJWT,PagingVM.pagingSearchGeneral,getSearchCombineCategoriesAndLocalitiesByFollow);
+
 
 export default router;
 

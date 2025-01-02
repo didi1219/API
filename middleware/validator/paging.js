@@ -43,11 +43,6 @@ const pagingSearchByLocSchema = vine.object({
     localities: vine.array(vine.number())
 });
 
-const pagingSearchAllEventByOwnerSchema = vine.object({
-    page: vine.number(),
-    perPage: vine.number().min(1),
-});
-
 const pagingWithIdSchema = vine.object({
     page: vine.number(),
     perPage: vine.number(),
@@ -68,6 +63,5 @@ export const
     pagingSearchGeneral =  vine.compile((pagingSearchGeneralSchema)),
     pagingSearchByCategories = vine.compile(pagingSearchByCategoriesSchema),
     pagingSearchByLoc = vine.compile(pagingSearchByLocSchema),
-    pagingSearchAllEventByOwner = vine.compile(pagingSearchAllEventByOwnerSchema),
     pagingWithId = vine.compile(pagingWithIdSchema),
     pagingWithAllFilters = vine.compile(pagingWithAllFilterSchema);

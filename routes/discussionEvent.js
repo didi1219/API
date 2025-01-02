@@ -19,6 +19,7 @@ import {discussionEventValidatorMiddleware as DVM, tabValidatorMiddleware as Tab
 import {pagingValidatorMiddleWare as PagingVM} from "../middleware/validation.js";
 import {inDiscussion} from "../middleware/authorization/mustBeInDiscussion.js";
 import {logger} from '../middleware/logger.js';
+import {isOwner} from "../middleware/authorization/mustBeOwner.js";
 
 const router = Router();
 
@@ -31,6 +32,8 @@ router.get('/:id', checkJWT, admin, DVM.searchedDiscussionEvent, getDiscussionEv
 router.post('/',checkJWT,admin,DVM.discussionEventToAdd, addDiscussionEvent);
 router.patch('/',checkJWT,admin,DVM.discussionEventToUpdate, updateDiscussionEvent);
 router.delete('/:id',checkJWT,admin,DVM.discussionEventToDelete, deleteDiscussionEvent);
+
+router.post('/new/discussion/',checkJWT,DVM.discussionEventToAdd,isOwner,addDiscussionEvent);
 
 router.get('/:id/messages/:offset', checkJWT, DVM.discussionEventToListMessages, inDiscussion, getMessagesInDiscussion);
 router.get('/:id/newerMessages/:nextMessageID', checkJWT, DVM.discussionEventToListNewerMessages, inDiscussion, getNewerMessagesInDiscussion);

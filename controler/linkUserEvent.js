@@ -144,7 +144,7 @@ export const declineInvitation = async (req, res) => {
     logger.info(`Entering declineInvitation with params: ${JSON.stringify(req.val)}`);
     try {
         const response = await linkUserEventModel.searchIdLinkUserEvents(pool, {user_id: req.session.id, event_id: req.val.event_id});
-        await linkUserEventModel.updateLinkUserEvent(pool, { id: response.id, is_waiting: false, is_accepted: false });
+        await linkUserEventModel.deleteLinkUserEvent(pool, { id: response.id });
         logger.info(`Invitation declined for user ${req.val.user_id}`);
         res.sendStatus(204);
     } catch (error) {

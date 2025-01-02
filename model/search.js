@@ -1,4 +1,5 @@
 import {calculOffset,verifyValueOfPerPage} from '../util/paging.js'
+import {formatDateTime} from "../util/formatDate.js";
 
 export const readEventByName = async (SQLClient, {name,perPage, page})=> {
     const size = verifyValueOfPerPage(perPage);
@@ -267,4 +268,174 @@ export const nbRowsSearchCombineCategoriesAndLocalities = async (SQLClient, { lo
     const { rows } = await SQLClient.query(query, values);
 
     return rows[0].rows_count;
+};
+
+
+export const searchCombineCategoriesAndLocalitiesOwnEvent = async (SQLClient, { search, user_id }) => {
+    const filters = [];
+    const values = [];
+
+
+    if (search) {
+        const searchPlaceholder = `$${values.length + 1}`;
+        filters.push(`(e.title ILIKE ${searchPlaceholder} OR l.label ILIKE ${searchPlaceholder} OR c.title ILIKE ${searchPlaceholder})`);
+        values.push(`%${search}%`);
+    }
+
+    if (user_id) {
+        const userPlaceholder = `$${values.length + 1}`;
+        filters.push(`e.user_id = ${userPlaceholder}`);
+        values.push(user_id);
+    }
+
+
+    const whereClause = filters.length > 0 ? `WHERE ${filters.join(' AND ')}` : '';
+
+    const query = `
+        SELECT
+            e.id, e.title, e.description, e.event_start, e.event_end, e.street_number,
+            e.picture_path, e.is_private, u.user_name, l.label AS locality, c.title AS category, c.icon_component_name, c.icon_name
+        FROM event e
+                 INNER JOIN location l ON e.location_id = l.id
+                 INNER JOIN category c ON e.category_id = c.id
+                 INNER JOIN users u ON e.user_id = u.id
+            ${whereClause}
+    `;
+    const { rows } = await SQLClient.query(query, values);
+
+    rows.map((item) => {
+        item.event_start = formatDateTime(item.event_start);
+        item.event_end = formatDateTime(item.event_end);
+    });
+
+    return rows;
+};
+
+export const countCombineCategoriesAndLocalitiesOwnEvent = async (SQLClient, {search, user_id }) => {
+    const filters = [];
+    const values = [];
+
+
+    if (search) {
+        const searchPlaceholder = `$${values.length + 1}`;
+        filters.push(`(e.title ILIKE ${searchPlaceholder} OR l.label ILIKE ${searchPlaceholder} OR c.title ILIKE ${searchPlaceholder})`);
+        values.push(`%${search}%`);
+    }
+
+    if (user_id) {
+        const userPlaceholder = `$${values.length + 1}`;
+        filters.push(`e.user_id = ${userPlaceholder}`);
+        values.push(user_id);
+    }
+
+    const whereClause = filters.length > 0 ? `WHERE ${filters.join(' AND ')}` : '';
+
+    const query = `
+        SELECT 
+            COUNT(*) AS total
+        FROM event e
+        INNER JOIN location l ON e.location_id = l.id
+        INNER JOIN category c ON e.category_id = c.id
+        INNER JOIN users u ON e.user_id = u.id
+        ${whereClause};
+    `;
+
+    const { rows } = await SQLClient.query(query, values);
+
+    return rows[0].total;
+};
+
+export const searchCombineCategoriesAndLocalitiesFollowedEvent = async (SQLClient, { search, page, perPage, user_id }) => {
+    const size = verifyValueOfPerPage(perPage);
+    const offset = calculOffset({ size, page })
+
+    const filters = [];
+    const values = [];
+
+    if (search) {
+        const searchPlaceholder = `$${values.length + 1}`;
+        filters.push(`(e.title ILIKE ${searchPlaceholder} OR l.label ILIKE ${searchPlaceholder} OR c.title ILIKE ${searchPlaceholder})`);
+        values.push(`%${search}%`);
+    }
+
+    if (user_id) {
+        const userPlaceholder = `$${values.length + 1}`;
+        filters.push(`le.user_id = ${userPlaceholder}`);
+        values.push(user_id);
+    }
+
+    const limitPlaceholder = `$${values.length + 1}`;
+    const offsetPlaceholder = `$${values.length + 2}`;
+    values.push(size, offset);
+
+    const whereClause = filters.length > 0 ? `WHERE ${filters.join(' AND ')}` : '';
+
+    const query = `
+        SELECT 
+            e.id, e.title, e.description, e.event_start, e.event_end, e.street_number, 
+            e.picture_path, e.is_private, u.user_name, l.label AS locality, c.title AS category, c.icon_component_name, c.icon_name
+        FROM event e
+        INNER JOIN location l ON e.location_id = l.id
+        INNER JOIN category c ON e.category_id = c.id
+        INNER JOIN users u ON e.user_id = u.id
+        INNER JOIN linkuserevent le ON e.id = le.event_id
+        ${whereClause}
+        ORDER BY e.id ASC
+        LIMIT ${limitPlaceholder} OFFSET ${offsetPlaceholder};
+    `;
+
+    const { rows } = await SQLClient.query(query, values);
+    rows.map((item) => {
+        item.event_start = formatDateTime(item.event_start);
+        item.event_end = formatDateTime(item.event_end);
+    });
+
+    return rows;
+};
+export const countCombineCategoriesAndLocalitiesFollowedEvent = async (SQLClient, { locality, categories, search, user_id }) => {
+    const filters = [];
+    const values = [];
+
+    // Vérification de la localité
+    if (locality) {
+        const localityPlaceholder = `$${values.length + 1}`;
+        filters.push(`l.label ILIKE ${localityPlaceholder}`);
+        values.push(`%${locality}%`);
+    }
+
+    // Vérification des catégories
+    if (categories && categories.length > 0) {
+        const categoriesPlaceholders = categories.map((_, index) => `$${values.length + index + 1}`).join(', ');
+        filters.push(`e.category_id IN (${categoriesPlaceholders})`);
+        values.push(...categories);
+    }
+
+    // Vérification de la recherche
+    if (search) {
+        const searchPlaceholder = `$${values.length + 1}`;
+        filters.push(`(e.title ILIKE ${searchPlaceholder} OR l.label ILIKE ${searchPlaceholder} OR c.title ILIKE ${searchPlaceholder})`);
+        values.push(`%${search}%`);
+    }
+
+    if (user_id) {
+        const userPlaceholder = `$${values.length + 1}`;
+        filters.push(`le.user_id = ${userPlaceholder}`);
+        values.push(user_id);
+    }
+
+    const whereClause = filters.length > 0 ? `WHERE e.is_private = false AND ${filters.join(' AND ')}` : '';
+
+    const query = `
+        SELECT
+            COUNT(*) AS total
+        FROM event e
+        INNER JOIN location l ON e.location_id = l.id
+        INNER JOIN category c ON e.category_id = c.id
+        INNER JOIN linkuserevent le ON e.id = le.event_id
+        ${whereClause};
+    `;
+
+    const { rows } = await SQLClient.query(query, values);
+
+    return rows[0].total;
 };

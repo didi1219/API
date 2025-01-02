@@ -193,10 +193,8 @@ INSERT INTO message (content, type, sending_date, user_id, discussion_event_id) 
 
 -- Fill `linkUserEvent` table
 INSERT INTO linkUserEvent (user_id, event_id, is_waiting, is_accepted,is_favorite) VALUES
-                                                                         (1,3,false,true,false),
-                                                                         (1, 1, false, true,false),
                                                                          (2, 1, false, true,false),
-                                                                         (1, 2, false, true,false),
+                                                                         (1, 2, true, true,false),
                                                                          (2, 3, false, true,false),
                                                                          (3, 4, false, true,false),
                                                                          (3, 5, false, true,false),

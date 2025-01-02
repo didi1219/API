@@ -270,3 +270,35 @@ export const getSearchCombineCategoriesAndLocalities = async (req, res) => {
         res.sendStatus(500);
     }
 };
+
+
+
+
+export const getSearchCombineCategoriesAndLocalitiesOwnEvent = async (req, res) => {
+    logger.info(`Entering getSearchCombineCategoriesAndLocalities with params: ${JSON.stringify(req.val)}`);
+    try {
+        req.query.user_id = req.session.id;
+        const events = await searchModel.searchCombineCategoriesAndLocalitiesOwnEvent(pool, req.query);
+        const nbRows = await searchModel.countCombineCategoriesAndLocalitiesOwnEvent(pool, req.query);
+        logger.info(`Combined search results by categories and localities: ${JSON.stringify(events)}`);
+        res.status(200).json({ events, nbRows });
+    } catch (error) {
+        logger.error(`Error performing combined search by categories and localities: ${JSON.stringify(error.message, null, 2)}`);
+        console.log(error)
+        res.sendStatus(500);
+    }
+};
+
+export const getSearchCombineCategoriesAndLocalitiesByFollow = async (req, res) => {
+    logger.info(`Entering getSearchCombineCategoriesAndLocalities with params: ${JSON.stringify(req.val)}`);
+    try {
+        req.val.user_id = req.session.id;
+        const events = await searchModel.searchCombineCategoriesAndLocalitiesFollowedEvent(pool, req.val);
+        const nbRows = await searchModel.countCombineCategoriesAndLocalitiesFollowedEvent(pool, req.val);
+        logger.info(`Combined search results by categories and localities: ${JSON.stringify(events)}`);
+        res.status(200).json({ events, nbRows });
+    } catch (error) {
+        logger.error(`Error performing combined search by categories and localities: ${JSON.stringify(error.message, null, 2)}`);
+        res.sendStatus(500);
+    }
+};
