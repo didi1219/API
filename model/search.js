@@ -210,8 +210,8 @@ export const searchCombineCategoriesAndLocalities = async (SQLClient, { locality
     values.push(size, offset);
 
 
-    const whereClause = filters.length > 0 ? `WHERE e.is_private = false AND ${filters.join(' AND ')}` : '';
-    
+    const whereClause = `WHERE e.is_private = false` + (filters.length > 0 ? ` AND ${filters.join(' AND ')}` : '');
+
     const query = `
         SELECT 
             e.id, e.title, e.description, e.event_start, e.event_end, e.street_number, 

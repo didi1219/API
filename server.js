@@ -7,8 +7,6 @@ import internalIp from 'internal-ip';
 import { default as Router } from './routes/index.js';
 import morgan from 'morgan';
 import { logger } from './middleware/logger.js';
-import promClient from 'prom-client';
-const register = new promClient.Registry();
 
 const app = express();
 const port = 3001;
