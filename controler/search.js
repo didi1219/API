@@ -1,6 +1,7 @@
 import * as searchModel from "../model/search.js";
 import { pool } from "../database/database.js";
 import {logger} from '../middleware/logger.js';
+import {countCombineCategoriesAndLocalitiesOwnEvent} from "../model/search.js";
 
 export const searchEventByName = async (req, res) => {
     logger.info(`Entering searchEventByName with params: ${JSON.stringify(req.val)}`);
@@ -271,9 +272,6 @@ export const getSearchCombineCategoriesAndLocalities = async (req, res) => {
     }
 };
 
-
-
-
 export const getSearchCombineCategoriesAndLocalitiesOwnEvent = async (req, res) => {
     logger.info(`Entering getSearchCombineCategoriesAndLocalities with params: ${JSON.stringify(req.val)}`);
     try {
@@ -292,8 +290,9 @@ export const getSearchCombineCategoriesAndLocalitiesOwnEvent = async (req, res) 
 export const getSearchCombineCategoriesAndLocalitiesByFollow = async (req, res) => {
     logger.info(`Entering getSearchCombineCategoriesAndLocalities with params: ${JSON.stringify(req.val)}`);
     try {
-        req.val.user_id = req.session.id;
-        const events = await searchModel.searchCombineCategoriesAndLocalitiesFollowedEvent(pool, req.val);
+
+        const user_id = req.session.id;
+        const events = await searchModel.searchCombineCategoriesAndLocalitiesFollowedEvent(pool, user_id);
         const nbRows = await searchModel.countCombineCategoriesAndLocalitiesFollowedEvent(pool, req.val);
         logger.info(`Combined search results by categories and localities: ${JSON.stringify(events)}`);
         res.status(200).json({ events, nbRows });
@@ -302,3 +301,5 @@ export const getSearchCombineCategoriesAndLocalitiesByFollow = async (req, res) 
         res.sendStatus(500);
     }
 };
+
+
