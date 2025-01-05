@@ -1,7 +1,7 @@
 import {pool} from '../database/database.js';
 import {logger} from "../middleware/logger.js";
 import * as linkUserEventModel from '../model/linkUserEvent.js';
-import {createInvitation} from "../model/linkUserEvent.js";
+import {createInvitation, searchIdLinkUserEvents, searchLinkUserEventPaging} from "../model/linkUserEvent.js";
 
 export const getLinkUserEvent = async (req, res) => {
     logger.info(`Entering getLinkUserEvent with params: ${JSON.stringify(req.val)}`);
@@ -127,6 +127,22 @@ export const getInvitationNotAcceptedByCurrentId = async (req, res) => {
     }
 };
 
+export const searchLinkUserEvents = async (req, res) => {
+    logger.info(`Entering searchLinkUserEvent with params: ${JSON.stringify(req.val)}`);
+    try {
+        req.val.user_id = req.session.id;
+        const response = await linkUserEventModel.searchLinkUserEventPaging(pool,req.val);
+        if(response){
+            res.json(response);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (error){
+        res.sendStatus(500);
+    }
+}
+
+
 export const acceptInvitation = async (req, res) => {
     logger.info(`Entering acceptInvitation with params: ${JSON.stringify(req.val)}`);
     try {
@@ -173,7 +189,7 @@ export const getFavoriteEvent = async (req, res) => {
         const response = await linkUserEventModel.readFavoriteEvent(pool, req.val);
         if (response) {
             logger.info(`Favorite event found: ${JSON.stringify(response)}`);
-            res.status(200).json({ response });
+            res.status(200).json(response);
         } else {
             logger.warn('No favorite event found');
             res.sendStatus(404);

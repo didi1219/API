@@ -9,6 +9,7 @@ import {
     deleteLinkUserEvents,
     getInvitationNotAcceptedByCurrentId,
     acceptInvitation,
+    searchLinkUserEvents,
     declineInvitation,
     isFavorite,
     getFavoriteEvent,
@@ -41,10 +42,11 @@ router.get('/nbLinkUserEvents/search',checkJWT,PagingVM.paging,getNbLinkUserEven
 router.get('/nbLinkUserEvents/count/',checkJWT,countRows);
 router.get('/nbLinkUserEvent/byUser/', checkJWT,getNbLinkUserEventByCurrentUser);
 
-router.patch('/setFavorite/:event_id',checkJWT,LUEVM.linkUserEventInvitationPatch,isFavorite);
+router.patch('/setFavorite/',checkJWT,LUEVM.linkUserEventInvitationPatch,isFavorite);
 router.get('/favorite/event/', checkJWT,PagingVM.paging,getFavoriteEvent);
 router.get('/ratio/favorite/:event_id',checkJWT,LUEVM.linkUserEventRatioFavorite,getRatioFavoriteEvent);
 
+router.get('/search/all/',checkJWT,PagingVM.paging,searchLinkUserEvents);
 router.post('/follow/event/',checkJWT,LUEVM.linkUserEventToFollow,followAEvent);
 router.delete('/unfollow/event/:event_id',checkJWT,LUEVM.linkUserEventToUnFollow,unFollowAnEvent);
 router.get('/follow/accepted/:event_id',checkJWT,LUEVM.linkUserEventIsAccepted,linkUserEventAccepted);
